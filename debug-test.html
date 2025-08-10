@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <button id="test-btn">Test Button</button>
+    <div id="test-div" style="display:none;">Test Div</div>
+    
+    <script>
+        document.getElementById('test-btn').onclick = () => {
+            const div = document.getElementById('test-div');
+            div.style.display = div.style.display === 'none' ? 'block' : 'none';
+            console.log('Button clicked, div display:', div.style.display);
+        };
+        console.log('Debug test loaded');
+    </script>
+</body>
+</html>

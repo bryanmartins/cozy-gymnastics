@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard - Final do Salto | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .competition-info {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #0066cc;
+        }
+
+        .competition-info h2 {
+            color: #0066cc;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .qualification-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #ffd700;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            color: #0066cc;
+            font-size: 1.1rem;
+        }
+
+        .summary-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .scoreboard-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .scoreboard-header {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .scoreboard-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .scoreboard-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .results-table th {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1rem;
+            text-align: center;
+            font-weight: 700;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .results-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+            transition: background-color 0.3s ease;
+        }
+
+        .results-table tbody tr:hover {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        }
+
+        .gymnast-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .country-flag {
+            width: 32px;
+            height: 24px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .gymnast-name {
+            font-weight: 600;
+            color: #1e3c72;
+            font-size: 1.1rem;
+        }
+
+        .country-name {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .position {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #1e3c72;
+            width: 60px;
+        }
+
+        .medal-gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .medal-silver {
+            background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .medal-bronze {
+            background: linear-gradient(135deg, #CD7F32, #A0522D);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .score {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0066cc;
+            background: linear-gradient(135deg, #e7f3ff, #f0f8ff);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .score-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .score-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0066cc;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108,117,125,0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(23,162,184,0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .olympic-footer {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .olympic-footer p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-nav {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .results-table {
+                font-size: 0.9rem;
+            }
+            
+            .results-table th,
+            .results-table td {
+                padding: 0.5rem;
+            }
+            
+            .gymnast-info {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            .scoreboard-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header olímpico -->
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Jogos Olímpicos Brussels 2025
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+                <a href="login.html" class="nav-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="dashboard.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Voltar ao Dashboard
+        </a>
+        <button onclick="loadResults()" class="refresh-btn">
+            <i class="fas fa-sync-alt"></i>
+            Atualizar
+        </button>
+
+        <!-- Informações da Competição -->
+        <div class="competition-info">
+            <h2><i class="fas fa-info-circle"></i> Final do Salto sobre Mesa</h2>
+            <p>Final individual do aparelho Salto sobre Mesa. As 8 ginastas mais bem classificadas nas qualificatórias competem por medalhas olímpicas.</p>
+        </div>
+
+        <!-- Resumo das Qualificações -->
+        <div class="qualification-summary">
+            <h3><i class="fas fa-trophy"></i> Como Funciona a Final do Salto</h3>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <i class="fas fa-users"></i>
+                        Qualificação
+                    </div>
+                    <p>As 8 ginastas com as melhores notas no Salto durante as qualificatórias se classificam para a final (máximo 2 por país).</p>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <i class="fas fa-calculator"></i>
+                        Sistema de Pontuação
+                    </div>
+                    <p>Cada ginasta executa dois saltos. A nota final é a média das duas execuções.</p>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <i class="fas fa-medal"></i>
+                        Premiação
+                    </div>
+                    <p>As três ginastas com as maiores notas finais conquistam as medalhas de ouro, prata e bronze.</p>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <i class="fas fa-running"></i>
+                        Execução
+                    </div>
+                    <p>Os saltos são avaliados pela dificuldade (nota D) e execução (nota E), com possíveis penalizações.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scoreboard -->
+        <div class="scoreboard-container">
+            <div class="scoreboard-header">
+                <h1><i class="fas fa-trophy"></i> Final do Salto sobre Mesa</h1>
+                <p>Classificação Final - Ginástica Artística Feminina</p>
+            </div>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Carregando resultados...</p>
+            </div>
+
+            <div id="results-container" style="display: none;">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Pos.</th>
+                            <th>Ginasta</th>
+                            <th>1º Salto</th>
+                            <th>2º Salto</th>
+                            <th>Nota Final</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody">
+                        <!-- Resultados serão inseridos aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer olímpico -->
+    <footer class="olympic-footer">
+        <p>&copy; 2025 Jogos Olímpicos Brussels | Sistema de Pontuação da Ginástica Artística</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="js/countries.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-init.js"></script>
+
+    <script>
+        // Aguardar Firebase estar pronto
+        function initializeWhenReady() {
+            if (window.db) {
+                loadResults();
+            } else {
+                setTimeout(initializeWhenReady, 100);
+            }
+        }
+        
+        // Inicializar quando DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWhenReady);
+        } else {
+            initializeWhenReady();
+        }
+
+        let unsubscribe = null;
+
+        function displayResults(gymnasts) {
+            const tbody = document.getElementById('results-tbody');
+            const resultsContainer = document.getElementById('results-container');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            tbody.innerHTML = '';
+
+            if (gymnasts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhum resultado encontrado</td></tr>';
+                return;
+            }
+
+            gymnasts.forEach((gymnast, index) => {
+                const row = document.createElement('tr');
+                
+                // Classes de medalha
+                let positionClass = '';
+                if (index === 0) positionClass = 'medal-gold';
+                else if (index === 1) positionClass = 'medal-silver';
+                else if (index === 2) positionClass = 'medal-bronze';
+                
+                row.innerHTML = `
+                    <td class="position ${positionClass}">${index + 1}º</td>
+                    <td>
+                        <div class="gymnast-info">
+                            <span class="fi fi-${getCountryCode(gymnast.country)} country-flag"></span>
+                            <div>
+                                <div class="gymnast-name">${gymnast.name}</div>
+                                <div class="country-name">${gymnast.country}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="score">
+                        <div class="score-breakdown">
+                            <div class="score-detail">
+                                <span>D:</span>
+                                <span>${(gymnast.vt_d_1 || 0).toFixed(3)}</span>
+                            </div>
+                            <div class="score-detail">
+                                <span>E:</span>
+                                <span>${(gymnast.vt_e_1 || 0).toFixed(3)}</span>
+                            </div>
+                            <div class="score-detail">
+                                <span>P:</span>
+                                <span>-${(gymnast.vt_p_1 || 0).toFixed(3)}</span>
+                            </div>
+                            <div style="font-weight: bold; border-top: 1px solid #ccc; padding-top: 0.3rem;">
+                                <strong>${gymnast.vault1.toFixed(3)}</strong>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="score">
+                        <div class="score-breakdown">
+                            <div class="score-detail">
+                                <span>D:</span>
+                                <span>${(gymnast.vt_d_2 || 0).toFixed(3)}</span>
+                            </div>
+                            <div class="score-detail">
+                                <span>E:</span>
+                                <span>${(gymnast.vt_e_2 || 0).toFixed(3)}</span>
+                            </div>
+                            <div class="score-detail">
+                                <span>P:</span>
+                                <span>-${(gymnast.vt_p_2 || 0).toFixed(3)}</span>
+                            </div>
+                            <div style="font-weight: bold; border-top: 1px solid #ccc; padding-top: 0.3rem;">
+                                <strong>${gymnast.vault2.toFixed(3)}</strong>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="score" style="font-size: 1.3rem; font-weight: 800;">
+                        ${gymnast.average.toFixed(3)}
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadResults() {
+            const loading = document.getElementById('loading');
+            const resultsContainer = document.getElementById('results-container');
+            
+            loading.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            
+            try {
+                // Fechar listener anterior se existir
+                if (unsubscribe) {
+                    unsubscribe();
+                }
+
+                // Buscar todas as ginastas e calcular qualificadas diretamente das qualificatórias
+                unsubscribe = window.db.collection('new_gymnasts')
+                    .onSnapshot((snapshot) => {
+                        console.log('Snapshot recebido:', snapshot.size, 'documentos');
+                        
+                        // Primeiro, calcular quem está qualificada
+                        const allGymnasts = [];
+                        snapshot.forEach((doc) => {
+                            const data = doc.data();
+                            const qualifiersScores = data.scores?.qualifiers;
+                            
+                            if (qualifiersScores && (qualifiersScores.qualifiers_vt1_d !== undefined || qualifiersScores.qualifiers_vt_d !== undefined)) {
+                                let vtScore = 0;
+                                
+                                if (qualifiersScores.qualifiers_vt1_d !== undefined) {
+                                    const vt1Total = Math.max(0, (qualifiersScores.qualifiers_vt1_d || 0) + (qualifiersScores.qualifiers_vt1_e || 0) - (qualifiersScores.qualifiers_vt1_p || 0));
+                                    const vt2Total = Math.max(0, (qualifiersScores.qualifiers_vt2_d || 0) + (qualifiersScores.qualifiers_vt2_e || 0) - (qualifiersScores.qualifiers_vt2_p || 0));
+                                    vtScore = (vt1Total + vt2Total) / 2;
+                                } else {
+                                    vtScore = Math.max(0, (qualifiersScores.qualifiers_vt_d || 0) + (qualifiersScores.qualifiers_vt_e || 0) - (qualifiersScores.qualifiers_vt_p || 0));
+                                }
+                                
+                                allGymnasts.push({ ...data, id: doc.id, vtAverage: vtScore });
+                            }
+                        });
+
+                        allGymnasts.sort((a, b) => b.vtAverage - a.vtAverage);
+
+                        // Aplicar regra de máximo 2 por país
+                        const qualifiedGymnasts = [];
+                        const countryCount = {};
+
+                        for (const gymnast of allGymnasts) {
+                            if (qualifiedGymnasts.length >= 8) break;
+                            
+                            if (!countryCount[gymnast.country]) {
+                                countryCount[gymnast.country] = 0;
+                            }
+                            
+                            if (countryCount[gymnast.country] < 2) {
+                                qualifiedGymnasts.push(gymnast);
+                                countryCount[gymnast.country]++;
+                            }
+                        }
+                        
+                        console.log('Ginastas qualificadas para VT Final:', qualifiedGymnasts.length);
+                        
+                        // Agora processar os resultados apenas das qualificadas
+                        const results = [];
+                        
+                        qualifiedGymnasts.forEach((data) => {
+                            console.log('Ginasta qualificada:', data.name, data);
+                            
+                            // Verificar se tem notas da final de VT
+                            const vtFinalScores = data.scores?.vt_final || {};
+                            
+                            // Calcular scores dos dois saltos
+                            const vault1 = (vtFinalScores.vt_final_vt1_d || 0) + (vtFinalScores.vt_final_vt1_e || 0) - (vtFinalScores.vt_final_vt1_p || 0);
+                            const vault2 = (vtFinalScores.vt_final_vt2_d || 0) + (vtFinalScores.vt_final_vt2_e || 0) - (vtFinalScores.vt_final_vt2_p || 0);
+                            
+                            // Média dos dois saltos (nota final)
+                            const average = (vault1 + vault2) / 2;
+                            
+                            results.push({
+                                name: data.name,
+                                country: data.country,
+                                vault1: vault1,
+                                vault2: vault2,
+                                average: average,
+                                vt_d_1: vtFinalScores.vt_final_vt1_d || 0,
+                                vt_e_1: vtFinalScores.vt_final_vt1_e || 0,
+                                vt_p_1: vtFinalScores.vt_final_vt1_p || 0,
+                                vt_d_2: vtFinalScores.vt_final_vt2_d || 0,
+                                vt_e_2: vtFinalScores.vt_final_vt2_e || 0,
+                                vt_p_2: vtFinalScores.vt_final_vt2_p || 0
+                            });
+                        });
+
+                        // Ordenar por média (decrescente)
+                        results.sort((a, b) => b.average - a.average);
+
+                        console.log('Resultados carregados:', results.length);
+                        displayResults(results);
+                        
+                    }, (error) => {
+                        console.error('Erro ao carregar resultados:', error);
+                        document.getElementById('loading').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao carregar dados';
+                    });
+                    
+            } catch (error) {
+                console.error('Erro ao inicializar listeners:', error);
+                document.getElementById('loading').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao carregar dados';
+            }
+        }
+
+        function getCountryCode(country) {
+            const codes = {
+                'Brasil': 'br',
+                'Brazil': 'br',
+                'BRA': 'br',
+                'Estados Unidos': 'us',
+                'United States': 'us',
+                'USA': 'us',
+                'França': 'fr',
+                'France': 'fr',
+                'FRA': 'fr',
+                'Alemanha': 'de',
+                'Germany': 'de',
+                'GER': 'de',
+                'Rússia': 'ru',
+                'Russia': 'ru',
+                'RUS': 'ru',
+                'China': 'cn',
+                'CHN': 'cn',
+                'Japão': 'jp',
+                'Japan': 'jp',
+                'JPN': 'jp',
+                'Canadá': 'ca',
+                'Canada': 'ca',
+                'CAN': 'ca',
+                'Austrália': 'au',
+                'Australia': 'au',
+                'AUS': 'au',
+                'Reino Unido': 'gb',
+                'United Kingdom': 'gb',
+                'GBR': 'gb',
+                'Itália': 'it',
+                'Italy': 'it',
+                'ITA': 'it',
+                'Espanha': 'es',
+                'Spain': 'es',
+                'ESP': 'es',
+                'Holanda': 'nl',
+                'Netherlands': 'nl',
+                'NED': 'nl',
+                'Bélgica': 'be',
+                'Belgium': 'be',
+                'BEL': 'be',
+                'Romênia': 'ro',
+                'Romania': 'ro',
+                'ROU': 'ro',
+                'Ucrânia': 'ua',
+                'Ukraine': 'ua',
+                'UKR': 'ua'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Tornar função global para o botão
+        window.loadResults = loadResults;
+
+        // Carregar resultados será feito pelo initializeWhenReady
+    </script>
+</body>
+</html>

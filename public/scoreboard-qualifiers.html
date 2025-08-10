@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard - Qualificatórias | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Controles */
+        .controls-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .olympic-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        /* Tabela de classificação */
+        .scoreboard-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .scoreboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .scoreboard-table th {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0.8rem;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+
+        .scoreboard-table td {
+            padding: 1rem 0.8rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            font-weight: 500;
+        }
+
+        .scoreboard-table tr:hover {
+            background: rgba(30, 60, 114, 0.05);
+        }
+
+        .rank-cell {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .rank-1 { background: linear-gradient(45deg, #ffd700, #ffed4a); color: #8B4513; }
+        .rank-2 { background: linear-gradient(45deg, #c0c0c0, #e5e5e5); color: #555; }
+        .rank-3 { background: linear-gradient(45deg, #cd7f32, #daa520); color: #fff; }
+
+        .gymnast-name {
+            font-weight: 700;
+            color: #1e3c72;
+            text-align: left;
+        }
+
+        .country-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .score-cell {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .total-score {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1e3c72;
+            background: rgba(30, 60, 114, 0.1);
+        }
+
+        /* Qualifiers específico */
+        .qualification-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .qualified-aa { background: #2ed573; color: white; }
+        .qualified-tf { background: #3742fa; color: white; }
+        .qualified-event { background: #ff6348; color: white; }
+        .not-qualified { background: #747d8c; color: white; }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            color: #2a5298;
+            font-weight: 600;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .controls-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+            
+            .scoreboard-table {
+                font-size: 0.8rem;
+            }
+            
+            .scoreboard-table th,
+            .scoreboard-table td {
+                padding: 0.6rem 0.4rem;
+            }
+        }
+
+        /* Resumo das qualificações */
+        .qualification-summary {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .qualification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0;
+        }
+
+        .qualification-section {
+            padding: 2rem;
+            border-right: 1px solid #eee;
+        }
+
+        .qualification-section:last-child {
+            border-right: none;
+        }
+
+        .qualification-title {
+            color: #1e3c72;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1e3c72;
+        }
+
+        .qualification-list {
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .qualification-list .qualifier-item {
+            padding: 0.3rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .qualification-list .qualifier-item:last-child {
+            border-bottom: none;
+        }
+
+        .qualifier-name {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .qualifier-country {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .qualifier-score {
+            font-weight: 700;
+            color: #2a5298;
+        }
+
+        .apparatus-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .apparatus-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .apparatus-title {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .apparatus-list {
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .apparatus-list .qualifier-item {
+            padding: 0.2rem 0;
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Scoreboard - Qualificatórias
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="edit-scores-qualifiers.html" class="nav-btn">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Scoreboard</h1>
+            <p class="title-phase">Qualificatórias</p>
+        </div>
+
+        <div class="controls-section">
+            <div>
+                <h3 style="color: #1e3c72; margin-bottom: 0.5rem;">Classificação Geral das Qualificatórias</h3>
+                <p style="color: #666;">Resultados consolidados de todos os aparelhos</p>
+            </div>
+            <button id="refresh-scores-btn" class="olympic-button">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            Carregando resultados...
+        </div>
+
+        <div class="scoreboard-container" id="scoreboard-container" style="display: none;">
+            <div class="table-wrapper">
+                <table class="scoreboard-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Nome</th>
+                            <th>País</th>
+                            <th>VT</th>
+                            <th>UB</th>
+                            <th>BB</th>
+                            <th>FX</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scoreboard-tbody">
+                        <!-- Dados serão inseridos pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Seção de qualificados -->
+        <div id="qualification-summary" class="qualification-summary" style="display: none;">
+            <div class="qualification-grid">
+                <div class="qualification-section" id="aa-qualifiers"></div>
+                <div class="qualification-section" id="tf-qualifiers"></div>
+                <div class="qualification-section" id="event-qualifiers"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="olympic-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Jogos Olímpicos Brussels. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/countries.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="js/firebase-init.js"></script>
+    <script>
+        // Firebase v8 global variables available
+
+        let gymnastsData = [];
+        let currentRankings = { aa: [], team: [], vt: [], ub: [], bb: [], fx: [] };
+
+        // Carregar dados iniciais
+        async function loadScoreboard() {
+            const loading = document.getElementById('loading');
+            const container = document.getElementById('scoreboard-container');
+            
+            try {
+                loading.style.display = 'block';
+                container.style.display = 'none';
+                
+                console.log('Carregando dados das ginastas para qualificatórias...');
+                const gymnastsSnapshot = await window.db.collection('new_gymnasts').get();
+                gymnastsData = [];
+                
+                gymnastsSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const qualifiersScores = data.scores?.qualifiers;
+                    
+                    if (qualifiersScores) {
+                        // Calcular scores por aparelho seguindo as regras olímpicas
+                        
+                        // VT: Primeiro salto (para AA e TF) e média dos dois saltos (para classificação VT)
+                        const vt1Total = (qualifiersScores.qualifiers_vt1_d || 0) + (qualifiersScores.qualifiers_vt1_e || 0) - (qualifiersScores.qualifiers_vt1_p || 0);
+                        const vt2Total = (qualifiersScores.qualifiers_vt2_d || 0) + (qualifiersScores.qualifiers_vt2_e || 0) - (qualifiersScores.qualifiers_vt2_p || 0);
+                        
+                        // SEMPRE usar média dos dois saltos para classificação VT (incluindo zeros)
+                        const vtAverage = (vt1Total + vt2Total) / 2;
+                        
+                        // Outros aparelhos: cálculo normal
+                        const ubTotal = (qualifiersScores.qualifiers_ub_d || 0) + (qualifiersScores.qualifiers_ub_e || 0) - (qualifiersScores.qualifiers_ub_p || 0);
+                        const bbTotal = (qualifiersScores.qualifiers_bb_d || 0) + (qualifiersScores.qualifiers_bb_e || 0) - (qualifiersScores.qualifiers_bb_p || 0);
+                        const fxTotal = (qualifiersScores.qualifiers_fx_d || 0) + (qualifiersScores.qualifiers_fx_e || 0) - (qualifiersScores.qualifiers_fx_p || 0);
+                        
+                        // Total AA: soma dos 4 aparelhos (VT usa primeiro salto)
+                        const totalAA = vt1Total + ubTotal + bbTotal + fxTotal;
+                        
+                        // Total TF: para cálculo de equipes (usa menor nota descartada por aparelho)
+                        // Mas aqui só salvamos o individual, o cálculo de equipe é feito separadamente
+                        
+                        gymnastsData.push({
+                            id: doc.id,
+                            name: data.name,
+                            country: data.country,
+                            scores: {
+                                qualifiers: {
+                                    VT: { 
+                                        total: vt1Total,      // Para AA e TF
+                                        average: vtAverage,   // Para classificação final VT
+                                        vault1: vt1Total,
+                                        vault2: vt2Total
+                                    },
+                                    UB: { total: ubTotal },
+                                    BB: { total: bbTotal },
+                                    FX: { total: fxTotal }
+                                }
+                            },
+                            totalAA: totalAA // Total individual geral
+                        });
+                    }
+                });
+
+                console.log('Total de ginastas carregadas:', gymnastsData.length);
+
+                calculateQualifiersRankings();
+                renderScoreboard();
+                renderQualificationSummary();
+                
+                loading.style.display = 'none';
+                container.style.display = 'block';
+                document.getElementById('qualification-summary').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Erro ao carregar scoreboard:', error);
+                loading.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao carregar dados';
+            }
+        }
+
+        // Converter dados das qualificatórias da estrutura nova para a esperada
+        function convertQualifiersData(data) {
+            const qualifiersScores = data.scores?.qualifiers;
+            if (!qualifiersScores) return data;
+            
+            const convertedData = { ...data };
+            convertedData.scores = {
+                qualifiers: {
+                    VT: {
+                        dScore: qualifiersScores.qualifiers_vt_d || 0,
+                        eScore: qualifiersScores.qualifiers_vt_e || 0,
+                        penalty: qualifiersScores.qualifiers_vt_p || 0,
+                        total: (qualifiersScores.qualifiers_vt_d || 0) + (qualifiersScores.qualifiers_vt_e || 0) - (qualifiersScores.qualifiers_vt_p || 0)
+                    },
+                    UB: {
+                        dScore: qualifiersScores.qualifiers_ub_d || 0,
+                        eScore: qualifiersScores.qualifiers_ub_e || 0,
+                        penalty: qualifiersScores.qualifiers_ub_p || 0,
+                        total: (qualifiersScores.qualifiers_ub_d || 0) + (qualifiersScores.qualifiers_ub_e || 0) - (qualifiersScores.qualifiers_ub_p || 0)
+                    },
+                    BB: {
+                        dScore: qualifiersScores.qualifiers_bb_d || 0,
+                        eScore: qualifiersScores.qualifiers_bb_e || 0,
+                        penalty: qualifiersScores.qualifiers_bb_p || 0,
+                        total: (qualifiersScores.qualifiers_bb_d || 0) + (qualifiersScores.qualifiers_bb_e || 0) - (qualifiersScores.qualifiers_bb_p || 0)
+                    },
+                    FX: {
+                        dScore: qualifiersScores.qualifiers_fx_d || 0,
+                        eScore: qualifiersScores.qualifiers_fx_e || 0,
+                        penalty: qualifiersScores.qualifiers_fx_p || 0,
+                        total: (qualifiersScores.qualifiers_fx_d || 0) + (qualifiersScores.qualifiers_fx_e || 0) - (qualifiersScores.qualifiers_fx_p || 0)
+                    }
+                }
+            };
+            
+            return convertedData;
+        }
+
+        // Calcular rankings das qualificatórias seguindo as regras olímpicas
+        function calculateQualifiersRankings() {
+            // 1. Ranking AA (Individual Geral): ordenar por total AA
+            currentRankings.aa = [...gymnastsData]
+                .filter(g => g.totalAA > 0)
+                .sort((a, b) => b.totalAA - a.totalAA);
+
+            // 2. Rankings por aparelho para finais por aparelhos
+            const apparatus = ['VT', 'UB', 'BB', 'FX'];
+            
+            apparatus.forEach(app => {
+                let ranking;
+                
+                if (app === 'VT') {
+                    // Para VT, usar a média dos dois saltos
+                    ranking = [...gymnastsData]
+                        .filter(g => g.scores.qualifiers[app].average > 0)
+                        .sort((a, b) => b.scores.qualifiers[app].average - a.scores.qualifiers[app].average);
+                } else {
+                    // Para outros aparelhos, usar total normal
+                    ranking = [...gymnastsData]
+                        .filter(g => g.scores.qualifiers[app].total > 0)
+                        .sort((a, b) => b.scores.qualifiers[app].total - a.scores.qualifiers[app].total);
+                }
+                
+                currentRankings[app.toLowerCase()] = ranking;
+            });
+
+            // 3. Ranking por equipes (TF): calcular totais por país
+            const teamScores = new Map();
+            
+            gymnastsData.forEach(gymnast => {
+                const country = gymnast.country;
+                if (!teamScores.has(country)) {
+                    teamScores.set(country, {
+                        country: country,
+                        gymnasts: [],
+                        scores: { VT: [], UB: [], BB: [], FX: [] }
+                    });
+                }
+                
+                const team = teamScores.get(country);
+                team.gymnasts.push(gymnast);
+                
+                // Adicionar scores individuais por aparelho
+                team.scores.VT.push(gymnast.scores.qualifiers.VT.total);
+                team.scores.UB.push(gymnast.scores.qualifiers.UB.total);
+                team.scores.BB.push(gymnast.scores.qualifiers.BB.total);
+                team.scores.FX.push(gymnast.scores.qualifiers.FX.total);
+            });
+            
+            // Calcular total da equipe: descartar menor nota por aparelho (3 melhores de 4)
+            currentRankings.team = Array.from(teamScores.values()).map(team => {
+                const teamTotal = ['VT', 'UB', 'BB', 'FX'].reduce((total, app) => {
+                    const scores = team.scores[app].sort((a, b) => b - a); // Ordenar decrescente
+                    const top3 = scores.slice(0, 3); // Pegar 3 melhores
+                    return total + top3.reduce((sum, score) => sum + score, 0);
+                }, 0);
+                
+                return {
+                    ...team,
+                    total: teamTotal
+                };
+            }).sort((a, b) => b.total - a.total);
+
+            // Ordenar gymnastsData por AA para exibição principal
+            gymnastsData.sort((a, b) => b.totalAA - a.totalAA);
+        }
+
+        // Renderizar tabela
+        function renderScoreboard() {
+            const tbody = document.getElementById('scoreboard-tbody');
+            tbody.innerHTML = '';
+            
+            gymnastsData.forEach((gymnast, index) => {
+                const scores = gymnast.scores?.qualifiers || {};
+                const row = document.createElement('tr');
+                
+                // Determinar status de qualificação
+                const status = getQualificationStatus(gymnast, index);
+                
+                row.innerHTML = `
+                    <td class="rank-cell ${getRankClass(index + 1)}">${index + 1}</td>
+                    <td class="gymnast-name">${gymnast.name || 'Nome não encontrado'}</td>
+                    <td class="country-cell">
+                        <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                        ${gymnast.country || 'País não informado'}
+                    </td>
+                    <td class="score-cell">${(scores.VT?.total || 0).toFixed(3)}</td>
+                    <td class="score-cell">${(scores.UB?.total || 0).toFixed(3)}</td>
+                    <td class="score-cell">${(scores.BB?.total || 0).toFixed(3)}</td>
+                    <td class="score-cell">${(scores.FX?.total || 0).toFixed(3)}</td>
+                    <td class="total-score">${gymnast.totalAA.toFixed(3)}</td>
+                    <td><span class="qualification-status ${status.class}">${status.text}</span></td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            console.log('Tabela renderizada com', gymnastsData.length, 'ginastas');
+        }
+
+        // Determinar status de qualificação
+        function getQualificationStatus(gymnast, index) {
+            // Verificar se está qualificada para AA Final (top 8, máx 2 por país)
+            const aaQualifiers = getQualifiers(currentRankings.aa, 8, 2);
+            const isAAQualified = aaQualifiers.some(g => g.id === gymnast.id);
+            
+            if (isAAQualified) {
+                return { class: 'qualified-aa', text: 'AA Final' };
+            }
+            
+            // Verificar se está qualificada para alguma final por aparelho
+            const apparatus = ['vt', 'ub', 'bb', 'fx'];
+            for (const app of apparatus) {
+                const eventQualifiers = getQualifiers(currentRankings[app], 8, 2);
+                if (eventQualifiers.some(g => g.id === gymnast.id)) {
+                    return { class: 'qualified-event', text: 'Final Aparelho' };
+                }
+            }
+            
+            // Todos os países se classificam para TF
+            return { class: 'qualified-tf', text: 'TF' };
+        }
+
+        // Renderizar resumo das qualificações seguindo as regras olímpicas
+        function renderQualificationSummary() {
+            // AA Final (top 8, máx 2 por país)
+            const aaQualifiers = getQualifiers(currentRankings.aa, 8, 2);
+            document.getElementById('aa-qualifiers').innerHTML = `
+                <div class="qualification-title">
+                    <i class="fas fa-trophy" style="color: #ffd700;"></i>
+                    Final Individual Geral
+                </div>
+                <div class="qualification-list">
+                    ${aaQualifiers.map((g, i) => `
+                        <div class="qualifier-item">
+                            <div>
+                                <span class="qualifier-name">${i+1}. ${g.name}</span><br>
+                                <span class="qualifier-country">
+                                    <span class="fi fi-${getCountryCode(g.country)}"></span> ${g.country}
+                                </span>
+                            </div>
+                            <span class="qualifier-score">${g.totalAA.toFixed(3)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // TF (todos os 4 países)
+            document.getElementById('tf-qualifiers').innerHTML = `
+                <div class="qualification-title">
+                    <i class="fas fa-users" style="color: #3742fa;"></i>
+                    Final por Equipes
+                </div>
+                <div class="qualification-list">
+                    ${currentRankings.team.map((team, i) => `
+                        <div class="qualifier-item">
+                            <div>
+                                <span class="qualifier-name">${i+1}. ${team.country}</span><br>
+                                <span class="qualifier-country">${team.gymnasts.length} ginastas</span>
+                            </div>
+                            <span class="qualifier-score">${team.total.toFixed(3)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Finais por aparelho (8 ginastas cada, máx 2 por país)
+            const apparatus = [
+                { code: 'VT', name: 'Salto', icon: 'fas fa-running' },
+                { code: 'UB', name: 'Barras Assimétricas', icon: 'fas fa-grip-horizontal' },
+                { code: 'BB', name: 'Trave', icon: 'fas fa-balance-scale' },
+                { code: 'FX', name: 'Solo', icon: 'fas fa-music' }
+            ];
+            
+            let eventFinalsHtml = `
+                <div class="qualification-title">
+                    <i class="fas fa-medal" style="color: #ff6348;"></i>
+                    Finais por Aparelho
+                </div>
+            `;
+            
+            apparatus.forEach(app => {
+                const qualifiers = getQualifiers(currentRankings[app.code.toLowerCase()], 8, 2);
+                eventFinalsHtml += `
+                    <div class="apparatus-section">
+                        <div class="apparatus-title">
+                            <i class="${app.icon}"></i>
+                            ${app.name} (${app.code})
+                        </div>
+                        <div class="apparatus-list">
+                            ${qualifiers.map((g, i) => {
+                                const score = app.code === 'VT' ? g.scores.qualifiers.VT.average : g.scores.qualifiers[app.code].total;
+                                return `
+                                    <div class="qualifier-item">
+                                        <span class="qualifier-name">${i+1}. ${g.name} (${g.country})</span>
+                                        <span class="qualifier-score">${score.toFixed(3)}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('event-qualifiers').innerHTML = eventFinalsHtml;
+        }
+
+        // Função genérica para obter qualificados (com regra de máximo por país)
+        function getQualifiers(ranking, maxQualifiers, maxPerCountry) {
+            const qualifiers = [];
+            const countryCount = {};
+            
+            for (const gymnast of ranking) {
+                if (qualifiers.length >= maxQualifiers) break;
+                
+                const country = gymnast.country;
+                if (!countryCount[country]) {
+                    countryCount[country] = 0;
+                }
+                
+                if (countryCount[country] < maxPerCountry) {
+                    qualifiers.push(gymnast);
+                    countryCount[country]++;
+                }
+            }
+            
+            return qualifiers;
+        }
+        // Funções auxiliares
+        function getRankClass(rank) {
+            if (rank === 1) return 'rank-1';
+            if (rank === 2) return 'rank-2';
+            if (rank === 3) return 'rank-3';
+            return '';
+        }
+
+        function getCountryCode(country) {
+            const codes = {
+                'Brasil': 'br',
+                'Brazil': 'br',
+                'BRA': 'br',
+                'Estados Unidos': 'us',
+                'United States': 'us',
+                'USA': 'us',
+                'França': 'fr',
+                'France': 'fr',
+                'FRA': 'fr',
+                'Alemanha': 'de',
+                'Germany': 'de',
+                'GER': 'de',
+                'Itália': 'it',
+                'Italy': 'it',
+                'ITA': 'it',
+                'Reino Unido': 'gb',
+                'United Kingdom': 'gb',
+                'GBR': 'gb',
+                'Japão': 'jp',
+                'Japan': 'jp',
+                'JPN': 'jp',
+                'China': 'cn',
+                'CHN': 'cn',
+                'Rússia': 'ru',
+                'Russia': 'ru',
+                'RUS': 'ru',
+                'Canadá': 'ca',
+                'Canada': 'ca',
+                'CAN': 'ca',
+                'Austrália': 'au',
+                'Australia': 'au',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Event listeners
+        document.getElementById('refresh-scores-btn').addEventListener('click', loadScoreboard);
+
+        // Aguardar Firebase estar pronto
+        function initializeWhenReady() {
+            if (window.db && window.auth) {
+                console.log('Firebase pronto, carregando scoreboard...');
+                
+                // Carregar dados iniciais
+                loadScoreboard();
+
+                // Listen for real-time updates
+                window.db.collection('new_gymnasts').onSnapshot((snapshot) => {
+                    // Recarregar quando houver mudanças
+                    setTimeout(loadScoreboard, 1000);
+                });
+            } else {
+                console.log('Aguardando Firebase estar pronto...');
+                setTimeout(initializeWhenReady, 100);
+            }
+        }
+
+        // Inicializar quando DOM e Firebase estiverem prontos
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWhenReady);
+        } else {
+            initializeWhenReady();
+        }
+    </script>
+</body>
+</html>

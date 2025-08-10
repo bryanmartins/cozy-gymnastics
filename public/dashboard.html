@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 12px;
+            height: 12px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-role {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-icon.edit { background: linear-gradient(45deg, #ff6b6b, #ff5252); }
+        .card-icon.scoreboard { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+        .card-icon.startlist { background: linear-gradient(45deg, #feca57, #ff9ff3); }
+        .card-icon.control { background: linear-gradient(45deg, #5f27cd, #341f97); }
+        .card-icon.display { background: linear-gradient(45deg, #00d2d3, #54a0ff); }
+        .card-icon.judges { background: linear-gradient(45deg, #fd79a8, #fdcb6e); }
+        .card-icon.gymnasts { background: linear-gradient(45deg, #a8e6cf, #7fcdcd); }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .card-button {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+        }
+
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .phases-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .phase-btn {
+            padding: 0.6rem;
+            background: rgba(30, 60, 114, 0.05);
+            border: 1px solid rgba(30, 60, 114, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #1e3c72;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .phase-btn:hover {
+            background: rgba(30, 60, 114, 0.1);
+            border-color: #1e3c72;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Dashboard Olímpico
+            </div>
+            <div class="user-info">
+                <span id="user-role" class="user-role"></span>
+                <button id="logout-btn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="welcome-section">
+            <h1 class="welcome-title">Bem-vindo(a) ao Sistema</h1>
+            <p class="welcome-subtitle">Jogos Olímpicos Brussels 2025 - Ginástica Artística Feminina</p>
+        </section>
+
+        <div class="dashboard-grid">
+            <!-- Card de Edição de Notas -->
+            <div class="dashboard-card" id="edit-scores-card">
+                <div class="card-header">
+                    <div class="card-icon edit">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="card-title">Edição de Notas</h3>
+                </div>
+                <p class="card-description">
+                    Edite e gerencie as pontuações das ginastas em todas as fases da competição.
+                </p>
+                <div class="card-buttons">
+                    <div class="phases-list">
+                        <a href="edit-scores-qualifiers.html" class="phase-btn">Qualificatórias</a>
+                        <a href="edit-scores-team-final.html" class="phase-btn">Final Equipes</a>
+                        <a href="edit-scores-aa-final.html" class="phase-btn">Final AA</a>
+                        <a href="edit-scores-vt-final.html" class="phase-btn">Final VT</a>
+                        <a href="edit-scores-ub-final.html" class="phase-btn">Final UB</a>
+                        <a href="edit-scores-bb-final.html" class="phase-btn">Final BB</a>
+                        <a href="edit-scores-fx-final.html" class="phase-btn">Final FX</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Scoreboard -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon scoreboard">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="card-title">Placar Eletrônico</h3>
+                </div>
+                <p class="card-description">
+                    Visualize os resultados e classificações em tempo real de cada fase.
+                </p>
+                <div class="card-buttons">
+                    <div class="phases-list">
+                        <a href="scoreboard-qualifiers.html" class="phase-btn">Qualificatórias</a>
+                        <a href="scoreboard-team-final.html" class="phase-btn">Final Equipes</a>
+                        <a href="scoreboard-aa-final.html" class="phase-btn">Final AA</a>
+                        <a href="scoreboard-vt-final.html" class="phase-btn">Final VT</a>
+                        <a href="scoreboard-ub-final.html" class="phase-btn">Final UB</a>
+                        <a href="scoreboard-bb-final.html" class="phase-btn">Final BB</a>
+                        <a href="scoreboard-fx-final.html" class="phase-btn">Final FX</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Start List -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon startlist">
+                        <i class="fas fa-list-ol"></i>
+                    </div>
+                    <h3 class="card-title">Lista de Largada</h3>
+                </div>
+                <p class="card-description">
+                    Gerencie as ordens de apresentação e rotações das competidoras.
+                </p>
+                <div class="card-buttons">
+                    <div class="phases-list">
+                        <a href="start-list-qualifiers.html" class="phase-btn">Qualificatórias</a>
+                        <a href="start-list-team-final.html" class="phase-btn">Final Equipes</a>
+                        <a href="start-list-aa-final.html" class="phase-btn">Final AA</a>
+                        <a href="start-list-vt-final.html" class="phase-btn">Final VT</a>
+                        <a href="start-list-ub-final.html" class="phase-btn">Final UB</a>
+                        <a href="start-list-bb-final.html" class="phase-btn">Final BB</a>
+                        <a href="start-list-fx-final.html" class="phase-btn">Final FX</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Controle -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon control">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="card-title">Controle Geral</h3>
+                </div>
+                <p class="card-description">
+                    Controle as telas de exibição, timers e recursos durante a competição.
+                </p>
+                <div class="card-buttons">
+                    <a href="control.html" class="card-button btn-primary">
+                        <i class="fas fa-play"></i> Acessar Controle
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card de Display -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon display">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3 class="card-title">Tela de Exibição</h3>
+                </div>
+                <p class="card-description">
+                    Tela principal para exibição ao público e transmissão.
+                </p>
+                <div class="card-buttons">
+                    <a href="display.html" class="card-button btn-primary">
+                        <i class="fas fa-external-link-alt"></i> Abrir Display
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card de Jurados (apenas para admin) -->
+            <div class="dashboard-card" id="judges-card" style="display: none;">
+                <div class="card-header">
+                    <div class="card-icon judges">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3 class="card-title">Sistema de Jurados</h3>
+                </div>
+                <p class="card-description">
+                    Acesso direto às interfaces de julgamento para Jurados D e E.
+                </p>
+                <div class="card-buttons">
+                    <a href="judges-d.html" class="card-button btn-primary">
+                        <i class="fas fa-calculator"></i> Jurado D
+                    </a>
+                    <a href="judges-e.html" class="card-button btn-secondary">
+                        <i class="fas fa-star"></i> Jurado E
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card Gestão de Ginastas -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon gymnasts">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="card-title">Gestão de Ginastas</h3>
+                </div>
+                <p class="card-description">
+                    Visualize e gerencie informações completas de todas as ginastas cadastradas no sistema.
+                </p>
+                <div class="card-buttons">
+                    <a href="gymnasts.html" class="card-button btn-primary">
+                        <i class="fas fa-list"></i> Lista de Ginastas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-init.js"></script>
+    
+    <!-- Auth Guard deve vir DEPOIS do Firebase -->
+    
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        const auth = window.auth;
+        const db = window.db;
+
+        // Função principal da dashboard
+        function initDashboard() {
+            const userRoleElement = document.getElementById('user-role');
+            const logoutBtn = document.getElementById('logout-btn');
+            const editScoresCard = document.getElementById('edit-scores-card');
+            const judgesCard = document.getElementById('judges-card');
+
+            // Verificar autenticação pelo sistema Firebase
+            const currentUser = getCurrentUser();
+            
+            console.log('🔍 Dashboard - Verificando usuário:', currentUser);
+
+            // Se não estiver logado, auth-guard já redirecionará
+            if (!currentUser.email) {
+                console.log('❌ Usuário não logado, auth-guard deve redirecionar');
+                return;
+            }
+
+            // Verificar se é admin
+            if (!currentUser.isAdmin) {
+                console.log('❌ Usuário não é admin:', currentUser.role);
+                alert('Acesso negado. Apenas administradores podem acessar o dashboard.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            console.log('✅ Admin confirmado, configurando dashboard');
+
+            // Configurar interface para admin
+            if (userRoleElement) {
+                userRoleElement.textContent = currentUser.email || 'Administrador';
+            }
+            
+            if (judgesCard) {
+                judgesCard.style.display = 'block';
+            }
+
+            // Configurar logout
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    console.log('🚪 Fazendo logout...');
+                    await logout();
+                });
+            }
+
+            console.log('✅ Dashboard inicializado com sucesso');
+        }
+
+        // Aguardar o DOM estar pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDashboard);
+        } else {
+            initDashboard();
+        }
+    </script>
+</body>
+</html>

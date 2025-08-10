@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Pontuações - Final por Equipes | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Seção de sorteio */
+        .draw-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .draw-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .draw-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .apparatus-draw {
+            background: rgba(30, 60, 114, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .apparatus-draw h4 {
+            color: #1e3c72;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .country-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .country-item {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .draw-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* Formulários das ginastas */
+        .team-sections {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .team-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1e3c72;
+        }
+
+        .rotations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .rotation-section {
+            background: rgba(30, 60, 114, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .rotation-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gymnast-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+        }
+
+        .gymnast-name {
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .score-input {
+            width: 80px;
+            max-width: 80px;
+            padding: 0.5rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .score-input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        /* Botões olímpicos */
+        .olympic-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+        }
+
+        .olympic-button.secondary-button {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+        }
+
+        .olympic-button.danger-button {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .save-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Loading e feedback */
+        .loading {
+            display: none;
+            text-align: center;
+            color: #2a5298;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #2ed573, #5f27cd);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .error-message {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .draw-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .rotations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Modal de Presença */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .presence-team-section {
+            background: rgba(30, 60, 114, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .presence-team-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .presence-team-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .presence-gymnasts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .presence-gymnast-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .presence-gymnast-item:hover {
+            border-color: #2a5298;
+            box-shadow: 0 2px 8px rgba(42, 82, 152, 0.1);
+        }
+
+        .presence-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .presence-gymnast-info {
+            flex: 1;
+        }
+
+        .presence-gymnast-name {
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 0.2rem;
+        }
+
+        .presence-gymnast-bib {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Edição de Pontuações
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <button id="logout-btn" class="nav-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Editar Pontuações</h1>
+            <p class="title-phase">Final por Equipes</p>
+        </div>
+
+        <div id="success-message" class="success-message"></div>
+        <div id="error-message" class="error-message"></div>
+
+        <!-- Seção de Sorteio -->
+        <div class="draw-section">
+            <h3 class="draw-title">Sorteio da Final por Equipes</h3>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                Cada equipe deve ter 3 ginastas sorteadas por aparelho em cada rotação
+            </p>
+            
+            <div id="loading-draw" class="loading">
+                <i class="fas fa-spinner"></i>
+                Carregando sorteio...
+            </div>
+
+            <div id="draw-display" class="draw-grid" style="display: none;">
+                <!-- O sorteio será mostrado aqui -->
+            </div>
+
+            <div class="draw-controls">
+                <button id="set-presence-btn" class="olympic-button">
+                    <i class="fas fa-users"></i> Definir Presença
+                </button>
+                <button id="new-draw-btn" class="olympic-button secondary-button">
+                    <i class="fas fa-dice"></i> Novo Sorteio
+                </button>
+                <button id="save-draw-btn" class="olympic-button" disabled style="opacity: 0.6;">
+                    <i class="fas fa-save"></i> Salvar Sorteio
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal de Presença -->
+        <div id="presence-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-users"></i> Definir Presença das Ginastas</h3>
+                    <button type="button" class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p style="color: #666; margin-bottom: 1.5rem; text-align: center;">
+                        Marque as ginastas que estão presentes para a Final por Equipes
+                    </p>
+                    <div id="presence-teams-container">
+                        <!-- Ginastas por equipe serão inseridas aqui -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="save-presence-btn" class="olympic-button">
+                        <i class="fas fa-save"></i> Salvar Presença
+                    </button>
+                    <button type="button" class="olympic-button secondary-button close-modal">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            Carregando dados...
+        </div>
+
+        <form id="team-final-score-form" style="display: none;">
+            <div id="teams-container" class="team-sections">
+                <!-- Os formulários das equipes serão inseridos aqui pelo JavaScript -->
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="generate-random-btn" class="olympic-button secondary-button">
+                    <i class="fas fa-dice"></i> Gerar Notas Aleatórias
+                </button>
+                <button type="button" id="clear-scores-btn" class="olympic-button danger-button">
+                    <i class="fas fa-trash"></i> Limpar Notas
+                </button>
+            </div>
+
+            <div class="save-section">
+                <button type="submit" id="save-scores-btn" class="olympic-button">
+                    <i class="fas fa-save"></i> Salvar Pontuações
+                </button>
+                <div id="save-loading" class="loading">
+                    <i class="fas fa-spinner"></i>
+                    Salvando pontuações...
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <footer class="olympic-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Jogos Olímpicos Brussels. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script src="js/countries.js"></script>
+    <script src="js/firebase-init.js"></script>
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        const auth = window.auth;
+        const db = window.db;
+
+        const apparatus = ['VT', 'UB', 'BB', 'FX'];
+        const apparatusNames = {
+            'VT': 'Salto',
+            'UB': 'Barras Assimétricas',
+            'BB': 'Trave de Equilíbrio',
+            'FX': 'Solo'
+        };
+
+        let gymnastsData = [];
+        let teamFinalDraw = {};
+
+        // Funções do Modal de Presença
+        function openPresenceModal() {
+            console.log('🎯 [DEBUG] Abrindo modal de presença...');
+            
+            if (gymnastsData.length === 0) {
+                showError('Erro: Carregue os dados das ginastas primeiro.');
+                return;
+            }
+
+            renderPresenceModal();
+            document.getElementById('presence-modal').style.display = 'flex';
+        }
+
+        function closePresenceModal() {
+            document.getElementById('presence-modal').style.display = 'none';
+        }
+
+        function renderPresenceModal() {
+            const container = document.getElementById('presence-teams-container');
+            const countries = [...new Set(gymnastsData.map(g => g.country))].sort();
+            
+            container.innerHTML = '';
+            
+            countries.forEach(country => {
+                const countryGymnasts = gymnastsData.filter(g => g.country === country);
+                
+                const teamSection = document.createElement('div');
+                teamSection.className = 'presence-team-section';
+                
+                teamSection.innerHTML = `
+                    <div class="presence-team-header">
+                        <span class="flag-icon fi fi-${getCountryCode(country).toLowerCase()}"></span>
+                        <span class="presence-team-name">${country}</span>
+                    </div>
+                    <div class="presence-gymnasts-grid">
+                        ${countryGymnasts.map(gymnast => `
+                            <div class="presence-gymnast-item">
+                                <input 
+                                    type="checkbox" 
+                                    id="presence-${gymnast.id}" 
+                                    class="presence-checkbox"
+                                    data-gymnast-id="${gymnast.id}"
+                                    ${gymnast.team_final_present === true ? 'checked' : ''}
+                                >
+                                <div class="presence-gymnast-info">
+                                    <div class="presence-gymnast-name">${gymnast.name}</div>
+                                    <div class="presence-gymnast-bib">Dorsal: ${gymnast.bib || 'N/A'}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(teamSection);
+            });
+        }
+
+        async function savePresence() {
+            const checkboxes = document.querySelectorAll('.presence-checkbox');
+            const updates = [];
+            
+            for (const checkbox of checkboxes) {
+                const gymnastId = checkbox.getAttribute('data-gymnast-id');
+                const isPresent = checkbox.checked;
+                
+                // Atualizar dados locais
+                const gymnast = gymnastsData.find(g => g.id === gymnastId);
+                if (gymnast) {
+                    gymnast.team_final_present = isPresent;
+                }
+                
+                // Preparar atualização no Firebase
+                updates.push(
+                    db.collection('new_gymnasts').doc(gymnastId).update({
+                        team_final_present: isPresent
+                    })
+                );
+            }
+
+            try {
+                console.log('🎯 [DEBUG] Salvando presença das ginastas...');
+                await Promise.all(updates);
+                
+                showSuccess('Presença das ginastas salva com sucesso!');
+                closePresenceModal();
+                
+                // Atualizar contadores de presença
+                updatePresenceCounters();
+                
+            } catch (error) {
+                console.error('❌ [ERRO] Erro ao salvar presença:', error);
+                showError('Erro ao salvar presença das ginastas: ' + error.message);
+            }
+        }
+
+        function updatePresenceCounters() {
+            const countries = [...new Set(gymnastsData.map(g => g.country))].sort();
+            
+            countries.forEach(country => {
+                const presentCount = gymnastsData
+                    .filter(g => g.country === country && g.team_final_present === true)
+                    .length;
+                
+                console.log(`🎯 [INFO] ${country}: ${presentCount} ginastas presentes`);
+            });
+        }
+
+        // Verificar autenticação
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const userRole = localStorage.getItem('userRole');
+            if (userRole !== 'admin') {
+                alert('Acesso negado. Apenas administradores podem editar pontuações.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            loadData();
+        });
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await auth.signOut();
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('userEmail');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+            }
+        });
+
+        // Carregar dados com sincronização em tempo real
+        function loadData() {
+            console.log('🎯 [DEBUG] Iniciando carregamento de dados...');
+            
+            const loading = document.getElementById('loading');
+            const form = document.getElementById('team-final-score-form');
+            
+            try {
+                loading.style.display = 'block';
+                
+                // Usar onSnapshot para sincronização em tempo real
+                const unsubscribe = db.collection('new_gymnasts').onSnapshot(async (snapshot) => {
+                    gymnastsData = [];
+                    
+                    snapshot.forEach((doc) => {
+                        gymnastsData.push({ id: doc.id, ...doc.data() });
+                    });
+
+                    console.log('🎯 [DEBUG] Dados das ginastas carregados:', gymnastsData.length);
+
+                    await loadDraw();
+                    renderTeamForms();
+                    
+                    loading.style.display = 'none';
+                    form.style.display = 'block';
+                    
+                }, (error) => {
+                    console.error('🎯 [DEBUG] Erro ao carregar dados das ginastas:', error);
+                    showError('Erro ao carregar dados das ginastas.');
+                    loading.style.display = 'none';
+                });
+                
+                // Salvar a função unsubscribe para cleanup
+                window.gymnastsUnsubscribe = unsubscribe;
+                
+                // Adicionar listener para mudanças no sorteio salvo
+                const drawUnsubscribe = db.collection('start_lists').doc('team_final').onSnapshot((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const savedStructure = data.structure || data;
+                        
+                        // Só atualizar se a estrutura mudou (evitar loops)
+                        if (JSON.stringify(savedStructure) !== JSON.stringify(teamFinalDraw)) {
+                            console.log('🎯 [DEBUG] Sorteio atualizado via listener');
+                            teamFinalDraw = savedStructure;
+                            renderDraw();
+                            renderTeamForms();
+                            
+                            // Habilitar botão de salvar
+                            const saveBtn = document.getElementById('save-draw-btn');
+                            if (saveBtn && teamFinalDraw && (teamFinalDraw.rotation1 || teamFinalDraw.rotations)) {
+                                saveBtn.disabled = false;
+                                saveBtn.style.opacity = '1';
+                            }
+                        }
+                    }
+                }, (error) => {
+                    console.error('🎯 [DEBUG] Erro ao ouvir mudanças no sorteio:', error);
+                });
+                
+                // Salvar função para cleanup
+                window.drawUnsubscribe = drawUnsubscribe;
+                
+            } catch (error) {
+                console.error('🎯 [DEBUG] Erro ao carregar dados:', error);
+                showError('Erro ao carregar dados das ginastas.');
+                loading.style.display = 'none';
+            }
+        }
+
+        // Carregar ou gerar sorteio
+        async function loadDraw() {
+            console.log('🎯 [DEBUG] Carregando sorteio...');
+            
+            const loadingDraw = document.getElementById('loading-draw');
+            const drawDisplay = document.getElementById('draw-display');
+            const saveBtn = document.getElementById('save-draw-btn');
+            
+            try {
+                loadingDraw.style.display = 'block';
+                
+                console.log('🎯 [DEBUG] Buscando documento team_final no Firebase...');
+                const drawDoc = await db.collection('start_lists').doc('team_final').get();
+                
+                if (drawDoc.exists) {
+                    console.log('🎯 [DEBUG] Documento encontrado!');
+                    const data = drawDoc.data();
+                    console.log('🎯 [DEBUG] Dados carregados:', data);
+                    
+                    teamFinalDraw = data.structure || data; // Support both formats
+                    console.log('🎯 [DEBUG] teamFinalDraw carregado:', teamFinalDraw);
+                    
+                    // Habilitar botão de salvar se o sorteio é válido
+                    if (teamFinalDraw && (teamFinalDraw.rotation1 || teamFinalDraw.rotations)) {
+                        saveBtn.disabled = false;
+                        saveBtn.style.opacity = '1';
+                    }
+                } else {
+                    console.log('🎯 [DEBUG] Documento não encontrado, gerando novo sorteio...');
+                    generateNewDraw();
+                    
+                    // Habilitar botão de salvar após gerar novo sorteio
+                    if (teamFinalDraw && (teamFinalDraw.rotation1 || teamFinalDraw.rotations)) {
+                        saveBtn.disabled = false;
+                        saveBtn.style.opacity = '1';
+                    }
+                }
+                
+                renderDraw();
+                loadingDraw.style.display = 'none';
+                drawDisplay.style.display = 'grid';
+                
+            } catch (error) {
+                console.error('🎯 [DEBUG] Erro ao carregar sorteio:', error);
+                console.error('🎯 [DEBUG] Stack trace:', error.stack);
+                generateNewDraw();
+                renderDraw();
+                loadingDraw.style.display = 'none';
+                drawDisplay.style.display = 'grid';
+                
+                // Habilitar botão de salvar após gerar novo sorteio
+                if (teamFinalDraw && (teamFinalDraw.rotation1 || teamFinalDraw.rotations)) {
+                    saveBtn.disabled = false;
+                    saveBtn.style.opacity = '1';
+                }
+            }
+        }
+
+        // Gerar novo sorteio
+        function generateNewDraw() {
+            console.log('🎯 [DEBUG] Iniciando geração de novo sorteio...');
+            
+            const countries = [...new Set(gymnastsData.map(g => g.country))].sort(); // Ordenar países para consistência
+            console.log('🎯 [DEBUG] Países encontrados:', countries);
+            console.log('🎯 [DEBUG] Total de ginastas:', gymnastsData.length);
+            
+            if (countries.length === 0) {
+                console.error('🎯 [DEBUG] Nenhum país encontrado!');
+                showError('Erro: Nenhum país encontrado nos dados das ginastas.');
+                return;
+            }
+            
+            // Estrutura compatível com o display
+            teamFinalDraw = {
+                type: 'team_final',
+                rotations: [],
+                generatedAt: new Date().toISOString() // Adicionar timestamp para rastreamento
+            };
+            
+            // Para cada rotação (4 rotações)
+            for (let rotation = 1; rotation <= 4; rotation++) {
+                const rotationData = {
+                    number: rotation,
+                    apparatus: {}
+                };
+                
+                // Para cada aparelho nesta rotação
+                apparatus.forEach((app, appIndex) => {
+                    const rotationApp = apparatus[(appIndex + rotation - 1) % 4];
+                    rotationData.apparatus[rotationApp] = [];
+                    
+                    // Para cada país, sortear 3 ginastas (usando seed baseado no país + rotação para consistência)
+                    countries.forEach(country => {
+                        const countryGymnasts = gymnastsData.filter(g => g.country === country);
+                        
+                        // Criar seed determinístico baseado no país e rotação
+                        const seed = country + rotationApp + rotation;
+                        const shuffled = [...countryGymnasts].sort((a, b) => {
+                            const hashA = (seed + a.id).split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+                            const hashB = (seed + b.id).split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+                            return hashA - hashB;
+                        });
+                        
+                        const selected = shuffled.slice(0, 3);
+                        
+                        selected.forEach(gymnast => {
+                            rotationData.apparatus[rotationApp].push({
+                                id: gymnast.id,
+                                name: gymnast.name,
+                                country: gymnast.country,
+                                bib: gymnast.bib || ''
+                            });
+                        });
+                    });
+                });
+                
+                teamFinalDraw.rotations.push(rotationData);
+            }
+            
+            // Manter compatibilidade com código atual
+            for (let rotation = 1; rotation <= 4; rotation++) {
+                teamFinalDraw[`rotation${rotation}`] = {};
+                
+                apparatus.forEach((app, appIndex) => {
+                    const rotationApp = apparatus[(appIndex + rotation - 1) % 4];
+                    teamFinalDraw[`rotation${rotation}`][rotationApp] = {};
+                    
+                    countries.forEach(country => {
+                        const countryGymnasts = gymnastsData.filter(g => g.country === country);
+                        
+                        // Usar mesmo algoritmo determinístico
+                        const seed = country + rotationApp + rotation;
+                        const shuffled = [...countryGymnasts].sort((a, b) => {
+                            const hashA = (seed + a.id).split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+                            const hashB = (seed + b.id).split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+                            return hashA - hashB;
+                        });
+                        
+                        const selected = shuffled.slice(0, 3);
+                        teamFinalDraw[`rotation${rotation}`][rotationApp][country] = selected.map(g => g.id);
+                    });
+                });
+            }
+            
+            console.log('🎯 [DEBUG] Sorteio gerado:', teamFinalDraw);
+            console.log('🎯 [DEBUG] Rotações geradas:', teamFinalDraw.rotations?.length || 0);
+        }
+
+        // Gerar sorteio verdadeiramente aleatório com lógica de presença
+        function generateRandomDraw() {
+            console.log('🎯 [DEBUG] Gerando sorteio aleatório com sistema de presença...');
+            
+            const countries = [...new Set(gymnastsData.map(g => g.country))].sort();
+            
+            if (countries.length === 0) {
+                showError('Erro: Nenhum país encontrado nos dados das ginastas.');
+                return;
+            }
+
+            // Verificar se pelo menos um país tem ginastas presentes
+            let totalPresent = 0;
+            countries.forEach(country => {
+                const presentCount = gymnastsData.filter(g => g.country === country && g.team_final_present === true).length;
+                totalPresent += presentCount;
+                console.log(`🎯 [INFO] ${country}: ${presentCount} ginastas presentes`);
+            });
+
+            if (totalPresent === 0) {
+                showError('Erro: Nenhuma ginasta foi marcada como presente. Por favor, defina a presença primeiro.');
+                return;
+            }
+            
+            teamFinalDraw = {
+                type: 'team_final',
+                rotations: [],
+                duplications: {}, // Nova estrutura para controlar duplicações
+                generatedAt: new Date().toISOString(),
+                isRandom: true
+            };
+            
+            // Para cada rotação (4 rotações)
+            for (let rotation = 1; rotation <= 4; rotation++) {
+                const rotationData = {
+                    number: rotation,
+                    apparatus: {}
+                };
+
+                // Inicializar duplicações para esta rotação
+                teamFinalDraw.duplications[`rotation${rotation}`] = {};
+                
+                apparatus.forEach((app, appIndex) => {
+                    const rotationApp = apparatus[(appIndex + rotation - 1) % 4];
+                    rotationData.apparatus[rotationApp] = [];
+                    teamFinalDraw.duplications[`rotation${rotation}`][rotationApp] = {};
+                    
+                    countries.forEach(country => {
+                        const presentGymnasts = gymnastsData.filter(g => 
+                            g.country === country && g.team_final_present === true
+                        );
+                        
+                        const gymnastSlots = [];
+                        
+                        if (presentGymnasts.length >= 3) {
+                            // 3 ou mais presentes: sortear 3 aleatoriamente
+                            const shuffled = [...presentGymnasts].sort(() => Math.random() - 0.5);
+                            const selected = shuffled.slice(0, 3);
+                            selected.forEach(gymnast => {
+                                gymnastSlots.push({
+                                    gymnastId: gymnast.id,
+                                    multiplier: 1
+                                });
+                            });
+                        } else if (presentGymnasts.length === 2) {
+                            // 2 presentes: usar as 2 + duplicar 1 aleatoriamente
+                            const randomIndex = Math.floor(Math.random() * 2);
+                            presentGymnasts.forEach((gymnast, index) => {
+                                gymnastSlots.push({
+                                    gymnastId: gymnast.id,
+                                    multiplier: 1
+                                });
+                            });
+                            // Duplicar uma das ginastas aleatoriamente
+                            gymnastSlots.push({
+                                gymnastId: presentGymnasts[randomIndex].id,
+                                multiplier: 2
+                            });
+                        } else if (presentGymnasts.length === 1) {
+                            // 1 presente: triplicar a nota
+                            const gymnast = presentGymnasts[0];
+                            gymnastSlots.push({
+                                gymnastId: gymnast.id,
+                                multiplier: 1
+                            });
+                            gymnastSlots.push({
+                                gymnastId: gymnast.id,
+                                multiplier: 2
+                            });
+                            gymnastSlots.push({
+                                gymnastId: gymnast.id,
+                                multiplier: 3
+                            });
+                        } else {
+                            // 0 presentes: zeros automáticos (3 slots vazios)
+                            for (let i = 0; i < 3; i++) {
+                                gymnastSlots.push({
+                                    gymnastId: null,
+                                    multiplier: 1
+                                });
+                            }
+                        }
+
+                        // Salvar na estrutura de duplicações
+                        teamFinalDraw.duplications[`rotation${rotation}`][rotationApp][country] = gymnastSlots;
+                        
+                        // Adicionar ginastas ao rotationData para display
+                        gymnastSlots.forEach(slot => {
+                            if (slot.gymnastId) {
+                                const gymnast = gymnastsData.find(g => g.id === slot.gymnastId);
+                                if (gymnast) {
+                                    rotationData.apparatus[rotationApp].push({
+                                        id: gymnast.id,
+                                        name: gymnast.name,
+                                        country: gymnast.country,
+                                        bib: gymnast.bib || '',
+                                        multiplier: slot.multiplier
+                                    });
+                                }
+                            } else {
+                                // Slot vazio (zero)
+                                rotationData.apparatus[rotationApp].push({
+                                    id: null,
+                                    name: 'AUSENTE',
+                                    country: country,
+                                    bib: '',
+                                    multiplier: 1
+                                });
+                            }
+                        });
+                    });
+                });
+                
+                teamFinalDraw.rotations.push(rotationData);
+            }
+            
+            // Manter compatibilidade com código atual (formato antigo)
+            for (let rotation = 1; rotation <= 4; rotation++) {
+                teamFinalDraw[`rotation${rotation}`] = {};
+                
+                apparatus.forEach((app, appIndex) => {
+                    const rotationApp = apparatus[(appIndex + rotation - 1) % 4];
+                    teamFinalDraw[`rotation${rotation}`][rotationApp] = {};
+                    
+                    countries.forEach(country => {
+                        const slots = teamFinalDraw.duplications[`rotation${rotation}`][rotationApp][country];
+                        const gymnastIds = slots.map(slot => slot.gymnastId).filter(id => id !== null);
+                        
+                        // Para compatibilidade, usar apenas IDs únicos
+                        const uniqueIds = [...new Set(gymnastIds)];
+                        teamFinalDraw[`rotation${rotation}`][rotationApp][country] = uniqueIds;
+                    });
+                });
+            }
+            
+            console.log('🎯 [DEBUG] Sorteio com presença gerado:', teamFinalDraw);
+            console.log('🎯 [DEBUG] Duplicações:', teamFinalDraw.duplications);
+        }
+
+        // Validar estrutura do sorteio
+        function validateTeamFinalDraw() {
+            console.log('🎯 [DEBUG] Validando estrutura do sorteio...');
+            
+            if (!teamFinalDraw) {
+                console.error('🎯 [DEBUG] teamFinalDraw é null/undefined');
+                return false;
+            }
+            
+            if (Object.keys(teamFinalDraw).length === 0) {
+                console.error('🎯 [DEBUG] teamFinalDraw está vazio');
+                return false;
+            }
+            
+            // Verificar se tem rotações no formato antigo
+            const hasOldFormat = teamFinalDraw.rotation1 && 
+                                 teamFinalDraw.rotation2 && 
+                                 teamFinalDraw.rotation3 && 
+                                 teamFinalDraw.rotation4;
+            
+            // Verificar se tem rotações no formato novo
+            const hasNewFormat = teamFinalDraw.rotations && 
+                                 Array.isArray(teamFinalDraw.rotations) && 
+                                 teamFinalDraw.rotations.length === 4;
+            
+            if (!hasOldFormat && !hasNewFormat) {
+                console.error('🎯 [DEBUG] Estrutura de rotações inválida');
+                console.error('🎯 [DEBUG] Formato antigo válido:', hasOldFormat);
+                console.error('🎯 [DEBUG] Formato novo válido:', hasNewFormat);
+                return false;
+            }
+            
+            console.log('🎯 [DEBUG] Estrutura do sorteio é válida');
+            return true;
+        }
+
+        // Renderizar sorteio
+        function renderDraw() {
+            const container = document.getElementById('draw-display');
+            container.innerHTML = '';
+            
+            // Se não tiver rotação 1, não há sorteio
+            if (!teamFinalDraw.rotation1 && !teamFinalDraw.rotations?.[0]) {
+                container.innerHTML = '<p>Nenhum sorteio disponível</p>';
+                return;
+            }
+            
+            // Mostrar uma visão geral do sorteio (Rotação 1 como exemplo)
+            apparatus.forEach(app => {
+                const appDiv = document.createElement('div');
+                appDiv.className = 'apparatus-draw';
+                
+                let countries = [];
+                
+                // Tentar buscar de ambos os formatos
+                if (teamFinalDraw.rotation1?.[app]) {
+                    countries = Object.keys(teamFinalDraw.rotation1[app]);
+                } else if (teamFinalDraw.rotations?.[0]?.apparatus?.[app]) {
+                    const gymnasts = teamFinalDraw.rotations[0].apparatus[app];
+                    countries = [...new Set(gymnasts.map(g => g.country))];
+                }
+                
+                appDiv.innerHTML = `
+                    <h4>${apparatusNames[app]}</h4>
+                    <div class="country-selection">
+                        ${countries.map(country => {
+                            let gymnastInfo = [];
+                            
+                            // Verificar se há duplicações para esta rotação/aparelho/país
+                            const duplications = teamFinalDraw.duplications?.['rotation1']?.[app]?.[country];
+                            
+                            if (duplications) {
+                                // Usar dados de duplicação para mostrar multiplicadores
+                                duplications.forEach(slot => {
+                                    if (slot.gymnastId) {
+                                        const gymnast = gymnastsData.find(g => g.id === slot.gymnastId);
+                                        const name = gymnast ? gymnast.name.split(' ')[0] : 'N/A';
+                                        const multiplierText = slot.multiplier > 1 ? ` (x${slot.multiplier})` : '';
+                                        gymnastInfo.push(`${name}${multiplierText}`);
+                                    } else {
+                                        gymnastInfo.push('AUSENTE');
+                                    }
+                                });
+                            } else if (teamFinalDraw.rotation1?.[app]?.[country]) {
+                                // Formato antigo sem duplicações
+                                const gymnastIds = teamFinalDraw.rotation1[app][country];
+                                gymnastInfo = gymnastIds.map(id => {
+                                    const gymnast = gymnastsData.find(g => g.id === id);
+                                    return gymnast ? gymnast.name.split(' ')[0] : 'N/A';
+                                });
+                            } else if (teamFinalDraw.rotations?.[0]?.apparatus?.[app]) {
+                                // Formato de rotações com multiplicadores
+                                const countryGymnasts = teamFinalDraw.rotations[0].apparatus[app].filter(g => g.country === country);
+                                gymnastInfo = countryGymnasts.map(g => {
+                                    const name = g.name === 'AUSENTE' ? 'AUSENTE' : g.name.split(' ')[0];
+                                    const multiplierText = g.multiplier > 1 ? ` (x${g.multiplier})` : '';
+                                    return `${name}${multiplierText}`;
+                                });
+                            }
+                            
+                            return `
+                                <div class="country-item">
+                                    <span class="fi fi-${getCountryCode(country)}"></span>
+                                    <div>
+                                        <strong>${country}</strong><br>
+                                        <small>${gymnastInfo.join(', ')}</small>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(appDiv);
+            });
+        }
+
+        // Renderizar formulários das equipes
+        function renderTeamForms() {
+            const container = document.getElementById('teams-container');
+            container.innerHTML = '';
+            
+            const countries = [...new Set(gymnastsData.map(g => g.country))];
+            
+            countries.forEach(country => {
+                const teamCard = document.createElement('div');
+                teamCard.className = 'team-card';
+                
+                teamCard.innerHTML = `
+                    <div class="team-header">
+                        <span class="fi fi-${getCountryCode(country)}" style="font-size: 2rem;"></span>
+                        <h3 class="team-name">${country}</h3>
+                    </div>
+                    <div class="rotations-grid">
+                        ${[1, 2, 3, 4].map(rotation => {
+                            const rotationApp = apparatus[(rotation - 1) % 4];
+                            
+                            // Usar estrutura de duplicações se disponível
+                            let gymnasts = [];
+                            if (teamFinalDraw.duplications) {
+                                const slots = teamFinalDraw.duplications[`rotation${rotation}`]?.[rotationApp]?.[country] || [];
+                                gymnasts = slots.map(slot => {
+                                    if (slot.gymnastId) {
+                                        const gymnast = gymnastsData.find(g => g.id === slot.gymnastId);
+                                        return gymnast ? { ...gymnast, multiplier: slot.multiplier } : null;
+                                    } else {
+                                        return { id: null, name: 'AUSENTE', multiplier: 1 };
+                                    }
+                                }).filter(g => g !== null);
+                            } else {
+                                // Estrutura antiga
+                                const gymnastIds = teamFinalDraw[`rotation${rotation}`]?.[rotationApp]?.[country] || [];
+                                gymnasts = gymnastIds.map(id => {
+                                    const gymnast = gymnastsData.find(g => g.id === id);
+                                    return gymnast ? { ...gymnast, multiplier: 1 } : null;
+                                }).filter(g => g !== null);
+                            }
+                            
+                            return `
+                                <div class="rotation-section">
+                                    <h4 class="rotation-title">Rotação ${rotation}<br>${apparatusNames[rotationApp]}</h4>
+                                    ${gymnasts.map(gymnast => {
+                                        if (gymnast.id === null) {
+                                            // Slot vazio
+                                            return `
+                                                <div class="gymnast-card" style="opacity: 0.5; border: 2px dashed #ccc;">
+                                                    <div class="gymnast-name">AUSENTE</div>
+                                                    <div style="text-align: center; color: #999; font-style: italic;">
+                                                        Nota: 0.000 pontos
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }
+                                        
+                                        // Obter dados existentes da Team Final
+                                        const existingScores = gymnast.scores?.team_final || {};
+                                        const dValue = existingScores[`team_final_${rotationApp.toLowerCase()}_d`] || '';
+                                        const eValue = existingScores[`team_final_${rotationApp.toLowerCase()}_e`] || '';
+                                        const pValue = existingScores[`team_final_${rotationApp.toLowerCase()}_p`] || '';
+                                        
+                                        console.log(`🎯 [DEBUG SCORES] ${gymnast.name} ${rotationApp}:`, {
+                                            existingScores,
+                                            dKey: `team_final_${rotationApp.toLowerCase()}_d`,
+                                            dValue,
+                                            eValue,
+                                            pValue
+                                        });
+                                        
+                                        const multiplierDisplay = gymnast.multiplier > 1 ? ` <span style="color: #e53e3e; font-weight: bold;">(x${gymnast.multiplier})</span>` : '';
+                                        
+                                        return `
+                                            <div class="gymnast-card">
+                                                <div class="gymnast-name">${gymnast.name}${multiplierDisplay}</div>
+                                                <div class="score-row">
+                                                    <div>
+                                                        <div class="score-label">D</div>
+                                                        <input type="number" step="0.001" min="0" max="10" 
+                                                               class="score-input" 
+                                                               id="${gymnast.id}_${rotationApp}_d"
+                                                               value="${dValue}"
+                                                               placeholder="0.000">
+                                                    </div>
+                                                    <div>
+                                                        <div class="score-label">E</div>
+                                                        <input type="number" step="0.001" min="0" max="10" 
+                                                               class="score-input" 
+                                                               id="${gymnast.id}_${rotationApp}_e"
+                                                               value="${eValue}"
+                                                               placeholder="0.000">
+                                                    </div>
+                                                    <div>
+                                                        <div class="score-label">P</div>
+                                                        <input type="number" step="0.001" min="0" max="10" 
+                                                               class="score-input" 
+                                                               id="${gymnast.id}_${rotationApp}_p"
+                                                               value="${pValue}"
+                                                               placeholder="0.000">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            `;
+                        }).join('')}
+                        }).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(teamCard);
+            });
+        }
+
+        // Função auxiliar para obter código do país
+        function getCountryCode(country) {
+            const codes = {
+                'BRA': 'br',
+                'USA': 'us',
+                'CHN': 'cn',
+                'ITA': 'it',
+                'FRA': 'fr',
+                'GER': 'de',
+                'GBR': 'gb',
+                'JPN': 'jp',
+                'RUS': 'ru',
+                'CAN': 'ca',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Event listeners
+        document.getElementById('set-presence-btn').addEventListener('click', openPresenceModal);
+        
+        document.getElementById('save-presence-btn').addEventListener('click', savePresence);
+        
+        // Event listeners para fechar modal
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', closePresenceModal);
+        });
+        
+        // Fechar modal clicando fora dele
+        document.getElementById('presence-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'presence-modal') {
+                closePresenceModal();
+            }
+        });
+
+        document.getElementById('new-draw-btn').addEventListener('click', () => {
+            if (confirm('Gerar um novo sorteio? Isso irá substituir o sorteio atual.')) {
+                console.log('🎯 [DEBUG] Gerando novo sorteio aleatório...');
+                generateRandomDraw(); // Usar função aleatória para novo sorteio
+                renderDraw();
+                renderTeamForms();
+                showSuccess('Novo sorteio gerado!');
+                
+                // Habilitar o botão de salvar
+                const saveBtn = document.getElementById('save-draw-btn');
+                saveBtn.disabled = false;
+                saveBtn.style.opacity = '1';
+            }
+        });
+
+        document.getElementById('save-draw-btn').addEventListener('click', async () => {
+            try {
+                console.log('🎯 [DEBUG] Iniciando salvamento do sorteio...');
+                console.log('🎯 [DEBUG] teamFinalDraw:', teamFinalDraw);
+                
+                // Validar estrutura
+                if (!validateTeamFinalDraw()) {
+                    showError('Erro: Estrutura do sorteio é inválida. Tente gerar um novo sorteio primeiro.');
+                    return;
+                }
+                
+                // Verificar autenticação
+                const currentUser = auth.currentUser;
+                console.log('🎯 [DEBUG] Usuário atual:', currentUser?.email || 'Não logado');
+                
+                if (!currentUser) {
+                    showError('Erro: Usuário não está autenticado. Faça login novamente.');
+                    return;
+                }
+                
+                // Preparar dados para salvar
+                const docData = {
+                    structure: teamFinalDraw,
+                    lastUpdated: new Date(),
+                    savedBy: currentUser.email || 'unknown'
+                };
+                
+                console.log('🎯 [DEBUG] Dados para salvar:', docData);
+                console.log('🎯 [DEBUG] Salvando no Firebase...');
+                
+                // Salvar no Firebase
+                await db.collection('start_lists').doc('team_final').set(docData);
+                
+                console.log('🎯 [DEBUG] Sorteio salvo com sucesso!');
+                showSuccess('Sorteio salvo com sucesso!');
+                
+                // Feedback visual no botão
+                const saveBtn = document.getElementById('save-draw-btn');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
+                saveBtn.style.background = 'linear-gradient(45deg, #2ed573, #5f27cd)';
+                
+                setTimeout(() => {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.style.background = 'linear-gradient(45deg, #1e3c72, #2a5298)';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('🎯 [DEBUG] Erro ao salvar sorteio:', error);
+                console.error('🎯 [DEBUG] Stack trace:', error.stack);
+                showError(`Erro ao salvar sorteio: ${error.message}`);
+            }
+        });
+
+        document.getElementById('generate-random-btn').addEventListener('click', () => {
+            const inputs = document.querySelectorAll('.score-input');
+            inputs.forEach(input => {
+                if (input.id.includes('_d')) {
+                    input.value = (Math.random() * 3 + 4).toFixed(2);
+                } else if (input.id.includes('_e')) {
+                    input.value = (Math.random() * 2 + 8).toFixed(2);
+                } else if (input.id.includes('_p')) {
+                    input.value = (Math.random() * 0.5).toFixed(2);
+                }
+            });
+            showSuccess('Notas aleatórias geradas com sucesso!');
+        });
+
+        document.getElementById('clear-scores-btn').addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja limpar todas as notas?')) {
+                const inputs = document.querySelectorAll('.score-input');
+                inputs.forEach(input => input.value = '');
+                showSuccess('Notas limpas com sucesso!');
+            }
+        });
+
+        // Salvar pontuações
+        document.getElementById('team-final-score-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const saveLoading = document.getElementById('save-loading');
+            try {
+                saveLoading.style.display = 'block';
+                
+                const updates = [];
+                
+                // Para cada ginasta, salvar apenas as notas dos aparelhos onde ela compete
+                for (const gymnast of gymnastsData) {
+                    const scores = {};
+                    let hasAnyScore = false;
+                    
+                    // Usar estrutura de duplicações se disponível, senão usar estrutura antiga
+                    if (teamFinalDraw.duplications) {
+                        // Nova estrutura com duplicações
+                        for (let rotation = 1; rotation <= 4; rotation++) {
+                            apparatus.forEach((app, appIndex) => {
+                                const rotationApp = apparatus[(appIndex + rotation - 1) % 4];
+                                const slots = teamFinalDraw.duplications[`rotation${rotation}`]?.[rotationApp]?.[gymnast.country] || [];
+                                
+                                // Verificar se esta ginasta tem slot neste aparelho
+                                const hasSlot = slots.some(slot => slot.gymnastId === gymnast.id);
+                                
+                                if (hasSlot) {
+                                    const dInput = document.getElementById(`${gymnast.id}_${rotationApp}_d`);
+                                    const eInput = document.getElementById(`${gymnast.id}_${rotationApp}_e`);
+                                    const pInput = document.getElementById(`${gymnast.id}_${rotationApp}_p`);
+                                    
+                                    if (dInput && eInput && pInput) {
+                                        const dScore = parseFloat(dInput.value) || 0;
+                                        const eScore = parseFloat(eInput.value) || 0;
+                                        const penalty = parseFloat(pInput.value) || 0;
+                                        const total = Math.max(0, dScore + eScore - penalty);
+                                        
+                                        scores[`team_final_${rotationApp.toLowerCase()}_d`] = dScore;
+                                        scores[`team_final_${rotationApp.toLowerCase()}_e`] = eScore;
+                                        scores[`team_final_${rotationApp.toLowerCase()}_p`] = penalty;
+                                        scores[`team_final_${rotationApp.toLowerCase()}_total`] = total;
+                                        hasAnyScore = true;
+                                        
+                                        console.log(`💾 [SAVE] ${gymnast.name} - ${rotationApp}: D=${dScore} E=${eScore} P=${penalty} Total=${total}`);
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        // Estrutura antiga (fallback)
+                        for (let rotation = 1; rotation <= 4; rotation++) {
+                            apparatus.forEach((app, appIndex) => {
+                                const rotationApp = apparatus[(appIndex + rotation - 1) % 4];
+                                const gymnastIds = teamFinalDraw[`rotation${rotation}`]?.[rotationApp]?.[gymnast.country] || [];
+                                
+                                if (gymnastIds.includes(gymnast.id)) {
+                                    const dInput = document.getElementById(`${gymnast.id}_${rotationApp}_d`);
+                                    const eInput = document.getElementById(`${gymnast.id}_${rotationApp}_e`);
+                                    const pInput = document.getElementById(`${gymnast.id}_${rotationApp}_p`);
+                                    
+                                    if (dInput && eInput && pInput) {
+                                        const dScore = parseFloat(dInput.value) || 0;
+                                        const eScore = parseFloat(eInput.value) || 0;
+                                        const penalty = parseFloat(pInput.value) || 0;
+                                        const total = Math.max(0, dScore + eScore - penalty);
+                                        
+                                        scores[`team_final_${rotationApp.toLowerCase()}_d`] = dScore;
+                                        scores[`team_final_${rotationApp.toLowerCase()}_e`] = eScore;
+                                        scores[`team_final_${rotationApp.toLowerCase()}_p`] = penalty;
+                                        scores[`team_final_${rotationApp.toLowerCase()}_total`] = total;
+                                        hasAnyScore = true;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Só salvar se houver pelo menos uma nota
+                    if (hasAnyScore) {
+                        // Merge com scores existentes
+                        const existingScores = gymnast.scores || {};
+                        const mergedScores = { 
+                            ...existingScores, 
+                            team_final: { 
+                                ...existingScores.team_final, 
+                                ...scores 
+                            } 
+                        };
+                        
+                        updates.push(
+                            db.collection('new_gymnasts').doc(gymnast.id).update({
+                                [`scores.team_final`]: mergedScores.team_final
+                            })
+                        );
+                        
+                        // Log detalhado do que está sendo salvo
+                        console.log(`💾 [SAVE-DETAIL] ${gymnast.name}:`, {
+                            id: gymnast.id,
+                            scores_saved: mergedScores.team_final
+                        });
+                    }
+                }
+                
+                await Promise.all(updates);
+                showSuccess('Pontuações da Final por Equipes salvas com sucesso!');
+                
+            } catch (error) {
+                console.error('Erro ao salvar pontuações:', error);
+                showError('Erro ao salvar pontuações. Tente novamente.');
+            } finally {
+                saveLoading.style.display = 'none';
+            }
+        });
+
+        // Funções de feedback
+        function showSuccess(message) {
+            const element = document.getElementById('success-message');
+            element.textContent = message;
+            element.style.display = 'block';
+            setTimeout(() => element.style.display = 'none', 5000);
+        }
+
+        function showError(message) {
+            const element = document.getElementById('error-message');
+            element.textContent = message;
+            element.style.display = 'block';
+            setTimeout(() => element.style.display = 'none', 5000);
+        }
+
+        // Cleanup quando a página é fechada
+        window.addEventListener('beforeunload', () => {
+            if (window.gymnastsUnsubscribe) {
+                window.gymnastsUnsubscribe();
+            }
+            if (window.drawUnsubscribe) {
+                window.drawUnsubscribe();
+            }
+        });
+    </script>
+
+    <!-- Auth Guard -->
+    
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>

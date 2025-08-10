@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start List - Qualificatórias | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Rotações */
+        .rotation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .rotation-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .rotation-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .rotation-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rotation-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .apparatus-section {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .apparatus-section:last-child {
+            border-bottom: none;
+        }
+
+        .apparatus-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .apparatus-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .gymnast-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .gymnast-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: rgba(30, 60, 114, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gymnast-item:hover {
+            background: rgba(30, 60, 114, 0.1);
+            transform: translateX(5px);
+        }
+
+        .gymnast-order {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .gymnast-info {
+            flex: 1;
+        }
+
+        .gymnast-name {
+            font-weight: 700;
+            color: #1e3c72;
+            font-size: 1rem;
+        }
+
+        .gymnast-country {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.2rem;
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Controles */
+        .controls-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .olympic-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .olympic-button.secondary {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            color: #2a5298;
+            font-weight: 600;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .rotation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .controls-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+            
+            .rotation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .apparatus-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Start List - Qualificatórias
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="scoreboard-qualifiers.html" class="nav-btn">
+                    <i class="fas fa-trophy"></i> Scoreboard
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Lista de Largada</h1>
+            <p class="title-phase">Qualificatórias</p>
+        </div>
+
+        <div class="controls-section">
+            <div>
+                <h3 style="color: #1e3c72; margin-bottom: 0.5rem;">Ordem de Competição - Qualificatórias</h3>
+                <p style="color: #666;">Rotações por equipe - Todos os aparelhos</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button id="shuffle-start-list" class="olympic-button secondary">
+                    <i class="fas fa-shuffle"></i> Reorganizar
+                </button>
+                <button id="save-start-list" class="olympic-button">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            Carregando lista de largada...
+        </div>
+
+        <div id="rotations-container" class="rotation-grid" style="display: none;">
+            <!-- As rotações serão inseridas aqui pelo JavaScript -->
+        </div>
+    </main>
+
+    <footer class="olympic-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Jogos Olímpicos Brussels. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/countries.js"></script>
+    <!-- Firebase v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="js/firebase-init.js"></script>
+    
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        const db = window.db;
+        
+        const apparatus = ['VT', 'UB', 'BB', 'FX'];
+        const apparatusNames = {
+            'VT': 'Salto',
+            'UB': 'Barras Assimétricas',
+            'BB': 'Trave de Equilíbrio',
+            'FX': 'Solo'
+        };
+
+        let gymnastsData = [];
+        let startListData = {};
+
+        // Função para gerar dados de teste
+        function generateTestGymnasts() {
+            const countries = ['BRA', 'USA', 'CHN', 'ROU', 'RUS', 'GBR', 'JPN', 'ITA'];
+            const firstNames = ['Ana', 'Sophia', 'Maria', 'Emma', 'Li', 'Yuki', 'Elena', 'Sara'];
+            const lastNames = ['Silva', 'Johnson', 'Wang', 'Popescu', 'Petrov', 'Smith', 'Tanaka', 'Rossi'];
+            
+            const testGymnasts = [];
+            
+            countries.forEach((country, countryIndex) => {
+                // 4 ginastas por país para qualificatórias
+                for (let i = 0; i < 4; i++) {
+                    testGymnasts.push({
+                        id: `test-${country}-${i + 1}`,
+                        firstName: firstNames[Math.floor(Math.random() * firstNames.length)],
+                        lastName: lastNames[Math.floor(Math.random() * lastNames.length)],
+                        country: country,
+                        bibNumber: (countryIndex * 10) + (i + 1),
+                        dateOfBirth: '2005-01-01',
+                        isActive: true
+                    });
+                }
+            });
+            
+            console.log(`[Start List Test Data] Generated ${testGymnasts.length} test gymnasts`);
+            return testGymnasts;
+        }
+
+        // Carregar dados iniciais
+        async function loadStartList() {
+            const loading = document.getElementById('loading');
+            const container = document.getElementById('rotations-container');
+            
+            try {
+                loading.style.display = 'block';
+                container.style.display = 'none';
+                
+                const gymnastsSnapshot = await db.collection('new_gymnasts').get();
+                gymnastsData = [];
+                
+                gymnastsSnapshot.forEach((doc) => {
+                    gymnastsData.push({ id: doc.id, ...doc.data() });
+                });
+
+                console.log(`[Start List Qualifiers] Loaded ${gymnastsData.length} gymnasts from Firebase`);
+
+                // Se não há ginastas, criar dados de teste
+                if (gymnastsData.length === 0) {
+                    console.log('[Start List Qualifiers] No gymnasts found, generating test data...');
+                    gymnastsData = generateTestGymnasts();
+                }
+
+                // Organizar por países
+                const countries = [...new Set(gymnastsData.map(g => g.country))];
+                
+                // Verificar se já existe start list salva
+                try {
+                    const startListDoc = await db.collection('start_lists').get();
+                    let savedStartList = null;
+                    
+                    startListDoc.forEach((doc) => {
+                        if (doc.id === 'qualifiers') {
+                            savedStartList = doc.data();
+                        }
+                    });
+                    
+                    if (savedStartList && savedStartList.structure) {
+                        const loadedStructure = savedStartList.structure;
+                        
+                        // Convert back from control format to render format
+                        if (loadedStructure.rotations && loadedStructure.rotations[0] && typeof loadedStructure.rotations[0].apparatus === 'object') {
+                            // This is control format - convert to render format
+                            console.log("[Qualifiers] Converting from control format to render format");
+                            
+                            const apparatus = ['vt', 'ub', 'bb', 'fx'];
+                            const apparatusNames = {
+                                'vt': 'SALTO',
+                                'ub': 'PARALELAS', 
+                                'bb': 'TRAVE',
+                                'fx': 'SOLO'
+                            };
+                            
+                            const convertedRotations = loadedStructure.rotations.map(rotation => ({
+                                number: rotation.number,
+                                apparatus: apparatus.map(app => {
+                                    const gymnasts = rotation.apparatus[app] || [];
+                                    const teamIndex = apparatus.indexOf(app);
+                                    const teamName = `Equipe ${String.fromCharCode(65 + teamIndex)}`;
+                                    const country = gymnasts.length > 0 ? gymnasts[0].country : '';
+                                    
+                                    return {
+                                        name: app,
+                                        displayName: apparatusNames[app],
+                                        team: {
+                                            name: teamName,
+                                            country: country
+                                        },
+                                        gymnasts: gymnasts.map((gymnast, idx) => ({
+                                            ...gymnast,
+                                            order: idx + 1
+                                        }))
+                                    };
+                                })
+                            }));
+                            
+                            startListData = {
+                                ...loadedStructure,
+                                rotations: convertedRotations
+                            };
+                        } else {
+                            // Already in render format
+                            startListData = loadedStructure;
+                        }
+                    } else {
+                        generateStartList(countries);
+                    }
+                } catch (error) {
+                    console.log('Nenhuma start list salva encontrada, gerando nova');
+                    generateStartList(countries);
+                }
+
+                renderStartList();
+                
+                loading.style.display = 'none';
+                container.style.display = 'grid';
+                
+            } catch (error) {
+                console.error('Erro ao carregar start list:', error);
+                loading.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao carregar dados';
+            }
+        }
+
+        // Gerar start list para qualificatórias
+        function generateStartList(countries) {
+            console.log("[Qualifiers] Generating start list...");
+            console.log("[Qualifiers] Input gymnastsData:", gymnastsData.length, "gymnasts");
+            
+            // Agrupar ginastas por país primeiro
+            const gymnastsGroupedByCountry = {};
+            
+            gymnastsData.forEach(gymnast => {
+                if (!gymnastsGroupedByCountry[gymnast.country]) {
+                    gymnastsGroupedByCountry[gymnast.country] = [];
+                }
+                gymnastsGroupedByCountry[gymnast.country].push(gymnast);
+            });
+            
+            console.log("[Qualifiers] Grouped by country:", Object.keys(gymnastsGroupedByCountry));
+            
+            // Embaralhar a ordem dos países para definir equipes A, B, C, D
+            const countriesList = Object.keys(gymnastsGroupedByCountry);
+            const shuffledCountries = [...countriesList].sort(() => Math.random() - 0.5);
+            
+            const apparatus = ['vt', 'ub', 'bb', 'fx'];
+            const apparatusNames = {
+                'vt': 'SALTO',
+                'ub': 'PARALELAS',
+                'bb': 'TRAVE',
+                'fx': 'SOLO'
+            };
+            
+            // Criar as 4 equipes com países embaralhados
+            const teams = [];
+            for (let i = 0; i < 4; i++) {
+                const country = shuffledCountries[i];
+                const countryGymnasts = gymnastsGroupedByCountry[country];
+                
+                // Embaralhar a ordem dos ginastas dentro do país
+                const shuffledGymnasts = [...countryGymnasts].sort(() => Math.random() - 0.5);
+                
+                teams.push({
+                    name: `Equipe ${String.fromCharCode(65 + i)}`, // A, B, C, D
+                    gymnasts: shuffledGymnasts,
+                    country: country,
+                    startApparatus: apparatus[i]
+                });
+            }
+            
+            console.log("[Qualifiers] Teams created:", teams.map(t => `${t.name}: ${t.country} (${t.gymnasts.length} ginastas)`));
+            
+            // Gerar as 4 rotações
+            const rotations = [];
+            
+            for (let rotNum = 1; rotNum <= 4; rotNum++) {
+                const rotation = {
+                    number: rotNum,
+                    apparatus: []
+                };
+                
+                // Para cada aparelho nesta rotação
+                apparatus.forEach((app, appIndex) => {
+                    // Determinar qual equipe está neste aparelho nesta rotação
+                    const teamIndex = (appIndex + rotNum - 1) % 4;
+                    const team = teams[teamIndex];
+                    
+                    rotation.apparatus.push({
+                        name: app,
+                        displayName: apparatusNames[app],
+                        team: team,
+                        gymnasts: team.gymnasts.map((gymnast, idx) => ({
+                            ...gymnast,
+                            order: idx + 1
+                        }))
+                    });
+                });
+                
+                rotations.push(rotation);
+            }
+            
+            startListData = {
+                type: 'qualifiers',
+                teams: teams,
+                // Keep original format for rendering
+                rotations: rotations,
+                // Add control/display compatible format
+                rotationsForControl: rotations.map(rotation => ({
+                    number: rotation.number,
+                    apparatus: rotation.apparatus.reduce((acc, app) => {
+                        acc[app.name] = app.gymnasts;
+                        return acc;
+                    }, {})
+                })),
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log("[Qualifiers] Generated startListData:", startListData);
+        }
+
+        // Renderizar start list
+        function renderStartList() {
+            const container = document.getElementById('rotations-container');
+            container.innerHTML = '';
+            
+            if (!startListData.rotations) {
+                container.innerHTML = '<p>Nenhuma rotação gerada</p>';
+                return;
+            }
+            
+            startListData.rotations.forEach(rotation => {
+                const rotationCard = document.createElement('div');
+                rotationCard.className = 'rotation-card';
+                
+                rotationCard.innerHTML = `
+                    <div class="rotation-header">
+                        <div class="rotation-title">Rotação ${rotation.number}</div>
+                        <div class="rotation-subtitle">Distribuição por Aparelhos</div>
+                    </div>
+                    <div class="apparatus-sections">
+                        ${rotation.apparatus.map(app => `
+                            <div class="apparatus-section">
+                                <div class="apparatus-title">${app.displayName}</div>
+                                <div class="team-info" style="text-align: center; color: #1e3c72; font-weight: 600; margin-bottom: 1rem;">
+                                    ${app.team.name}
+                                    ${app.team.country ? `<br><small style="color: #666; font-weight: 500;">${app.team.country}</small>` : ''}
+                                </div>
+                                <div class="gymnast-list">
+                                    ${app.gymnasts.map(gymnast => `
+                                        <div class="gymnast-item">
+                                            <div class="gymnast-order">${gymnast.order}</div>
+                                            <div class="gymnast-info">
+                                                <div class="gymnast-name">${gymnast.name}</div>
+                                                <div class="gymnast-country">
+                                                    <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                                                    ${gymnast.country}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(rotationCard);
+            });
+        }
+
+        // Renderizar ginastas de uma rotação
+        function renderRotationGymnasts(rotationData, rotationNumber) {
+            let html = '';
+            let order = 1;
+            
+            if (rotationData.teams) {
+                rotationData.teams.forEach(team => {
+                    team.gymnasts.forEach(gymnast => {
+                        html += `
+                            <div class="gymnast-item">
+                                <div class="gymnast-order">${order}</div>
+                                <div class="gymnast-info">
+                                    <div class="gymnast-name">${gymnast.name}</div>
+                                    <div class="gymnast-country">
+                                        <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                                        ${gymnast.country}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        order++;
+                    });
+                });
+            }
+            
+            return html;
+        }
+
+        // Reorganizar start list
+        function shuffleStartList() {
+            console.log("[Qualifiers] Shuffling start list...");
+            console.log("[Qualifiers] Current gymnastsData length:", gymnastsData.length);
+            
+            const countries = [...new Set(gymnastsData.map(g => g.country))];
+            console.log("[Qualifiers] Countries found:", countries);
+            
+            generateStartList(countries);
+            renderStartList();
+            
+            console.log("[Qualifiers] Start list shuffled and rendered");
+        }
+
+        // Salvar start list
+        async function saveStartList() {
+            try {
+                // Create structure compatible with control.html and display.html
+                const structureForSaving = {
+                    type: 'qualifiers',
+                    teams: startListData.teams,
+                    rotations: startListData.rotationsForControl,
+                    timestamp: new Date().toISOString()
+                };
+                
+                await db.collection('start_lists').doc('qualifiers').set({
+                    structure: structureForSaving,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Feedback visual
+                const saveBtn = document.getElementById('save-start-list');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
+                saveBtn.style.background = 'linear-gradient(45deg, #2ed573, #5f27cd)';
+                
+                setTimeout(() => {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.style.background = 'linear-gradient(45deg, #1e3c72, #2a5298)';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Erro ao salvar start list:', error);
+                alert('Erro ao salvar lista de largada');
+            }
+        }
+
+        // Função auxiliar para obter código do país
+        function getCountryCode(country) {
+            const codes = {
+                'BRA': 'br',
+                'USA': 'us',
+                'CHN': 'cn',
+                'ITA': 'it',
+                'FRA': 'fr',
+                'GER': 'de',
+                'GBR': 'gb',
+                'JPN': 'jp',
+                'RUS': 'ru',
+                'CAN': 'ca',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Event listeners
+        document.getElementById('shuffle-start-list').addEventListener('click', shuffleStartList);
+        document.getElementById('save-start-list').addEventListener('click', saveStartList);
+
+        // Listeners em tempo real para sincronização automática
+        
+        // Listener para mudanças nas ginastas
+        db.collection('new_gymnasts').onSnapshot((snapshot) => {
+            console.log('Ginastas atualizadas, recarregando...');
+            const newGymnastsData = [];
+            snapshot.forEach((doc) => {
+                newGymnastsData.push({ id: doc.id, ...doc.data() });
+            });
+            
+            // Se houve mudanças nos dados das ginastas, regenerar a start list
+            if (JSON.stringify(gymnastsData) !== JSON.stringify(newGymnastsData)) {
+                gymnastsData = newGymnastsData;
+                const countries = [...new Set(gymnastsData.map(g => g.country))];
+                generateStartList(countries);
+                renderStartList();
+            }
+        }, (error) => {
+            console.error('Erro ao sincronizar ginastas:', error);
+        });
+
+        // Listener para mudanças na start list
+        db.collection('start_lists').doc('qualifiers').onSnapshot((doc) => {
+            if (doc.exists()) {
+                const savedData = doc.data();
+                if (savedData.structure && JSON.stringify(startListData) !== JSON.stringify(savedData.structure)) {
+                    console.log('Start list atualizada, sincronizando...');
+                    
+                    const loadedStructure = savedData.structure;
+                    
+                    // Convert back from control format to render format
+                    if (loadedStructure.rotations && loadedStructure.rotations[0] && typeof loadedStructure.rotations[0].apparatus === 'object') {
+                        // This is control format - convert to render format
+                        console.log("[Qualifiers Sync] Converting from control format to render format");
+                        
+                        const apparatus = ['vt', 'ub', 'bb', 'fx'];
+                        const apparatusNames = {
+                            'vt': 'SALTO',
+                            'ub': 'PARALELAS', 
+                            'bb': 'TRAVE',
+                            'fx': 'SOLO'
+                        };
+                        
+                        const convertedRotations = loadedStructure.rotations.map(rotation => ({
+                            number: rotation.number,
+                            apparatus: apparatus.map(app => {
+                                const gymnasts = rotation.apparatus[app] || [];
+                                const teamIndex = apparatus.indexOf(app);
+                                const teamName = `Equipe ${String.fromCharCode(65 + teamIndex)}`;
+                                const country = gymnasts.length > 0 ? gymnasts[0].country : '';
+                                
+                                return {
+                                    name: app,
+                                    displayName: apparatusNames[app],
+                                    team: {
+                                        name: teamName,
+                                        country: country
+                                    },
+                                    gymnasts: gymnasts.map((gymnast, idx) => ({
+                                        ...gymnast,
+                                        order: idx + 1
+                                    }))
+                                };
+                            })
+                        }));
+                        
+                        startListData = {
+                            ...loadedStructure,
+                            rotations: convertedRotations
+                        };
+                    } else {
+                        // Already in render format
+                        startListData = loadedStructure;
+                    }
+                    
+                    renderStartList();
+                }
+            }
+        }, (error) => {
+            console.error('Erro ao sincronizar start list:', error);
+        });
+
+        // Carregar dados iniciais
+        loadStartList();
+    </script>
+
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>

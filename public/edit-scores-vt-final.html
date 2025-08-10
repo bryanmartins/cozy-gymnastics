@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Pontuações - Final VT | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Info section */
+        .info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            text-align: center;
+        }
+
+        .qualified-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .qualified-item {
+            background: rgba(30, 60, 114, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        /* Formulários das ginastas */
+        .gymnasts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .gymnast-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .gymnast-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .gymnast-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1e3c72;
+        }
+
+        .vault-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(30, 60, 114, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .vault-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .score-input {
+            width: 80px;
+            max-width: 80px;
+            padding: 0.5rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .score-input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        .total-display {
+            background: rgba(30, 60, 114, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-top: 0.5rem;
+        }
+
+        /* Botões olímpicos */
+        .olympic-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+        }
+
+        .olympic-button.secondary-button {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+        }
+
+        .olympic-button.danger-button {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .save-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Loading e feedback */
+        .loading {
+            display: none;
+            text-align: center;
+            color: #2a5298;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #2ed573, #5f27cd);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .error-message {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Sistema de Notificação Fixo */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .notification {
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            pointer-events: auto;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #f44336;
+        }
+        
+        .notification.warning {
+            background: #ff9800;
+        }
+        
+        .notification.info {
+            background: #2196F3;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .gymnasts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Notificação fixo no canto superior direito -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Edição de Pontuações
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <button id="logout-btn" class="nav-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Editar Pontuações</h1>
+            <p class="title-phase">Final - Salto</p>
+        </div>
+
+        <div class="info-section">
+            <h3 style="color: #1e3c72; margin-bottom: 1rem;">Qualificadas para a Final de Salto</h3>
+            <p style="color: #666;">8 melhores ginastas do VT nas qualificatórias (máx. 2 por país)</p>
+            <div id="qualified-gymnasts" class="qualified-grid">
+                <!-- Será preenchido pelo JavaScript -->
+            </div>
+        </div>
+
+        <div id="success-message" class="success-message"></div>
+        <div id="error-message" class="error-message"></div>
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            Carregando dados...
+        </div>
+
+        <form id="vt-final-score-form" style="display: none;">
+            <div id="gymnasts-container" class="gymnasts-container">
+                <!-- Os formulários das ginastas serão inseridos aqui pelo JavaScript -->
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="generate-random-btn" class="olympic-button secondary-button">
+                    <i class="fas fa-dice"></i> Gerar Notas Aleatórias
+                </button>
+                <button type="button" id="clear-scores-btn" class="olympic-button danger-button">
+                    <i class="fas fa-trash"></i> Limpar Notas
+                </button>
+            </div>
+
+            <div class="save-section">
+                <button type="submit" id="save-scores-btn" class="olympic-button">
+                    <i class="fas fa-save"></i> Salvar Pontuações
+                </button>
+                <div id="save-loading" class="loading">
+                    <i class="fas fa-spinner"></i>
+                    Salvando pontuações...
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <footer class="olympic-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Jogos Olímpicos Brussels. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+
+
+    <script src="js/countries.js"></script>
+    <script src="js/firebase-init.js"></script>
+    <script>
+        // Aguardar Firebase estar pronto
+        let auth, db;
+        
+        function initializeWhenReady() {
+            if (window.auth && window.db) {
+                auth = window.auth;
+                db = window.db;
+                initializePage();
+            } else {
+                // Aguardar evento firebaseReady
+                window.addEventListener('firebaseReady', () => {
+                    auth = window.auth;
+                    db = window.db;
+                    initializePage();
+                });
+            }
+        }
+        
+        // Inicializar quando DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', initializeWhenReady);
+
+        let gymnastsData = [];
+        let qualifiedGymnasts = [];
+
+        // Verificar autenticação
+        function initializePage() {
+            window.auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const userRole = localStorage.getItem('userRole');
+                if (userRole !== 'admin') {
+                    alert('Acesso negado. Apenas administradores podem editar pontuações.');
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+
+                loadData();
+            });
+        }
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await window.auth.signOut();
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('userEmail');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+            }
+        });
+
+        // Carregar dados
+        // Carregar dados com sincronização em tempo real
+        function loadData() {
+            const loading = document.getElementById('loading');
+            const form = document.getElementById('vt-final-score-form');
+            
+            try {
+                loading.style.display = 'block';
+                
+                // Usar onSnapshot para sincronização em tempo real
+                const unsubscribe = window.db.collection('new_gymnasts').onSnapshot((snapshot) => {
+                    gymnastsData = [];
+                    
+                    snapshot.forEach((doc) => {
+                        gymnastsData.push({ id: doc.id, ...doc.data() });
+                    });
+
+                    calculateQualified();
+                    renderQualifiedList();
+                    renderGymnasts();
+                    loadExistingScores();
+                    
+                    loading.style.display = 'none';
+                    form.style.display = 'block';
+                    
+                }, (error) => {
+                    console.error('Erro ao carregar dados:', error);
+                    showError('Erro ao carregar dados das ginastas.');
+                    loading.style.display = 'none';
+                });
+                
+                // Salvar a função unsubscribe para cleanup
+                window.gymnastsUnsubscribe = unsubscribe;
+                
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                showError('Erro ao carregar dados das ginastas.');
+                loading.style.display = 'none';
+            }
+        }
+
+        // Calcular qualificadas para Final VT - SEMPRE usando qualifiers
+        function calculateQualified() {
+            console.log('[VT Final] Calculando qualificadas das qualifiers...');
+            
+            const qualifiersGymnasts = gymnastsData.filter(gymnast => {
+                const qualifiersScores = gymnast.scores?.qualifiers;
+                return qualifiersScores && (
+                    qualifiersScores.qualifiers_vt1_d !== undefined || 
+                    qualifiersScores.qualifiers_vt_d !== undefined
+                );
+            }).map(gymnast => {
+                const qualifiersScores = gymnast.scores.qualifiers;
+                let vtScore = 0;
+                
+                if (qualifiersScores.qualifiers_vt1_d !== undefined) {
+                    const vt1Total = Math.max(0, (qualifiersScores.qualifiers_vt1_d || 0) + (qualifiersScores.qualifiers_vt1_e || 0) - (qualifiersScores.qualifiers_vt1_p || 0));
+                    const vt2Total = Math.max(0, (qualifiersScores.qualifiers_vt2_d || 0) + (qualifiersScores.qualifiers_vt2_e || 0) - (qualifiersScores.qualifiers_vt2_p || 0));
+                    vtScore = (vt1Total + vt2Total) / 2;
+                } else {
+                    vtScore = Math.max(0, (qualifiersScores.qualifiers_vt_d || 0) + (qualifiersScores.qualifiers_vt_e || 0) - (qualifiersScores.qualifiers_vt_p || 0));
+                }
+                
+                return { ...gymnast, vtAverage: vtScore };
+            });
+
+            qualifiersGymnasts.sort((a, b) => b.vtAverage - a.vtAverage);
+
+            // Aplicar regra de máximo 2 por país
+            qualifiedGymnasts = [];
+            const countryCount = {};
+
+            for (const gymnast of qualifiersGymnasts) {
+                if (qualifiedGymnasts.length >= 8) break;
+                
+                if (!countryCount[gymnast.country]) {
+                    countryCount[gymnast.country] = 0;
+                }
+                
+                if (countryCount[gymnast.country] < 2) {
+                    qualifiedGymnasts.push(gymnast);
+                    countryCount[gymnast.country]++;
+                }
+            }
+            
+            console.log('[VT Final] Qualificadas:', qualifiedGymnasts.length);
+        }
+
+        // Renderizar lista de qualificadas
+        function renderQualifiedList() {
+            const container = document.getElementById('qualified-gymnasts');
+            container.innerHTML = '';
+            
+            qualifiedGymnasts.forEach((gymnast, index) => {
+                const item = document.createElement('div');
+                item.className = 'qualified-item';
+                item.innerHTML = `
+                    <div style="font-weight: 700; color: #1e3c72; margin-bottom: 0.5rem;">
+                        ${index + 1}º ${gymnast.name}
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                        <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                        ${gymnast.country}
+                    </div>
+                    <div style="font-size: 0.9rem; color: #666; margin-top: 0.3rem;">
+                        Qualif.: ${gymnast.vtAverage?.toFixed(3) || '0.000'}
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Renderizar formulários das ginastas
+        function renderGymnasts() {
+            const container = document.getElementById('gymnasts-container');
+            container.innerHTML = '';
+            
+            qualifiedGymnasts.forEach(gymnast => {
+                const card = document.createElement('div');
+                card.className = 'gymnast-card';
+                
+                card.innerHTML = `
+                    <div class="gymnast-header">
+                        <span class="fi fi-${getCountryCode(gymnast.country)}" style="font-size: 1.5rem;"></span>
+                        <h3 class="gymnast-name">${gymnast.name}</h3>
+                    </div>
+                    
+                    <div class="vault-section">
+                        <h4 class="vault-title">Salto 1</h4>
+                        <div class="score-row">
+                            <div class="score-group">
+                                <label class="score-label">Nota D:</label>
+                                <input type="number" step="0.001" min="0" max="10" 
+                                       class="score-input" 
+                                       id="${gymnast.id}_vault1_d"
+                                       placeholder="0.000"
+                                       onchange="calculateVaultTotal('${gymnast.id}', 'vault1')">
+                            </div>
+                            <div class="score-group">
+                                <label class="score-label">Nota E:</label>
+                                <input type="number" step="0.001" min="0" max="10" 
+                                       class="score-input" 
+                                       id="${gymnast.id}_vault1_e"
+                                       placeholder="0.000"
+                                       onchange="calculateVaultTotal('${gymnast.id}', 'vault1')">
+                            </div>
+                            <div class="score-group">
+                                <label class="score-label">Penalidade:</label>
+                                <input type="number" step="0.001" min="0" max="10" 
+                                       class="score-input" 
+                                       id="${gymnast.id}_vault1_p"
+                                       placeholder="0.000"
+                                       onchange="calculateVaultTotal('${gymnast.id}', 'vault1')">
+                            </div>
+                        </div>
+                        <div class="total-display" id="${gymnast.id}_vault1_total">
+                            Total Salto 1: 0.00
+                        </div>
+                    </div>
+
+                    <div class="vault-section">
+                        <h4 class="vault-title">Salto 2</h4>
+                        <div class="score-row">
+                            <div class="score-group">
+                                <label class="score-label">Nota D:</label>
+                                <input type="number" step="0.001" min="0" max="10" 
+                                       class="score-input" 
+                                       id="${gymnast.id}_vault2_d"
+                                       placeholder="0.000"
+                                       onchange="calculateVaultTotal('${gymnast.id}', 'vault2')">
+                            </div>
+                            <div class="score-group">
+                                <label class="score-label">Nota E:</label>
+                                <input type="number" step="0.001" min="0" max="10" 
+                                       class="score-input" 
+                                       id="${gymnast.id}_vault2_e"
+                                       placeholder="0.000"
+                                       onchange="calculateVaultTotal('${gymnast.id}', 'vault2')">
+                            </div>
+                            <div class="score-group">
+                                <label class="score-label">Penalidade:</label>
+                                <input type="number" step="0.001" min="0" max="10" 
+                                       class="score-input" 
+                                       id="${gymnast.id}_vault2_p"
+                                       placeholder="0.000"
+                                       onchange="calculateVaultTotal('${gymnast.id}', 'vault2')">
+                            </div>
+                        </div>
+                        <div class="total-display" id="${gymnast.id}_vault2_total">
+                            Total Salto 2: 0.00
+                        </div>
+                    </div>
+
+                    <div class="total-display" style="background: linear-gradient(45deg, #1e3c72, #2a5298); color: white; font-size: 1.1rem;" id="${gymnast.id}_final_average">
+                        Média Final: 0.00
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Calcular total de um salto
+        window.calculateVaultTotal = function(gymnastId, vaultNum) {
+            const dInput = document.getElementById(`${gymnastId}_${vaultNum}_d`);
+            const eInput = document.getElementById(`${gymnastId}_${vaultNum}_e`);
+            const pInput = document.getElementById(`${gymnastId}_${vaultNum}_p`);
+            const totalDisplay = document.getElementById(`${gymnastId}_${vaultNum}_total`);
+            
+            const dScore = parseFloat(dInput.value) || 0;
+            const eScore = parseFloat(eInput.value) || 0;
+            const penalty = parseFloat(pInput.value) || 0;
+            
+            const total = Math.max(0, dScore + eScore - penalty);
+            totalDisplay.textContent = `Total ${vaultNum === 'vault1' ? 'Salto 1' : 'Salto 2'}: ${total.toFixed(3)}`;
+            
+            calculateFinalAverage(gymnastId);
+        };
+
+        // Calcular média final
+        function calculateFinalAverage(gymnastId) {
+            const vault1Total = getVaultTotal(gymnastId, 'vault1');
+            const vault2Total = getVaultTotal(gymnastId, 'vault2');
+            
+            const average = (vault1Total + vault2Total) / 2;
+            const averageDisplay = document.getElementById(`${gymnastId}_final_average`);
+            averageDisplay.textContent = `Média Final: ${average.toFixed(3)}`;
+        }
+
+        // Obter total de um salto
+        function getVaultTotal(gymnastId, vaultNum) {
+            const dScore = parseFloat(document.getElementById(`${gymnastId}_${vaultNum}_d`).value) || 0;
+            const eScore = parseFloat(document.getElementById(`${gymnastId}_${vaultNum}_e`).value) || 0;
+            const penalty = parseFloat(document.getElementById(`${gymnastId}_${vaultNum}_p`).value) || 0;
+            
+            return Math.max(0, dScore + eScore - penalty);
+        }
+
+        // Função auxiliar para obter código do país
+        function getCountryCode(country) {
+            const codes = {
+                'BRA': 'br',
+                'USA': 'us',
+                'CHN': 'cn',
+                'ITA': 'it',
+                'FRA': 'fr',
+                'GER': 'de',
+                'GBR': 'gb',
+                'JPN': 'jp',
+                'RUS': 'ru',
+                'CAN': 'ca',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Event listeners
+        document.getElementById('generate-random-btn').addEventListener('click', () => {
+            const inputs = document.querySelectorAll('.score-input');
+            inputs.forEach(input => {
+                if (input.id.includes('_d')) {
+                    input.value = (Math.random() * 2 + 5).toFixed(3); // D: 5.000-7.000
+                } else if (input.id.includes('_e')) {
+                    input.value = (Math.random() * 1.5 + 8.5).toFixed(3); // E: 8.500-10.000
+                } else if (input.id.includes('_p')) {
+                    input.value = (Math.random() * 0.3).toFixed(3); // P: 0.000-0.300
+                }
+                
+                // Recalcular totais
+                if (input.onchange) {
+                    input.onchange();
+                }
+            });
+            showSuccess('Notas aleatórias geradas com sucesso!');
+        });
+
+        document.getElementById('clear-scores-btn').addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja limpar todas as notas?')) {
+                const inputs = document.querySelectorAll('.score-input');
+                inputs.forEach(input => {
+                    input.value = '';
+                    if (input.onchange) {
+                        input.onchange();
+                    }
+                });
+                showSuccess('Notas limpas com sucesso!');
+            }
+        });
+
+        // Salvar pontuações
+        document.getElementById('vt-final-score-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const saveLoading = document.getElementById('save-loading');
+            try {
+                saveLoading.style.display = 'block';
+                
+                const updates = [];
+                
+                qualifiedGymnasts.forEach(gymnast => {
+                    const vault1Total = getVaultTotal(gymnast.id, 'vault1');
+                    const vault2Total = getVaultTotal(gymnast.id, 'vault2');
+                    
+                    const scores = {
+                        vt_final: {
+                            vt_final_vt1_d: parseFloat(document.getElementById(`${gymnast.id}_vault1_d`).value) || 0,
+                            vt_final_vt1_e: parseFloat(document.getElementById(`${gymnast.id}_vault1_e`).value) || 0,
+                            vt_final_vt1_p: parseFloat(document.getElementById(`${gymnast.id}_vault1_p`).value) || 0,
+                            vt_final_vt2_d: parseFloat(document.getElementById(`${gymnast.id}_vault2_d`).value) || 0,
+                            vt_final_vt2_e: parseFloat(document.getElementById(`${gymnast.id}_vault2_e`).value) || 0,
+                            vt_final_vt2_p: parseFloat(document.getElementById(`${gymnast.id}_vault2_p`).value) || 0,
+                            total: (vault1Total + vault2Total) / 2
+                        }
+                    };
+                    
+                    // Merge com scores existentes
+                    const existingScores = gymnast.scores || {};
+                    const mergedScores = { ...existingScores, ...scores };
+                    
+                    updates.push(window.db.collection('new_gymnasts').doc(gymnast.id).update({
+                        scores: mergedScores
+                    }));
+                });
+                
+                await Promise.all(updates);
+                showSuccess('Pontuações da Final de Salto salvas com sucesso!');
+                
+            } catch (error) {
+                console.error('Erro ao salvar pontuações:', error);
+                showError('Erro ao salvar pontuações. Tente novamente.');
+            } finally {
+                saveLoading.style.display = 'none';
+            }
+        });
+
+        // Carregar pontuações existentes da Final VT
+        function loadExistingScores() {
+            qualifiedGymnasts.forEach(gymnast => {
+                const scores = gymnast.scores;
+                if (!scores) return;
+                
+                // Tentar estrutura correta
+                const vtFinalScores = scores.vt_final;
+                let vault1D = 0, vault1E = 0, vault1P = 0;
+                let vault2D = 0, vault2E = 0, vault2P = 0;
+                
+                if (vtFinalScores) {
+                    // Usar estrutura padronizada
+                    vault1D = vtFinalScores.vt_final_vt1_d || 0;
+                    vault1E = vtFinalScores.vt_final_vt1_e || 0;
+                    vault1P = vtFinalScores.vt_final_vt1_p || 0;
+                    vault2D = vtFinalScores.vt_final_vt2_d || 0;
+                    vault2E = vtFinalScores.vt_final_vt2_e || 0;
+                    vault2P = vtFinalScores.vt_final_vt2_p || 0;
+                }
+                
+                // Carregar dados do primeiro salto
+                const d1Input = document.getElementById(`${gymnast.id}_vault1_d`);
+                const e1Input = document.getElementById(`${gymnast.id}_vault1_e`);
+                const p1Input = document.getElementById(`${gymnast.id}_vault1_p`);
+                
+                if (d1Input && vault1D > 0) d1Input.value = vault1D;
+                if (e1Input && vault1E > 0) e1Input.value = vault1E;
+                if (p1Input && vault1P > 0) p1Input.value = vault1P;
+                
+                // Carregar dados do segundo salto
+                const d2Input = document.getElementById(`${gymnast.id}_vault2_d`);
+                const e2Input = document.getElementById(`${gymnast.id}_vault2_e`);
+                const p2Input = document.getElementById(`${gymnast.id}_vault2_p`);
+                
+                if (d2Input && vault2D > 0) d2Input.value = vault2D;
+                if (e2Input && vault2E > 0) e2Input.value = vault2E;
+                if (p2Input && vault2P > 0) p2Input.value = vault2P;
+                
+                // Recalcular totais
+                calculateVaultTotal(gymnast.id, 'vault1');
+                calculateVaultTotal(gymnast.id, 'vault2');
+                
+                // Recalcular totais
+                calculateVaultTotal(gymnast.id, 'vault1');
+                calculateVaultTotal(gymnast.id, 'vault2');
+            });
+        }
+
+        // Sistema de Notificação Global
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            container.appendChild(notification);
+            
+            // Mostrar notificação
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Remover notificação após 4 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+        
+        // Substituir alerts por notificações
+        window.showSuccess = (message) => showNotification(message, 'success');
+        window.showError = (message) => showNotification(message, 'error');
+        window.showWarning = (message) => showNotification(message, 'warning');
+        window.showInfo = (message) => showNotification(message, 'info');
+    </script>
+
+    <!-- Auth Guard -->
+    
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>
+
+

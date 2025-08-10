@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard - Final das Barras Assimétricas | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        .olympic-header {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .olympic-rings {
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 0.3rem;
+            opacity: 0.3;
+        }
+
+        .ring {
+            width: 30px;
+            height: 30px;
+            border: 3px solid;
+            border-radius: 50%;
+        }
+
+        .ring:nth-child(1) { border-color: #0081c8; }
+        .ring:nth-child(2) { border-color: #fcb131; }
+        .ring:nth-child(3) { border-color: #000000; }
+        .ring:nth-child(4) { border-color: #00a651; }
+        .ring:nth-child(5) { border-color: #ee334e; }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .loading i {
+            font-size: 3rem;
+            color: #0066cc;
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .podium-section {
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0066cc;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        .podium {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .podium-position {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            position: relative;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .podium-position:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+
+        .gold {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, #fff9e6, #fff5cc);
+        }
+
+        .silver {
+            border-color: #c0c0c0;
+            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+        }
+
+        .bronze {
+            border-color: #cd7f32;
+            background: linear-gradient(135deg, #faf7f2, #f5f0e8);
+        }
+
+        .position-medal {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .gold .position-medal { color: #ffd700; }
+        .silver .position-medal { color: #c0c0c0; }
+        .bronze .position-medal { color: #cd7f32; }
+
+        .position-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #0066cc;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .gymnast-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0066cc;
+            margin-bottom: 0.5rem;
+        }
+
+        .gymnast-country {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .final-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0066cc;
+            margin: 1rem 0;
+        }
+
+        .score-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .score-component {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        .score-value {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        .qualification-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .full-results {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .results-table th {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .results-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .results-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .rank-1, .rank-2, .rank-3 {
+            font-weight: bold;
+        }
+
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+
+        .country-flag {
+            margin-right: 0.5rem;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,102,204,0.3);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,102,204,0.4);
+        }
+
+        .refresh-btn i {
+            margin-right: 0.5rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .podium {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .header-title {
+                font-size: 1.8rem;
+            }
+            
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .results-table {
+                font-size: 0.9rem;
+            }
+            
+            .results-table th,
+            .results-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="olympic-rings">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+        <h1 class="header-title">Scoreboard - Final UB</h1>
+        <p class="header-subtitle">Jogos Olímpicos Brussels 2025</p>
+    </header>
+
+    <div class="main-container">
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Carregando resultados...</p>
+        </div>
+
+        <div id="podium" class="podium-section" style="display: none;">
+            <h2 class="section-title">🏆 Pódio - Final das Barras Assimétricas</h2>
+            <div class="podium">
+                <!-- Resultados do pódio serão inseridos aqui -->
+            </div>
+        </div>
+
+        <div id="fullResults" class="full-results" style="display: none;">
+            <h3 class="section-title">📊 Resultados Completos</h3>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Ginasta</th>
+                        <th>País</th>
+                        <th>Nota D</th>
+                        <th>Nota E</th>
+                        <th>Penalidade</th>
+                        <th>Total Final</th>
+                        <th>Qualificatória</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <!-- Resultados serão inseridos aqui -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="action-buttons">
+            <button class="refresh-btn" onclick="loadResults()">
+                <i class="fas fa-sync-alt"></i>
+                Atualizar Resultados
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase v8 -->
+    <script src="js/countries.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-init.js"></script>
+    
+    <script>
+        // Aguardar Firebase estar pronto
+        function initializeWhenReady() {
+            if (window.db) {
+                loadResults();
+            } else {
+                setTimeout(initializeWhenReady, 100);
+            }
+        }
+        
+        // Inicializar quando DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWhenReady);
+        } else {
+            initializeWhenReady();
+        }
+        
+        async function loadResults() {
+            try {
+                console.log('Carregando resultados UB Final...');
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('podium').style.display = 'none';
+                document.getElementById('fullResults').style.display = 'none';
+
+                // Usar onSnapshot para updates em tempo real
+                window.db.collection('new_gymnasts').onSnapshot((snapshot) => {
+                    const allGymnasts = [];
+                    
+                    // Primeiro, determinar quem está qualificada para a final UB
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        const qualifiersScores = data.scores?.qualifiers;
+                        
+                        if (qualifiersScores && qualifiersScores.qualifiers_ub_d !== undefined) {
+                            const ubScore = Math.max(0, (qualifiersScores.qualifiers_ub_d || 0) + (qualifiersScores.qualifiers_ub_e || 0) - (qualifiersScores.qualifiers_ub_p || 0));
+                            allGymnasts.push({ ...data, id: doc.id, ubScore: ubScore });
+                        }
+                    });
+
+                    allGymnasts.sort((a, b) => b.ubScore - a.ubScore);
+
+                    // Aplicar regra de máximo 2 por país
+                    const qualifiedGymnasts = [];
+                    const countryCount = {};
+
+                    for (const gymnast of allGymnasts) {
+                        if (qualifiedGymnasts.length >= 8) break;
+                        
+                        if (!countryCount[gymnast.country]) {
+                            countryCount[gymnast.country] = 0;
+                        }
+                        
+                        if (countryCount[gymnast.country] < 2) {
+                            qualifiedGymnasts.push(gymnast);
+                            countryCount[gymnast.country]++;
+                        }
+                    }
+                    
+                    console.log('Ginastas qualificadas para UB Final:', qualifiedGymnasts.length);
+                    
+                    // Processar resultados apenas das qualificadas
+                    const gymnastsData = [];
+                    
+                    qualifiedGymnasts.forEach((data) => {
+                        const ubFinalScores = data.scores?.ub_final;
+                        const qualifiersScores = data.scores?.qualifiers;
+                        
+                        // Calcular score da final UB
+                        const dScore = ubFinalScores?.ub_final_d || 0;
+                        const eScore = ubFinalScores?.ub_final_e || 0;
+                        const penalty = ubFinalScores?.ub_final_p || 0;
+                        const totalUBFinal = dScore + eScore - penalty;
+                        
+                        // Score das qualificatórias para referência
+                        let qualifiersScore = 0;
+                        if (qualifiersScores) {
+                            qualifiersScore = (qualifiersScores.qualifiers_ub_d || 0) + (qualifiersScores.qualifiers_ub_e || 0) - (qualifiersScores.qualifiers_ub_p || 0);
+                        }
+                        
+                        gymnastsData.push({
+                            id: data.id,
+                            name: data.name,
+                            country: data.country,
+                            dScore: dScore,
+                            eScore: eScore,
+                            penalty: penalty,
+                            total: totalUBFinal,
+                            qualifyingScore: qualifiersScore
+                        });
+                    });
+
+                    console.log('Dados coletados:', gymnastsData);
+
+                    // Ordenar por total da final UB (decrescente)
+                    gymnastsData.sort((a, b) => b.total - a.total);
+
+                    displayResults(gymnastsData);
+                    
+                }, (error) => {
+                    console.error('Erro ao carregar resultados:', error);
+                    document.getElementById('loading').innerHTML = '<p>Erro ao carregar dados. Tente novamente.</p>';
+                });
+            } catch (error) {
+                console.error('Erro ao carregar resultados:', error);
+                document.getElementById('loading').innerHTML = '<p>Erro ao carregar dados. Tente novamente.</p>';
+            }
+        }
+
+        function displayResults(results) {
+            displayPodium(results.slice(0, 3));
+            displayFullResults(results);
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('podium').style.display = 'block';
+            document.getElementById('fullResults').style.display = 'block';
+        }
+
+        function displayPodium(topThree) {
+            const podiumContainer = document.querySelector('.podium');
+            podiumContainer.innerHTML = '';
+
+            const positions = ['gold', 'silver', 'bronze'];
+            const medals = ['🥇', '🥈', '🥉'];
+
+            topThree.forEach((gymnast, index) => {
+                const positionDiv = document.createElement('div');
+                positionDiv.className = `podium-position ${positions[index]}`;
+                positionDiv.innerHTML = `
+                    <div class="position-number">${index + 1}</div>
+                    <div class="position-medal">${medals[index]}</div>
+                    <div class="gymnast-name">${gymnast.name}</div>
+                    <div class="gymnast-country">
+                        <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                        ${gymnast.country}
+                    </div>
+                    <div class="final-score">${gymnast.total.toFixed(3)}</div>
+                    <div class="score-details">
+                        <div class="score-component">
+                            <div class="score-label">Nota D</div>
+                            <div class="score-value">${gymnast.dScore.toFixed(3)}</div>
+                        </div>
+                        <div class="score-component">
+                            <div class="score-label">Nota E</div>
+                            <div class="score-value">${gymnast.eScore.toFixed(3)}</div>
+                        </div>
+                        <div class="score-component">
+                            <div class="score-label">Penalidade</div>
+                            <div class="score-value">${gymnast.penalty.toFixed(3)}</div>
+                        </div>
+                    </div>
+                    <div class="qualification-note">
+                        Qualificatória: ${gymnast.qualifyingScore.toFixed(3)}
+                    </div>
+                `;
+                podiumContainer.appendChild(positionDiv);
+            });
+        }
+
+        function displayFullResults(results) {
+            const tbody = document.getElementById('resultsBody');
+            tbody.innerHTML = '';
+
+            results.forEach((gymnast, index) => {
+                const row = document.createElement('tr');
+                row.className = `rank-${index + 1}`;
+                
+                row.innerHTML = `
+                    <td class="${index < 3 ? `rank-${index + 1}` : ''}">${index + 1}°</td>
+                    <td>${gymnast.name}</td>
+                    <td>
+                        <span class="fi fi-${getCountryCode(gymnast.country)} country-flag"></span>
+                        ${gymnast.country}
+                    </td>
+                    <td>${gymnast.dScore.toFixed(3)}</td>
+                    <td>${gymnast.eScore.toFixed(3)}</td>
+                    <td>${gymnast.penalty.toFixed(3)}</td>
+                    <td><strong>${gymnast.total.toFixed(3)}</strong></td>
+                    <td>${gymnast.qualifyingScore.toFixed(3)}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function getCountryCode(country) {
+            const codes = {
+                'Brasil': 'br',
+                'Brazil': 'br',
+                'BRA': 'br',
+                'Estados Unidos': 'us',
+                'United States': 'us',
+                'USA': 'us',
+                'China': 'cn',
+                'CHN': 'cn',
+                'Rússia': 'ru',
+                'Russia': 'ru',
+                'RUS': 'ru',
+                'França': 'fr',
+                'France': 'fr',
+                'FRA': 'fr',
+                'Alemanha': 'de',
+                'Germany': 'de',
+                'GER': 'de',
+                'Japão': 'jp',
+                'Japan': 'jp',
+                'JPN': 'jp',
+                'Canadá': 'ca',
+                'Canada': 'ca',
+                'CAN': 'ca',
+                'Austrália': 'au',
+                'Australia': 'au',
+                'AUS': 'au',
+                'Reino Unido': 'gb',
+                'United Kingdom': 'gb',
+                'GBR': 'gb',
+                'Itália': 'it',
+                'Italy': 'it',
+                'ITA': 'it',
+                'Espanha': 'es',
+                'Spain': 'es',
+                'ESP': 'es',
+                'Holanda': 'nl',
+                'Netherlands': 'nl',
+                'NED': 'nl',
+                'Bélgica': 'be',
+                'Belgium': 'be',
+                'BEL': 'be',
+                'Romênia': 'ro',
+                'Romania': 'ro',
+                'ROU': 'ro',
+                'Ucrânia': 'ua',
+                'Ukraine': 'ua',
+                'UKR': 'ua'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Tornar função global para o botão
+        window.loadResults = loadResults;
+
+        // Carregar resultados será feito pelo initializeWhenReady
+
+        // Auto-refresh a cada 30 segundos
+        setInterval(() => {
+            if (window.loadResults) window.loadResults();
+        }, 30000);
+    </script>
+</body>
+</html>

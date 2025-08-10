@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Pontuações - Final UB | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        /* Sistema de Notificações */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .notification {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid #28a745;
+            max-width: 350px;
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideIn 0.3s ease forwards;
+            pointer-events: auto;
+        }
+
+        .notification.error {
+            border-left-color: #dc3545;
+        }
+
+        .notification.warning {
+            border-left-color: #ffc107;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Seções de informação */
+        .info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .qualified-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .qualified-gymnast {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .gymnast-position {
+            background: #1e3c72;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .gymnast-details h4 {
+            color: #1e3c72;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .gymnast-country {
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.2rem;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e3e3e3;
+            border-top: 4px solid #1e3c72;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Formulário de edição */
+        .edit-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .rotation-section {
+            margin-bottom: 3rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+        }
+
+        .rotation-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .gymnasts-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .gymnast-row {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #1e3c72;
+        }
+
+        .gymnast-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .gymnast-name-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .gymnast-name-section h4 {
+            color: #1e3c72;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .scores-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .score-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .score-label {
+            font-weight: 600;
+            color: #1e3c72;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .score-input {
+            padding: 0.7rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+            width: 100%;
+            max-width: 100px;
+        }
+
+        .score-input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+
+        .total-display {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.1rem;
+            min-width: 100px;
+        }
+
+        /* Botões */
+        .form-actions {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .save-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .save-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Mensagens de erro/sucesso */
+        .error-message, .success-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .title-main {
+                font-size: 2rem;
+            }
+
+            .scores-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .score-group {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .score-input {
+                max-width: 80px;
+            }
+
+            .gymnast-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notificação fixo no canto superior direito -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Edição de Pontuações
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <button id="logout-btn" class="nav-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Editar Pontuações</h1>
+            <p class="title-phase">Final Individual Barras Assimétricas (UB)</p>
+        </div>
+
+        <div class="info-section">
+            <h3 style="color: #1e3c72; margin-bottom: 1rem;">Qualificadas para a Final UB</h3>
+            <p style="color: #666;">8 melhores ginastas do UB nas qualificatórias (máx. 2 por país)</p>
+            <div id="qualified-gymnasts" class="qualified-list">
+                <!-- Será preenchido pelo JavaScript -->
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Carregando dados das ginastas...</p>
+        </div>
+
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        <div id="success-message" class="success-message" style="display: none;"></div>
+
+        <form id="ub-final-score-form" class="edit-form" style="display: none;">
+            <div id="rotations-container">
+                <!-- Rotações serão geradas pelo JavaScript -->
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="save-btn">
+                    <i class="fas fa-save"></i> Salvar Pontuações
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Firebase Scripts -->
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            container.appendChild(notification);
+            
+            // Mostrar notificação
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Remover notificação após 4 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+        
+        // Substituir alerts por notificações
+        window.showSuccess = (message) => showNotification(message, 'success');
+        window.showError = (message) => showNotification(message, 'error');
+        window.showWarning = (message) => showNotification(message, 'warning');
+        window.showInfo = (message) => showNotification(message, 'info');
+    </script>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="js/firebase-init.js"></script>
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        const auth = window.auth;
+        const db = window.db;
+
+        let qualifiedGymnasts = [];
+
+        // Verificar autenticação
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const userRole = localStorage.getItem('userRole');
+            if (userRole !== 'admin') {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            // Usuário autenticado, carregar dados
+            loadQualifiedGymnasts();
+        });
+
+        // Carregar ginastas qualificadas com sincronização em tempo real
+        function loadQualifiedGymnasts() {
+            try {
+                // Usar onSnapshot para sincronização em tempo real
+                const unsubscribe = db.collection('new_gymnasts').onSnapshot((snapshot) => {
+                    console.log('Carregando ginastas qualificadas para UB Final...');
+                    
+                    // Primeiro, tentar usar ginastas marcadas como qualificadas para UB final
+                    let qualifiedFromFlag = [];
+                    
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        if (data.ub_final_qualified === true) {
+                            qualifiedFromFlag.push({
+                                id: doc.id,
+                                name: data.name,
+                                country: data.country,
+                                qualifyingScore: 0, // Será preenchido depois se necessário
+                                scores: data.scores
+                            });
+                        }
+                    });
+                    
+                    if (qualifiedFromFlag.length > 0) {
+                        qualifiedGymnasts = qualifiedFromFlag;
+                        console.log('Usando ginastas marcadas como qualificadas:', qualifiedGymnasts.length);
+                    } else {
+                        // Fallback: usar as 8 melhores do UB das qualificatórias
+                        console.log('[UB Final] Nenhuma ginasta marcada, usando fallback...');
+                        const allGymnasts = [];
+                        
+                        snapshot.forEach((doc) => {
+                            const data = doc.data();
+                            const qualifiersScores = data.scores?.qualifiers;
+                            if (qualifiersScores) {
+                                const ubScore = Math.max(0, (qualifiersScores.qualifiers_ub_d || 0) + (qualifiersScores.qualifiers_ub_e || 0) - (qualifiersScores.qualifiers_ub_p || 0));
+                                if (ubScore > 0) {
+                                    allGymnasts.push({
+                                        id: doc.id,
+                                        name: data.name,
+                                        country: data.country,
+                                        qualifyingScore: ubScore,
+                                        scores: data.scores
+                                    });
+                                }
+                            }
+                        });
+                        
+                        // Se ainda não há dados, usar modo de teste
+                        if (allGymnasts.length === 0) {
+                            console.warn('[UB Final] Nenhuma ginasta com pontuações encontrada. Usando todas as ginastas para teste.');
+                            const testGymnasts = [];
+                            snapshot.forEach((doc) => {
+                                const data = doc.data();
+                                testGymnasts.push({
+                                    id: doc.id,
+                                    name: data.name,
+                                    country: data.country,
+                                    qualifyingScore: 12 + Math.random() * 3, // Pontuação entre 12-15
+                                    scores: data.scores
+                                });
+                            });
+                            
+                            // Ordenar por pontuação e pegar as 8 melhores
+                            testGymnasts.sort((a, b) => b.qualifyingScore - a.qualifyingScore);
+                            qualifiedGymnasts = testGymnasts.slice(0, 8);
+                        } else {
+                            // Ordenar por pontuação e aplicar regra de máximo 2 por país
+                            allGymnasts.sort((a, b) => b.qualifyingScore - a.qualifyingScore);
+                            
+                            const countryCount = {};
+                            qualifiedGymnasts = allGymnasts.filter(gymnast => {
+                                if (!countryCount[gymnast.country]) {
+                                    countryCount[gymnast.country] = 0;
+                                }
+                                if (countryCount[gymnast.country] < 2) {
+                                    countryCount[gymnast.country]++;
+                                    return true;
+                                }
+                                return false;
+                            }).slice(0, 8); // Máximo 8 ginastas
+                        }
+                    }
+
+                    displayGymnasts();
+                    
+                }, (error) => {
+                    console.error('Erro ao carregar ginastas qualificadas:', error);
+                });
+                
+                // Salvar a função unsubscribe para cleanup
+                window.gymnastsUnsubscribe = unsubscribe;
+                
+            } catch (error) {
+                console.error('Erro ao carregar ginastas qualificadas:', error);
+            }
+        }
+
+        async function displayGymnasts() {
+            const container = document.getElementById('scoresContainer');
+            container.innerHTML = '';
+
+            for (let i = 0; i < qualifiedGymnasts.length; i++) {
+                const gymnast = qualifiedGymnasts[i];
+                
+                // Carregar notas existentes
+                const existingScores = await loadExistingScores(gymnast.id);
+                
+                const gymnastCard = document.createElement('div');
+                gymnastCard.className = 'gymnast-card';
+                gymnastCard.innerHTML = `
+                    <div class="gymnast-info">
+                        <div>
+                            <div class="gymnast-name">${gymnast.name}</div>
+                            <div class="gymnast-country">
+                                <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                                ${gymnast.country}
+                            </div>
+                        </div>
+                        <div class="qualification-position">
+                            Qualificação: ${i + 1}º (${gymnast.qualifyingScore.toFixed(3)})
+                        </div>
+                    </div>
+                    
+                    <div class="scores-section">
+                        <div class="score-input-group">
+                            <label class="score-label">Nota D</label>
+                            <input type="number" step="0.001" min="0" max="20" 
+                                   class="score-input d-score" 
+                                   placeholder="0.000"
+                                   value="${existingScores.dScore || ''}"
+                                   data-gymnast-id="${gymnast.id}">
+                        </div>
+                        
+                        <div class="score-input-group">
+                            <label class="score-label">Nota E</label>
+                            <input type="number" step="0.001" min="0" max="10" 
+                                   class="score-input e-score" 
+                                   placeholder="0.000"
+                                   value="${existingScores.eScore || ''}"
+                                   data-gymnast-id="${gymnast.id}">
+                        </div>
+                        
+                        <div class="score-input-group">
+                            <label class="score-label">Penalidade</label>
+                            <input type="number" step="0.001" min="0" max="10" 
+                                   class="score-input penalty" 
+                                   placeholder="0.000"
+                                   value="${existingScores.penalty || ''}"
+                                   data-gymnast-id="${gymnast.id}">
+                        </div>
+                    </div>
+                    
+                    <div class="total-score" id="total-${gymnast.id}">
+                        Total: ${existingScores.total ? existingScores.total.toFixed(3) : '0.000'}
+                    </div>
+                    
+                    <button class="save-btn" onclick="saveScore('${gymnast.id}', '${gymnast.name}', '${gymnast.country}')">
+                        <i class="fas fa-save"></i> Salvar Nota
+                    </button>
+                `;
+                
+                container.appendChild(gymnastCard);
+            }
+
+            // Adicionar event listeners para cálculo automático
+            document.querySelectorAll('.score-input').forEach(input => {
+                input.addEventListener('input', calculateTotal);
+            });
+
+            document.getElementById('loading').style.display = 'none';
+            container.style.display = 'grid';
+        }
+
+        async function loadExistingScores(gymnastId) {
+            try {
+                const scoreDoc = await db.collection('scores').doc(`ub-final-${gymnastId}`).get();
+                if (scoreDoc.exists()) {
+                    return scoreDoc.data();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar notas existentes:', error);
+            }
+            return {};
+        }
+
+        function calculateTotal(event) {
+            const gymnastId = event.target.dataset.gymnastId;
+            const dScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].d-score`).value) || 0;
+            const eScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].e-score`).value) || 0;
+            const penalty = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].penalty`).value) || 0;
+            
+            const total = Math.max(0, dScore + eScore - penalty);
+            document.getElementById(`total-${gymnastId}`).textContent = `Total: ${total.toFixed(3)}`;
+        }
+
+        window.saveScore = async function(gymnastId, gymnastName, country) {
+            try {
+                const dScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].d-score`).value) || 0;
+                const eScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].e-score`).value) || 0;
+                const penalty = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].penalty`).value) || 0;
+                const total = Math.max(0, dScore + eScore - penalty);
+
+                await db.collection('scores').doc(`ub-final-${gymnastId}`).set({
+                    gymnastId,
+                    gymnastName,
+                    country,
+                    apparatus: 'UB',
+                    phase: 'ub-final',
+                    dScore,
+                    eScore,
+                    penalty,
+                    total,
+                    timestamp: new Date(),
+                    updatedBy: auth.currentUser?.email || 'unknown'
+                });
+
+                // Feedback visual
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
+                btn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Erro ao salvar nota:', error);
+                alert('Erro ao salvar nota. Tente novamente.');
+            }
+        };
+
+        function getCountryCode(country) {
+            const codes = {
+                'BRA': 'br',
+                'USA': 'us',
+                'CHN': 'cn',
+                'ITA': 'it',
+                'FRA': 'fr',
+                'GER': 'de',
+                'GBR': 'gb',
+                'JPN': 'jp',
+                'RUS': 'ru',
+                'CAN': 'ca',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Carregar dados ao iniciar
+        loadQualifiedGymnasts();
+    </script>
+
+    <script src="js/auth-guard.js">    </script>
+
+    <!-- Auth Guard -->
+    
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>
+
+

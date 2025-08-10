@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Ginastas | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Anéis olímpicos mini */
+        .olympic-rings-mini {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .ring-mini {
+            width: 20px;
+            height: 20px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #f4c300; }
+        .ring-mini:nth-child(3) { border-color: #000; }
+        .ring-mini:nth-child(4) { border-color: #009f3d; }
+        .ring-mini:nth-child(5) { border-color: #df0024; }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Seção de controles */
+        .controls-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        .filter-select {
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            min-width: 150px;
+        }
+
+        .olympic-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+        }
+
+        .olympic-button.add-button {
+            background: linear-gradient(45deg, #2ed573, #5f27cd);
+        }
+
+        .olympic-button.danger-button {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+        }
+
+        /* Grid de ginastas */
+        .gymnasts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gymnast-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gymnast-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .gymnast-card.editing {
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        .gymnast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .gymnast-flag {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .gymnast-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 0.3rem;
+        }
+
+        .gymnast-country {
+            color: #666;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .gymnast-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+        }
+
+        .action-btn.edit-btn:hover {
+            color: #2a5298;
+        }
+
+        .action-btn.delete-btn:hover {
+            color: #ff4757;
+        }
+
+        .action-btn.save-btn {
+            color: #2ed573;
+        }
+
+        .action-btn.cancel-btn {
+            color: #ff4757;
+        }
+
+        /* Formulário de edição */
+        .edit-form {
+            display: none;
+        }
+
+        .edit-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Estatísticas */
+        .stats-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(30, 60, 114, 0.05);
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1e3c72;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Loading e feedback */
+        .loading {
+            display: none;
+            text-align: center;
+            color: #2a5298;
+            font-weight: 600;
+            margin: 2rem 0;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #2ed573, #5f27cd);
+            color: white;
+        }
+
+        .error-message {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+            color: white;
+        }
+
+        /* Modal para adicionar ginasta */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #ff4757;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .search-input, .filter-select {
+                width: 100%;
+            }
+            
+            .gymnasts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Gerenciar Ginastas
+            </div>
+            <nav class="header-nav">
+                <a href="control.html" class="nav-btn">
+                    <i class="fas fa-cog"></i> Controle
+                </a>
+                <button id="logout-btn" class="nav-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Gerenciar Ginastas</h1>
+            <p class="title-phase">Administração de Dados</p>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="stats-section">
+            <h3 style="color: #1e3c72; margin-bottom: 1rem; text-align: center;">Estatísticas</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-gymnasts">0</div>
+                    <div class="stat-label">Total de Ginastas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="total-countries">0</div>
+                    <div class="stat-label">Países</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="gymnasts-with-scores">0</div>
+                    <div class="stat-label">Com Pontuações</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="gymnasts-without-scores">0</div>
+                    <div class="stat-label">Sem Pontuações</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls-section">
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Buscar ginasta por nome...">
+                <select id="country-filter" class="filter-select">
+                    <option value="">Todos os países</option>
+                </select>
+                <button id="add-gymnast-btn" class="olympic-button add-button">
+                    <i class="fas fa-plus"></i> Nova Ginasta
+                </button>
+                <button id="export-data-btn" class="olympic-button">
+                    <i class="fas fa-download"></i> Exportar
+                </button>
+            </div>
+        </div>
+
+        <div id="success-message" class="success-message"></div>
+        <div id="error-message" class="error-message"></div>
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            Carregando ginastas...
+        </div>
+
+        <!-- Grid de ginastas -->
+        <div id="gymnasts-grid" class="gymnasts-grid" style="display: none;">
+            <!-- Será preenchido pelo JavaScript -->
+        </div>
+    </main>
+
+    <!-- Modal para adicionar/editar ginasta -->
+    <div id="gymnast-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Nova Ginasta</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <form id="gymnast-form">
+                <div class="form-group">
+                    <label class="form-label" for="gymnast-name">Nome Completo:</label>
+                    <input type="text" id="gymnast-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="gymnast-country">País:</label>
+                    <select id="gymnast-country" class="form-select" required>
+                        <option value="">Selecione um país</option>
+                        <option value="BRA">Brasil (BRA)</option>
+                        <option value="USA">Estados Unidos (USA)</option>
+                        <option value="CHN">China (CHN)</option>
+                        <option value="ITA">Itália (ITA)</option>
+                        <option value="FRA">França (FRA)</option>
+                        <option value="GER">Alemanha (GER)</option>
+                        <option value="GBR">Reino Unido (GBR)</option>
+                        <option value="JPN">Japão (JPN)</option>
+                        <option value="RUS">Rússia (RUS)</option>
+                        <option value="CAN">Canadá (CAN)</option>
+                        <option value="AUS">Austrália (AUS)</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+                    <button type="button" id="cancel-btn" class="olympic-button" style="background: #666;">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="submit" class="olympic-button">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="olympic-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Jogos Olímpicos Brussels. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase v8 Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-init.js"></script>
+
+    <script>
+        // Aguardar Firebase estar completamente disponível
+        window.addEventListener('load', () => {
+            // Firebase já inicializado via firebase-init.js (globals)
+            const auth = window.auth;
+            const db = window.db;
+            
+            // Verificar autenticação
+            auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const userRole = localStorage.getItem('userRole');
+            if (userRole !== 'admin') {
+                alert('Acesso negado. Apenas administradores podem gerenciar ginastas.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            loadGymnasts();
+        });
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await auth.signOut();
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('userEmail');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+            }
+        });
+
+        let gymnastsData = [];
+        let filteredGymnasts = [];
+        let editingGymnastId = null;
+
+        // Carregar ginastas
+        async function loadGymnasts() {
+            const loading = document.getElementById('loading');
+            const grid = document.getElementById('gymnasts-grid');
+            
+            try {
+                loading.style.display = 'block';
+                grid.style.display = 'none';
+                
+                const gymnastsSnapshot = await db.collection('new_gymnasts').get();
+                gymnastsData = [];
+                
+                gymnastsSnapshot.forEach((doc) => {
+                    gymnastsData.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Ordenar por nome
+                gymnastsData.sort((a, b) => a.name.localeCompare(b.name));
+                
+                filteredGymnasts = [...gymnastsData];
+                renderGymnasts();
+                updateStats();
+                updateCountryFilter();
+                
+                loading.style.display = 'none';
+                grid.style.display = 'grid';
+                
+            } catch (error) {
+                console.error('Erro ao carregar ginastas:', error);
+                showError('Erro ao carregar dados das ginastas.');
+                loading.style.display = 'none';
+            }
+        }
+
+        // Renderizar ginastas
+        function renderGymnasts() {
+            const grid = document.getElementById('gymnasts-grid');
+            grid.innerHTML = '';
+            
+            if (filteredGymnasts.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #666;">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <h3>Nenhuma ginasta encontrada</h3>
+                        <p>Tente ajustar os filtros de busca.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredGymnasts.forEach(gymnast => {
+                const card = document.createElement('div');
+                card.className = 'gymnast-card';
+                card.id = `gymnast-${gymnast.id}`;
+                
+                const hasScores = gymnast.scores && Object.keys(gymnast.scores).length > 0;
+                
+                card.innerHTML = `
+                    <div class="gymnast-header">
+                        <div>
+                            <div class="gymnast-name" id="name-display-${gymnast.id}">${gymnast.name}</div>
+                            <div class="gymnast-country" id="country-display-${gymnast.id}">
+                                <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                                ${getCountryName(gymnast.country)} (${gymnast.country})
+                            </div>
+                        </div>
+                        <div class="gymnast-actions">
+                            <button class="action-btn edit-btn" onclick="editGymnast('${gymnast.id}')" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteGymnast('${gymnast.id}')" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="gymnast-info" id="info-display-${gymnast.id}">
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong>Status:</strong> 
+                            <span style="color: ${hasScores ? '#2ed573' : '#ff4757'};">
+                                ${hasScores ? 'Com pontuações' : 'Sem pontuações'}
+                            </span>
+                        </div>
+                        ${hasScores ? `
+                            <div style="font-size: 0.9rem; color: #666;">
+                                Competições: ${Object.keys(gymnast.scores).join(', ')}
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="edit-form" id="edit-form-${gymnast.id}">
+                        <div class="form-group">
+                            <label class="form-label">Nome:</label>
+                            <input type="text" class="form-input" id="edit-name-${gymnast.id}" value="${gymnast.name}">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">País:</label>
+                            <select class="form-select" id="edit-country-${gymnast.id}">
+                                <option value="BRA" ${gymnast.country === 'BRA' ? 'selected' : ''}>Brasil (BRA)</option>
+                                <option value="USA" ${gymnast.country === 'USA' ? 'selected' : ''}>Estados Unidos (USA)</option>
+                                <option value="CHN" ${gymnast.country === 'CHN' ? 'selected' : ''}>China (CHN)</option>
+                                <option value="ITA" ${gymnast.country === 'ITA' ? 'selected' : ''}>Itália (ITA)</option>
+                                <option value="FRA" ${gymnast.country === 'FRA' ? 'selected' : ''}>França (FRA)</option>
+                                <option value="GER" ${gymnast.country === 'GER' ? 'selected' : ''}>Alemanha (GER)</option>
+                                <option value="GBR" ${gymnast.country === 'GBR' ? 'selected' : ''}>Reino Unido (GBR)</option>
+                                <option value="JPN" ${gymnast.country === 'JPN' ? 'selected' : ''}>Japão (JPN)</option>
+                                <option value="RUS" ${gymnast.country === 'RUS' ? 'selected' : ''}>Rússia (RUS)</option>
+                                <option value="CAN" ${gymnast.country === 'CAN' ? 'selected' : ''}>Canadá (CAN)</option>
+                                <option value="AUS" ${gymnast.country === 'AUS' ? 'selected' : ''}>Austrália (AUS)</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
+                            <button class="action-btn save-btn" onclick="saveGymnast('${gymnast.id}')" title="Salvar">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn cancel-btn" onclick="cancelEdit('${gymnast.id}')" title="Cancelar">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Atualizar estatísticas
+        function updateStats() {
+            const totalGymnasts = gymnastsData.length;
+            const uniqueCountries = new Set(gymnastsData.map(g => g.country)).size;
+            const gymnastsWithScores = gymnastsData.filter(g => g.scores && Object.keys(g.scores).length > 0).length;
+            const gymnastsWithoutScores = totalGymnasts - gymnastsWithScores;
+            
+            document.getElementById('total-gymnasts').textContent = totalGymnasts;
+            document.getElementById('total-countries').textContent = uniqueCountries;
+            document.getElementById('gymnasts-with-scores').textContent = gymnastsWithScores;
+            document.getElementById('gymnasts-without-scores').textContent = gymnastsWithoutScores;
+        }
+
+        // Atualizar filtro de países
+        function updateCountryFilter() {
+            const select = document.getElementById('country-filter');
+            const countries = [...new Set(gymnastsData.map(g => g.country))].sort();
+            
+            // Limpar opções existentes (exceto "Todos os países")
+            select.innerHTML = '<option value="">Todos os países</option>';
+            
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                select.appendChild(option);
+            });
+        }
+
+        // Filtrar ginastas
+        function filterGymnasts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const selectedCountry = document.getElementById('country-filter').value;
+            
+            filteredGymnasts = gymnastsData.filter(gymnast => {
+                const matchesSearch = gymnast.name.toLowerCase().includes(searchTerm);
+                const matchesCountry = !selectedCountry || gymnast.country === selectedCountry;
+                return matchesSearch && matchesCountry;
+            });
+            
+            renderGymnasts();
+        }
+
+        // Editar ginasta
+        window.editGymnast = function(gymnastId) {
+            if (editingGymnastId && editingGymnastId !== gymnastId) {
+                cancelEdit(editingGymnastId);
+            }
+            
+            editingGymnastId = gymnastId;
+            const card = document.getElementById(`gymnast-${gymnastId}`);
+            const infoDisplay = document.getElementById(`info-display-${gymnastId}`);
+            const editForm = document.getElementById(`edit-form-${gymnastId}`);
+            
+            card.classList.add('editing');
+            infoDisplay.style.display = 'none';
+            editForm.classList.add('active');
+        };
+
+        // Cancelar edição
+        window.cancelEdit = function(gymnastId) {
+            editingGymnastId = null;
+            const card = document.getElementById(`gymnast-${gymnastId}`);
+            const infoDisplay = document.getElementById(`info-display-${gymnastId}`);
+            const editForm = document.getElementById(`edit-form-${gymnastId}`);
+            
+            card.classList.remove('editing');
+            infoDisplay.style.display = 'block';
+            editForm.classList.remove('active');
+            
+            // Restaurar valores originais
+            const gymnast = gymnastsData.find(g => g.id === gymnastId);
+            document.getElementById(`edit-name-${gymnastId}`).value = gymnast.name;
+            document.getElementById(`edit-country-${gymnastId}`).value = gymnast.country;
+        };
+
+        // Salvar ginasta
+        window.saveGymnast = async function(gymnastId) {
+            const newName = document.getElementById(`edit-name-${gymnastId}`).value.trim();
+            const newCountry = document.getElementById(`edit-country-${gymnastId}`).value;
+            
+            if (!newName) {
+                showError('Nome é obrigatório.');
+                return;
+            }
+            
+            if (!newCountry) {
+                showError('País é obrigatório.');
+                return;
+            }
+            
+            try {
+                const gymnast = gymnastsData.find(g => g.id === gymnastId);
+                const updatedGymnast = { ...gymnast, name: newName, country: newCountry };
+                
+                await db.collection('new_gymnasts').doc(gymnastId).set(updatedGymnast);
+                
+                // Atualizar dados locais
+                const index = gymnastsData.findIndex(g => g.id === gymnastId);
+                gymnastsData[index] = updatedGymnast;
+                
+                // Atualizar displays
+                document.getElementById(`name-display-${gymnastId}`).textContent = newName;
+                document.getElementById(`country-display-${gymnastId}`).innerHTML = `
+                    <span class="fi fi-${getCountryCode(newCountry)}"></span>
+                    ${getCountryName(newCountry)} (${newCountry})
+                `;
+                
+                cancelEdit(gymnastId);
+                updateStats();
+                updateCountryFilter();
+                filterGymnasts();
+                
+                showSuccess(`Ginasta ${newName} atualizada com sucesso!`);
+                
+            } catch (error) {
+                console.error('Erro ao salvar ginasta:', error);
+                showError('Erro ao salvar alterações.');
+            }
+        };
+
+        // Excluir ginasta
+        window.deleteGymnast = async function(gymnastId) {
+            const gymnast = gymnastsData.find(g => g.id === gymnastId);
+            
+            if (!confirm(`Tem certeza que deseja excluir a ginasta ${gymnast.name}?\n\nISTO IRÁ REMOVER TODAS AS PONTUAÇÕES E DADOS RELACIONADOS!`)) {
+                return;
+            }
+            
+            try {
+                await db.collection('new_gymnasts').doc(gymnastId).delete();
+                
+                // Remover dos dados locais
+                gymnastsData = gymnastsData.filter(g => g.id !== gymnastId);
+                filteredGymnasts = filteredGymnasts.filter(g => g.id !== gymnastId);
+                
+                renderGymnasts();
+                updateStats();
+                updateCountryFilter();
+                
+                showSuccess(`Ginasta ${gymnast.name} removida com sucesso!`);
+                
+            } catch (error) {
+                console.error('Erro ao excluir ginasta:', error);
+                showError('Erro ao excluir ginasta.');
+            }
+        };
+
+        // Modal para nova ginasta
+        const modal = document.getElementById('gymnast-modal');
+        const addBtn = document.getElementById('add-gymnast-btn');
+        const closeBtn = document.getElementById('close-modal');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const form = document.getElementById('gymnast-form');
+        
+        addBtn.addEventListener('click', () => {
+            document.getElementById('modal-title').textContent = 'Nova Ginasta';
+            form.reset();
+            modal.style.display = 'block';
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        cancelBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Salvar nova ginasta
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('gymnast-name').value.trim();
+            const country = document.getElementById('gymnast-country').value;
+            
+            if (!name || !country) {
+                showError('Todos os campos são obrigatórios.');
+                return;
+            }
+            
+            // Verificar se já existe ginasta com este nome
+            if (gymnastsData.some(g => g.name.toLowerCase() === name.toLowerCase())) {
+                showError('Já existe uma ginasta com este nome.');
+                return;
+            }
+            
+            try {
+                const newGymnast = {
+                    name: name,
+                    country: country,
+                    scores: {}
+                };
+                
+                const newDocRef = await db.collection('new_gymnasts').add(newGymnast);
+                
+                // Adicionar aos dados locais
+                newGymnast.id = newDocRef.id;
+                gymnastsData.push(newGymnast);
+                gymnastsData.sort((a, b) => a.name.localeCompare(b.name));
+                
+                filterGymnasts();
+                updateStats();
+                updateCountryFilter();
+                
+                modal.style.display = 'none';
+                showSuccess(`Ginasta ${name} adicionada com sucesso!`);
+                
+            } catch (error) {
+                console.error('Erro ao adicionar ginasta:', error);
+                showError('Erro ao adicionar ginasta.');
+            }
+        });
+
+        // Event listeners para filtros
+        document.getElementById('search-input').addEventListener('input', filterGymnasts);
+        document.getElementById('country-filter').addEventListener('change', filterGymnasts);
+
+        // Exportar dados
+        document.getElementById('export-data-btn').addEventListener('click', () => {
+            const dataStr = JSON.stringify(gymnastsData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `gymnasts_${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showSuccess('Dados exportados com sucesso!');
+        });
+
+        // Função auxiliar para obter código do país
+        function getCountryCode(country) {
+            const codes = {
+                'BRA': 'br',
+                'USA': 'us',
+                'CHN': 'cn',
+                'ITA': 'it',
+                'FRA': 'fr',
+                'GER': 'de',
+                'GBR': 'gb',
+                'JPN': 'jp',
+                'RUS': 'ru',
+                'CAN': 'ca',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Função auxiliar para obter nome do país
+        function getCountryName(countryCode) {
+            const names = {
+                'BRA': 'Brasil',
+                'USA': 'Estados Unidos',
+                'CHN': 'China',
+                'ITA': 'Itália',
+                'FRA': 'França',
+                'GER': 'Alemanha',
+                'GBR': 'Reino Unido',
+                'JPN': 'Japão',
+                'RUS': 'Rússia',
+                'CAN': 'Canadá',
+                'AUS': 'Austrália'
+            };
+            return names[countryCode] || countryCode;
+        }
+
+        // Funções de feedback
+        function showSuccess(message) {
+            const element = document.getElementById('success-message');
+            element.textContent = message;
+            element.style.display = 'block';
+            setTimeout(() => element.style.display = 'none', 5000);
+        }
+
+        function showError(message) {
+            const element = document.getElementById('error-message');
+            element.textContent = message;
+            element.style.display = 'block';
+            setTimeout(() => element.style.display = 'none', 5000);
+        }
+        }); // Fecha window.addEventListener('load')
+    </script>
+</body>
+</html>

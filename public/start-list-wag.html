@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Lists - Ginástica Artística Feminina | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Grid de start lists */
+        .start-lists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .start-list-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .start-list-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-link {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            transform: translateY(-2px);
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-rings {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-ring {
+            width: 15px;
+            height: 15px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .footer-ring:nth-child(1) { border-color: #0085c3; }
+        .footer-ring:nth-child(2) { border-color: #000000; }
+        .footer-ring:nth-child(3) { border-color: #df0024; }
+        .footer-ring:nth-child(4) { border-color: #ffb81c; }
+        .footer-ring:nth-child(5) { border-color: #009f3d; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .title-main {
+                font-size: 1.8rem;
+            }
+
+            .start-lists-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header olímpico -->
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Jogos Olímpicos Brussels 2025
+            </div>
+            <nav class="header-nav">
+                <a href="control.html" class="nav-btn">
+                    <i class="fas fa-cog"></i>
+                    Controle
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Start Lists</h1>
+            <h2 class="title-phase">Ginástica Artística Feminina</h2>
+        </div>
+
+        <div class="start-lists-grid">
+            <!-- Qualificatórias -->
+            <div class="start-list-card">
+                <div class="card-header">
+                    <h3 class="card-title">Qualificatórias</h3>
+                    <p class="card-subtitle">Individual Geral e por Aparelhos</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">
+                        Ordem de apresentação das ginastas nas qualificatórias, organizadas por rotações nos quatro aparelhos.
+                    </p>
+                    <a href="start-list-qualifiers.html" class="card-link">
+                        <i class="fas fa-list"></i>
+                        Ver Start List
+                    </a>
+                </div>
+            </div>
+
+            <!-- Final Individual Geral -->
+            <div class="start-list-card">
+                <div class="card-header">
+                    <h3 class="card-title">Final Individual Geral</h3>
+                    <p class="card-subtitle">8 Melhores Ginastas</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">
+                        Ordem de apresentação das 8 melhores ginastas qualificadas para a final do individual geral.
+                    </p>
+                    <a href="start-list-aa-final.html" class="card-link">
+                        <i class="fas fa-trophy"></i>
+                        Ver Start List
+                    </a>
+                </div>
+            </div>
+
+            <!-- Final por Equipes -->
+            <div class="start-list-card">
+                <div class="card-header">
+                    <h3 class="card-title">Final por Equipes</h3>
+                    <p class="card-subtitle">Melhores Equipes</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">
+                        Sorteio e ordem de apresentação das equipes qualificadas para a final por equipes.
+                    </p>
+                    <a href="start-list-team-final.html" class="card-link">
+                        <i class="fas fa-users"></i>
+                        Ver Start List
+                    </a>
+                </div>
+            </div>
+
+            <!-- Final Salto -->
+            <div class="start-list-card">
+                <div class="card-header">
+                    <h3 class="card-title">Final Salto</h3>
+                    <p class="card-subtitle">8 Melhores no Aparelho</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">
+                        Ordem de apresentação das 8 melhores ginastas qualificadas para a final do salto sobre a mesa.
+                    </p>
+                    <a href="start-list-vt-final.html" class="card-link">
+                        <i class="fas fa-running"></i>
+                        Ver Start List
+                    </a>
+                </div>
+            </div>
+
+            <!-- Final Barras Assimétricas -->
+            <div class="start-list-card">
+                <div class="card-header">
+                    <h3 class="card-title">Final Barras Assimétricas</h3>
+                    <p class="card-subtitle">8 Melhores no Aparelho</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">
+                        Ordem de apresentação das 8 melhores ginastas qualificadas para a final das barras assimétricas.
+                    </p>
+                    <a href="start-list-ub-final.html" class="card-link">
+                        <i class="fas fa-grip-horizontal"></i>
+                        Ver Start List
+                    </a>
+                </div>
+            </div>
+
+            <!-- Final Trave -->
+            <div class="start-list-card">
+                <div class="card-header">
+                    <h3 class="card-title">Final Trave</h3>
+                    <p class="card-subtitle">8 Melhores no Aparelho</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">
+                        Ordem de apresentação das 8 melhores ginastas qualificadas para a final da trave de equilíbrio.
+                    </p>
+                    <a href="start-list-bb-final.html" class="card-link">
+                        <i class="fas fa-minus"></i>
+                        Ver Start List
+                    </a>
+                </div>
+            </div>
+
+            <!-- Final Solo -->
+            <div class="start-list-card">
+                <div class="card-header">
+                    <h3 class="card-title">Final Solo</h3>
+                    <p class="card-subtitle">8 Melhores no Aparelho</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">
+                        Ordem de apresentação das 8 melhores ginastas qualificadas para a final do solo.
+                    </p>
+                    <a href="start-list-fx-final.html" class="card-link">
+                        <i class="fas fa-square"></i>
+                        Ver Start List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer olímpico -->
+    <footer class="olympic-footer">
+        <div class="footer-rings">
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+        </div>
+        <p>Jogos Olímpicos Brussels 2025 - Ginástica Artística Feminina</p>
+    </footer>
+</body>
+</html>

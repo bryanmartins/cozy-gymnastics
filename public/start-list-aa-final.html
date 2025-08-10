@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start List - Final Individual Geral | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Anéis olímpicos mini */
+        .olympic-rings-mini {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .ring-mini {
+            width: 20px;
+            height: 20px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #f4c300; }
+        .ring-mini:nth-child(3) { border-color: #000; }
+        .ring-mini:nth-child(4) { border-color: #009f3d; }
+        .ring-mini:nth-child(5) { border-color: #df0024; }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Info section */
+        .info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            text-align: center;
+        }
+
+        .qualified-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .qualified-item {
+            background: rgba(30, 60, 114, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        /* Rotações */
+        .rotations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .rotation-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .rotation-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .rotation-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .apparatus-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .apparatus-section {
+            background: rgba(30, 60, 114, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .apparatus-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gymnast-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .gymnast-item {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .gymnast-item:hover {
+            background: rgba(30, 60, 114, 0.1);
+            transform: translateX(5px);
+        }
+
+        .gymnast-order {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .gymnast-info {
+            flex: 1;
+        }
+
+        .gymnast-name {
+            font-weight: 700;
+            color: #1e3c72;
+            font-size: 1rem;
+        }
+
+        .gymnast-country {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.2rem;
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Controles */
+        .controls-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .olympic-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .olympic-button.secondary {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            color: #2a5298;
+            font-weight: 600;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .rotations-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .apparatus-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+            
+            .qualified-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Start List
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="start-list-wag.html" class="nav-btn">
+                    <i class="fas fa-list"></i> Todas as Lists
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Start List</h1>
+            <p class="title-phase">Final Individual Geral</p>
+        </div>
+
+        <div class="info-section">
+            <h3 style="color: #1e3c72; margin-bottom: 1rem;">Qualificadas para a Final AA</h3>
+            <p style="color: #666; margin-bottom: 1rem;">8 melhores ginastas das qualificatórias (máx. 2 por país)</p>
+            <p style="color: #666; font-size: 0.9rem; font-style: italic;">
+                Cada ginasta compete em todos os 4 aparelhos, com 2 ginastas por aparelho por rotação
+            </p>
+            <div id="qualified-gymnasts" class="qualified-list">
+                <!-- Será preenchido pelo JavaScript -->
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <button id="shuffle-start-list" class="olympic-button secondary">
+                <i class="fas fa-random"></i> Reorganizar Rotações
+            </button>
+            <button id="save-start-list" class="olympic-button">
+                <i class="fas fa-save"></i> Salvar Start List
+            </button>
+        </div>
+
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            Carregando start list...
+        </div>
+
+        <div id="rotations-container" class="rotations-container" style="display: none;">
+            <!-- Será preenchido pelo JavaScript -->
+        </div>
+    </main>
+
+    <footer class="olympic-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Jogos Olímpicos Brussels. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase v8 -->
+    <script src="js/countries.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="js/firebase-init.js"></script>
+
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        const auth = window.auth;
+        const db = window.db;
+        
+        // Função para inicializar quando Firebase estiver pronto
+        function initializeWhenReady() {
+            if (window.auth && window.db) {
+                initializePage();
+            } else {
+                setTimeout(initializeWhenReady, 100);
+            }
+        }
+
+        function initializePage() {
+            // Verificar autenticação
+            window.auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                loadStartList();
+            });
+        }
+
+        // Aguardar Firebase estar pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWhenReady);
+        } else {
+            initializeWhenReady();
+        }
+
+        const apparatus = ['VT', 'UB', 'BB', 'FX'];
+        const apparatusNames = {
+            'VT': 'Salto',
+            'UB': 'Barras Assimétricas',
+            'BB': 'Trave de Equilíbrio',
+            'FX': 'Solo'
+        };
+
+        let gymnastsData = [];
+        let qualifiedGymnasts = [];
+        let startListData = {};
+
+        // Carregar dados iniciais
+        async function loadStartList() {
+            const loading = document.getElementById('loading');
+            const container = document.getElementById('rotations-container');
+            
+            try {
+                loading.style.display = 'block';
+                container.style.display = 'none';
+                
+                const gymnastsSnapshot = await window.db.collection('new_gymnasts').get();
+                gymnastsData = [];
+                
+                gymnastsSnapshot.forEach((doc) => {
+                    gymnastsData.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Calcular qualificadas para Final AA
+                calculateQualified();
+                renderQualifiedList();
+
+                // Verificar se já existe start list salva
+                try {
+                    const startListDoc = await window.db.collection('start_lists').get();
+                    let savedStartList = null;
+                    
+                    startListDoc.forEach((doc) => {
+                        if (doc.id === 'aa_final') {
+                            savedStartList = doc.data();
+                            // Check if it uses the new structure format
+                            if (savedStartList.structure) {
+                                savedStartList = savedStartList.structure;
+                            }
+                        }
+                    });
+                    
+                    if (savedStartList) {
+                        startListData = savedStartList;
+                    } else {
+                        generateStartList();
+                    }
+                } catch (error) {
+                    console.log('Nenhuma start list AA salva encontrada, gerando nova');
+                    generateStartList();
+                }
+
+                renderStartList();
+                
+                // Add real-time listeners for gymnasts and start lists
+                const unsubscribeGymnasts = window.db.collection("new_gymnasts").onSnapshot((snapshot) => {
+                    let updatedData = [];
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        if (!data.id) data.id = doc.id;
+                        updatedData.push(data);
+                    });
+                    allGymnastData = updatedData;
+                    console.log("[AA Final] Gymnast data updated via listener");
+                    
+                    // Regenerate qualified list and start list
+                    calculateQualified();
+                    renderQualifiedList();
+                    
+                    // Only regenerate start list if it hasn't been saved
+                    if (!startListData.rotations || startListData.rotations.length === 0) {
+                        generateStartList();
+                    }
+                    renderStartList();
+                }, (error) => {
+                    console.error("[AA Final] Error listening to gymnasts:", error);
+                });
+
+                const unsubscribeStartList = window.db.collection("start_lists").doc("aa_final").onSnapshot((docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        const data = docSnapshot.data();
+                        const savedStructure = data.structure || data; // Support both formats
+                        console.log("[AA Final] Start list updated via listener");
+                        
+                        // Only update if the structure is different
+                        if (JSON.stringify(savedStructure) !== JSON.stringify(startListData)) {
+                            startListData = savedStructure;
+                            renderStartList();
+                        }
+                    }
+                }, (error) => {
+                    console.error("[AA Final] Error listening to start list:", error);
+                });
+                
+                loading.style.display = 'none';
+                container.style.display = 'grid';
+                
+            } catch (error) {
+                console.error('Erro ao carregar start list:', error);
+                loading.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao carregar dados';
+            }
+        }
+
+        // Calcular qualificadas para Final AA
+        function calculateQualified() {
+            // Converter dados para a estrutura esperada
+            const convertedGymnasts = gymnastsData.map(gymnast => convertQualifiersData(gymnast));
+            
+            // Filtrar ginastas com pontuação das qualificatórias
+            const qualifiersGymnasts = convertedGymnasts.filter(g => 
+                g.scores && g.scores.qualifiers
+            );
+
+            // Calcular total AA para cada ginasta
+            qualifiersGymnasts.forEach(gymnast => {
+                const scores = gymnast.scores.qualifiers;
+                let totalAA = 0;
+                
+                // VT: usar primeiro salto para AA
+                totalAA += scores.VT?.total || 0;
+                
+                // UB, BB, FX
+                totalAA += scores.UB?.total || 0;
+                totalAA += scores.BB?.total || 0;
+                totalAA += scores.FX?.total || 0;
+                
+                gymnast.totalAA = totalAA;
+            });
+
+            // Ordenar por total AA
+            qualifiersGymnasts.sort((a, b) => b.totalAA - a.totalAA);
+
+            // Aplicar regra de máximo 2 por país
+            qualifiedGymnasts = [];
+            const countryCount = {};
+
+            for (const gymnast of qualifiersGymnasts) {
+                if (qualifiedGymnasts.length >= 8) break;
+                
+                if (!countryCount[gymnast.country]) {
+                    countryCount[gymnast.country] = 0;
+                }
+                
+                if (countryCount[gymnast.country] < 2) {
+                    qualifiedGymnasts.push(gymnast);
+                    countryCount[gymnast.country]++;
+                }
+            }
+        }
+
+        // Converter dados das qualificatórias da estrutura Firebase para a esperada
+        function convertQualifiersData(data) {
+            const qualifiersScores = data.scores?.qualifiers;
+            if (!qualifiersScores) return data;
+            
+            const convertedData = { ...data };
+            convertedData.scores = { ...data.scores };
+            
+            // Converter estrutura das qualificatórias
+            convertedData.scores.qualifiers = {
+                VT: {
+                    dScore: qualifiersScores.qualifiers_vt1_d || 0,
+                    eScore: qualifiersScores.qualifiers_vt1_e || 0,
+                    penalty: qualifiersScores.qualifiers_vt1_p || 0,
+                    total: Math.max(0, (qualifiersScores.qualifiers_vt1_d || 0) + (qualifiersScores.qualifiers_vt1_e || 0) - (qualifiersScores.qualifiers_vt1_p || 0))
+                },
+                UB: {
+                    dScore: qualifiersScores.qualifiers_ub_d || 0,
+                    eScore: qualifiersScores.qualifiers_ub_e || 0,
+                    penalty: qualifiersScores.qualifiers_ub_p || 0,
+                    total: Math.max(0, (qualifiersScores.qualifiers_ub_d || 0) + (qualifiersScores.qualifiers_ub_e || 0) - (qualifiersScores.qualifiers_ub_p || 0))
+                },
+                BB: {
+                    dScore: qualifiersScores.qualifiers_bb_d || 0,
+                    eScore: qualifiersScores.qualifiers_bb_e || 0,
+                    penalty: qualifiersScores.qualifiers_bb_p || 0,
+                    total: Math.max(0, (qualifiersScores.qualifiers_bb_d || 0) + (qualifiersScores.qualifiers_bb_e || 0) - (qualifiersScores.qualifiers_bb_p || 0))
+                },
+                FX: {
+                    dScore: qualifiersScores.qualifiers_fx_d || 0,
+                    eScore: qualifiersScores.qualifiers_fx_e || 0,
+                    penalty: qualifiersScores.qualifiers_fx_p || 0,
+                    total: Math.max(0, (qualifiersScores.qualifiers_fx_d || 0) + (qualifiersScores.qualifiers_fx_e || 0) - (qualifiersScores.qualifiers_fx_p || 0))
+                }
+            };
+            
+            return convertedData;
+        }
+
+        // Gerar start list para Final AA
+        function generateStartList() {
+            // Na Final AA: 8 ginastas, 2 por aparelho por rotação
+            // Cada ginasta passa por todos os 4 aparelhos ao longo das 4 rotações
+            
+            const shuffled = [...qualifiedGymnasts].sort(() => Math.random() - 0.5);
+            
+            // Dividir as 8 ginastas em 4 grupos de 2 (cada grupo começa em um aparelho diferente)
+            const groups = [];
+            for (let i = 0; i < 4; i++) {
+                groups.push({
+                    gymnasts: shuffled.slice(i * 2, (i + 1) * 2),
+                    startApparatus: apparatus[i]
+                });
+            }
+            
+            const rotations = [];
+            
+            // Gerar as 4 rotações
+            for (let rotNum = 1; rotNum <= 4; rotNum++) {
+                const rotation = {
+                    number: rotNum,
+                    apparatus: []
+                };
+                
+                // Para cada aparelho nesta rotação
+                apparatus.forEach((app, appIndex) => {
+                    // Determinar qual grupo está neste aparelho nesta rotação
+                    const groupIndex = (appIndex + rotNum - 1) % 4;
+                    const group = groups[groupIndex];
+                    
+                    rotation.apparatus.push({
+                        name: app,
+                        displayName: apparatusNames[app],
+                        gymnasts: group.gymnasts.map((gymnast, idx) => ({
+                            ...gymnast,
+                            order: idx + 1
+                        }))
+                    });
+                });
+                
+                rotations.push(rotation);
+            }
+            
+            startListData = {
+                type: 'aa_final',
+                groups: groups,
+                rotations: rotations,
+                timestamp: new Date().toISOString()
+            };
+        }
+
+        // Renderizar lista de qualificadas
+        function renderQualifiedList() {
+            const container = document.getElementById('qualified-gymnasts');
+            container.innerHTML = '';
+            
+            qualifiedGymnasts.forEach((gymnast, index) => {
+                const item = document.createElement('div');
+                item.className = 'qualified-item';
+                item.innerHTML = `
+                    <div style="font-weight: 700; color: #1e3c72; margin-bottom: 0.5rem;">
+                        ${index + 1}º ${gymnast.name}
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                        <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                        ${gymnast.country}
+                    </div>
+                    <div style="font-size: 0.9rem; color: #666; margin-top: 0.3rem;">
+                        Total AA: ${gymnast.totalAA.toFixed(3)}
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Renderizar start list
+        function renderStartList() {
+            const container = document.getElementById('rotations-container');
+            container.innerHTML = '';
+            
+            if (!startListData.rotations) {
+                container.innerHTML = '<p>Nenhuma rotação gerada</p>';
+                return;
+            }
+            
+            startListData.rotations.forEach(rotation => {
+                const rotationCard = document.createElement('div');
+                rotationCard.className = 'rotation-card';
+                
+                // Verificar se rotation.apparatus é um array
+                const apparatusArray = Array.isArray(rotation.apparatus) ? rotation.apparatus : 
+                                     rotation.apparatus ? Object.values(rotation.apparatus) : [];
+                
+                rotationCard.innerHTML = `
+                    <div class="rotation-header">
+                        <div class="rotation-title">Rotação ${rotation.number}</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">
+                            2 ginastas por aparelho
+                        </div>
+                    </div>
+                    <div class="apparatus-sections">
+                        ${apparatusArray.map(app => `
+                            <div class="apparatus-section">
+                                <div class="apparatus-title">${app.displayName}</div>
+                                <div class="gymnast-list">
+                                    ${(app.gymnasts || []).map(gymnast => `
+                                        <div class="gymnast-item">
+                                            <div class="gymnast-order">${gymnast.order}</div>
+                                            <div class="gymnast-info">
+                                                <div class="gymnast-name">${gymnast.name}</div>
+                                                <div class="gymnast-country">
+                                                    <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                                                    ${gymnast.country}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(rotationCard);
+            });
+        }
+
+        // Reorganizar start list
+        function shuffleStartList() {
+            generateStartList();
+            renderStartList();
+        }
+
+        // Salvar start list
+        async function saveStartList() {
+            try {
+                const docData = {
+                    structure: startListData,
+                    lastUpdated: new Date()
+                };
+                await window.db.collection('start_lists').doc('aa_final').set(docData);
+                
+                // Feedback visual
+                const saveBtn = document.getElementById('save-start-list');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
+                saveBtn.style.background = 'linear-gradient(45deg, #2ed573, #5f27cd)';
+                
+                setTimeout(() => {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.style.background = 'linear-gradient(45deg, #1e3c72, #2a5298)';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Erro ao salvar start list:', error);
+                alert('Erro ao salvar lista de largada');
+            }
+        }
+
+        // Função auxiliar para obter código do país
+        function getCountryCode(country) {
+            const codes = {
+                'Brasil': 'br',
+                'Brazil': 'br',
+                'BRA': 'br',
+                'Estados Unidos': 'us',
+                'United States': 'us',
+                'USA': 'us',
+                'França': 'fr',
+                'France': 'fr',
+                'FRA': 'fr',
+                'Alemanha': 'de',
+                'Germany': 'de',
+                'GER': 'de',
+                'Itália': 'it',
+                'Italy': 'it',
+                'ITA': 'it',
+                'Reino Unido': 'gb',
+                'United Kingdom': 'gb',
+                'GBR': 'gb',
+                'Japão': 'jp',
+                'Japan': 'jp',
+                'JPN': 'jp',
+                'China': 'cn',
+                'CHN': 'cn',
+                'Rússia': 'ru',
+                'Russia': 'ru',
+                'RUS': 'ru',
+                'Canadá': 'ca',
+                'Canada': 'ca',
+                'CAN': 'ca',
+                'Austrália': 'au',
+                'Australia': 'au',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Event listeners
+        document.getElementById('shuffle-start-list').addEventListener('click', shuffleStartList);
+        document.getElementById('save-start-list').addEventListener('click', saveStartList);
+    </script>
+
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>

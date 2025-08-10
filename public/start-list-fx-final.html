@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start List - Final Solo | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Container da start list */
+        .start-list-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            margin-top: 2rem;
+        }
+
+        .start-list-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .start-list-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .start-list-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .gymnast-list {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .gymnast-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(30, 60, 114, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gymnast-item:hover {
+            background: rgba(30, 60, 114, 0.1);
+            transform: translateX(5px);
+        }
+
+        .gymnast-order {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .flag-icon {
+            width: 30px;
+            height: 20px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .gymnast-info {
+            flex: 1;
+        }
+
+        .gymnast-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1e3c72;
+            margin-bottom: 0.2rem;
+        }
+
+        .gymnast-country {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .qualifying-score {
+            text-align: right;
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-top: 0.2rem;
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-rings {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-ring {
+            width: 15px;
+            height: 15px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .footer-ring:nth-child(1) { border-color: #0085c3; }
+        .footer-ring:nth-child(2) { border-color: #000000; }
+        .footer-ring:nth-child(3) { border-color: #df0024; }
+        .footer-ring:nth-child(4) { border-color: #ffb81c; }
+        .footer-ring:nth-child(5) { border-color: #009f3d; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .title-main {
+                font-size: 1.8rem;
+            }
+
+            .gymnast-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .qualifying-score {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header olímpico -->
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Jogos Olímpicos Brussels 2025
+            </div>
+            <nav class="header-nav">
+                <a href="control.html" class="nav-btn">
+                    <i class="fas fa-cog"></i>
+                    Controle
+                </a>
+                <a href="scoreboard-fx-final.html" class="nav-btn">
+                    <i class="fas fa-trophy"></i>
+                    Scoreboard
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Start List</h1>
+            <h2 class="title-phase">Final Solo - Feminino</h2>
+        </div>
+
+        <div class="start-list-container">
+            <div class="start-list-header">
+                <h3 class="start-list-title">Ordem de Apresentação</h3>
+                <p class="start-list-subtitle">Final Solo</p>
+            </div>
+            <div class="gymnast-list" id="start-list">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Carregando ginastas...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer olímpico -->
+    <footer class="olympic-footer">
+        <div class="footer-rings">
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+            <div class="footer-ring"></div>
+        </div>
+        <p>Jogos Olímpicos Brussels 2025 - Ginástica Artística Feminina</p>
+    </footer>
+
+    <!-- Firebase e JavaScript -->
+    <!-- Firebase v8 -->
+    <script src="js/countries.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-init.js"></script>
+    
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        // Aguardar Firebase estar pronto
+        function initializeWhenReady() {
+            if (window.db) {
+                loadFXFinalists();
+            } else {
+                setTimeout(initializeWhenReady, 100);
+            }
+        }
+        
+        // Inicializar quando DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWhenReady);
+        } else {
+            initializeWhenReady();
+        }
+        
+        async function loadFXFinalists() {
+            try {
+                // Buscar todas as ginastas da coleção new_gymnasts
+                const snapshot = await window.db.collection('new_gymnasts').get();
+                
+                const gymnasts = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    // Verificar se tem pontuação de qualificação no solo
+                    if (data.scores && data.scores.qualifiers) {
+                        const qualifiersScores = data.scores.qualifiers;
+                        const fxTotal = Math.max(0, (qualifiersScores.qualifiers_fx_d || 0) + (qualifiersScores.qualifiers_fx_e || 0) - (qualifiersScores.qualifiers_fx_p || 0));
+                        
+                        if (fxTotal > 0) {
+                            gymnasts.push({
+                                id: doc.id,
+                                name: data.name,
+                                country: data.country,
+                                fxScore: fxTotal
+                            });
+                        }
+                    }
+                });
+
+                // Ordenar pelos melhores resultados
+                gymnasts.sort((a, b) => b.fxScore - a.fxScore);
+                
+                // Aplicar regra FIG: máximo 2 ginastas por país
+                const finalists = [];
+                const countryCount = {};
+                
+                for (const gymnast of gymnasts) {
+                    if (finalists.length >= 8) break;
+                    
+                    if (!countryCount[gymnast.country]) {
+                        countryCount[gymnast.country] = 0;
+                    }
+                    
+                    if (countryCount[gymnast.country] < 2) {
+                        finalists.push(gymnast);
+                        countryCount[gymnast.country]++;
+                    }
+                }
+
+                displayStartList(finalists);
+            } catch (error) {
+                console.error('Erro ao carregar finalistas:', error);
+                document.getElementById('start-list').innerHTML = `
+                    <div class="gymnast-item">
+                        <p style="color: red; text-align: center; width: 100%;">
+                            Erro ao carregar dados. Verifique a conexão com o Firebase.
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayStartList(gymnasts) {
+            const container = document.getElementById('start-list');
+            
+            if (gymnasts.length === 0) {
+                container.innerHTML = `
+                    <div class="gymnast-item">
+                        <p style="text-align: center; width: 100%;">
+                            Nenhuma ginasta qualificada encontrada.
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Ordem inversa (pior para melhor)
+            gymnasts.reverse();
+            
+            container.innerHTML = gymnasts.map((gymnast, index) => `
+                <div class="gymnast-item">
+                    <div class="gymnast-order">${index + 1}</div>
+                    <span class="flag-icon fi fi-${getCountryCode(gymnast.country)}"></span>
+                    <div class="gymnast-info">
+                        <div class="gymnast-name">${gymnast.name}</div>
+                        <div class="gymnast-country">${gymnast.country}</div>
+                    </div>
+                    <div class="qualifying-score">
+                        <div class="score-label">Qualificação</div>
+                        <div class="score-value">${gymnast.fxScore?.toFixed(3) || '0.000'}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Função auxiliar para obter código do país
+        function getCountryCode(country) {
+            const codes = {
+                'BRA': 'br',
+                'USA': 'us',
+                'CHN': 'cn',
+                'ITA': 'it',
+                'FRA': 'fr',
+                'GER': 'de',
+                'GBR': 'gb',
+                'JPN': 'jp',
+                'RUS': 'ru',
+                'CAN': 'ca',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Inicializar
+        loadFXFinalists();
+
+        // Auto refresh a cada 30 segundos
+        setInterval(loadFXFinalists, 30000);
+    </script>
+
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>

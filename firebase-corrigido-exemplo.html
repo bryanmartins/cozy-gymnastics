@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Login Corrigido (Hipotético)</title>
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script>
+        firebase.initializeApp(firebaseConfig);
+        
+        let isLoggingIn = false; // Flag para evitar conflitos
+        let redirectProcessed = false; // Evitar múltiplos redirecionamentos
+        
+        // DESABILITAR onAuthStateChanged durante login manual
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if (isLoggingIn || redirectProcessed) return; // PARE AQUI!
+            
+            if (user) {
+                redirectProcessed = true;
+                // Só redireciona se NÃO estiver em processo de login manual
+                const role = await getUserRole(user);
+                redirectBasedOnRole(role);
+            }
+        });
+        
+        // Login manual com controle total
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            isLoggingIn = true; // BLOQUEAR onAuthStateChanged
+            
+            try {
+                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+                const role = await getUserRole(userCredential.user);
+                
+                redirectProcessed = true; // BLOQUEAR futuras verificações
+                redirectBasedOnRole(role);
+                
+            } catch (error) {
+                console.error(error);
+            } finally {
+                isLoggingIn = false;
+            }
+        });
+        
+        function redirectBasedOnRole(role) {
+            if (redirectProcessed) return; // JÁ REDIRECIONOU
+            
+            let url = null;
+            if (role === 'admin') url = 'dashboard.html';
+            else if (role === 'judge_d') url = 'judges-d.html';
+            else if (role === 'judge_e') url = 'judges-e.html';
+            
+            if (url) {
+                redirectProcessed = true;
+                window.location.href = url;
+            }
+        }
+    </script>
+</body>
+</html>

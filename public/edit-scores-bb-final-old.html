@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final BB - Edição de Notas | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .competition-info {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #0066cc;
+        }
+
+        .scores-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gymnast-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #ffd700;
+        }
+
+        .gymnast-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gymnast-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .gymnast-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        .gymnast-country {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .qualification-position {
+            background: #e8f4f8;
+            color: #0066cc;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .scores-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .score-input-group {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .score-input-group:focus-within {
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        .score-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .score-input {
+            width: 80px;
+            max-width: 80px;
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .score-input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        .total-score {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0066cc;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108,117,125,0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Sistema de Notificação Fixo */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .notification {
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            pointer-events: auto;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #f44336;
+        }
+        
+        .notification.warning {
+            background: #ff9800;
+        }
+        
+        .notification.info {
+            background: #2196F3;
+        }
+
+        @media (max-width: 768px) {
+            .gymnast-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .scores-section {
+                grid-template-columns: 1fr;
+            }
+
+            .olympic-rings {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="olympic-header">
+        <div class="container">
+            <div class="olympic-rings">
+                <div class="ring blue"></div>
+                <div class="ring yellow"></div>
+                <div class="ring black"></div>
+                <div class="ring green"></div>
+                <div class="ring red"></div>
+            </div>
+            <h1><i class="fas fa-medal"></i> Brussels 2025 - Final BB (Trave)</h1>
+            <p>Edição de Notas da Final</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="dashboard.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+        </a>
+
+        <div class="competition-info">
+            <h2><i class="fas fa-info-circle"></i> Informações da Competição</h2>
+            <p><strong>Modalidade:</strong> Final Individual - Trave (BB)</p>
+            <p><strong>Formato:</strong> 8 ginastas qualificadas competem em uma rotação</p>
+            <p><strong>Qualificação:</strong> Melhores 8 notas nas Qualificatórias (máximo 2 por país)</p>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Carregando ginastas qualificadas...</p>
+        </div>
+
+        <div id="scoresContainer" class="scores-grid" style="display: none;"></div>
+    </div>
+
+    <!-- Sistema de Notificação -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script src="js/firebase-init.js"></script>
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        const auth = window.auth;
+        const db = window.db;
+
+        let qualifiedGymnasts = [];
+
+        // Carregar ginastas qualificadas com sincronização em tempo real
+        function loadQualifiedGymnasts() {
+            try {
+                // Usar onSnapshot para sincronização em tempo real
+                const unsubscribe = db.collection('new_gymnasts').onSnapshot((snapshot) => {
+                    console.log('Carregando ginastas qualificadas para BB Final...');
+                    
+                    // Primeiro, tentar usar ginastas marcadas como qualificadas para BB final
+                    let qualifiedFromFlag = [];
+                    
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        if (data.bb_final_qualified === true) {
+                            qualifiedFromFlag.push({
+                                id: doc.id,
+                                name: data.name,
+                                country: data.country,
+                                qualifyingScore: 0, // Será preenchido depois se necessário
+                                scores: data.scores
+                            });
+                        }
+                    });
+                    
+                    if (qualifiedFromFlag.length > 0) {
+                        qualifiedGymnasts = qualifiedFromFlag;
+                        console.log('Usando ginastas marcadas como qualificadas:', qualifiedGymnasts.length);
+                    } else {
+                        // Fallback: usar as 8 melhores do BB das qualificatórias
+                        console.log('Nenhuma ginasta marcada, usando fallback...');
+                        const allGymnasts = [];
+                        
+                        snapshot.forEach((doc) => {
+                            const data = doc.data();
+                            const qualifiersScores = data.scores?.qualifiers;
+                            if (qualifiersScores) {
+                                const bbScore = Math.max(0, (qualifiersScores.qualifiers_bb_d || 0) + (qualifiersScores.qualifiers_bb_e || 0) - (qualifiersScores.qualifiers_bb_p || 0));
+                                if (bbScore > 0) {
+                                    allGymnasts.push({
+                                        id: doc.id,
+                                        name: data.name,
+                                        country: data.country,
+                                        qualifyingScore: bbScore,
+                                        scores: data.scores
+                                    });
+                                }
+                            }
+                        });
+
+                        // Ordenar por nota BB
+                        allGymnasts.sort((a, b) => b.qualifyingScore - a.qualifyingScore);
+
+                        // Aplicar regra máximo 2 por país
+                        const countryCount = {};
+                        qualifiedGymnasts = allGymnasts.filter(gymnast => {
+                            if (!countryCount[gymnast.country]) {
+                                countryCount[gymnast.country] = 0;
+                            }
+                            if (countryCount[gymnast.country] < 2) {
+                                countryCount[gymnast.country]++;
+                                return true;
+                            }
+                            return false;
+                        }).slice(0, 8); // Máximo 8 ginastas
+                    }
+
+                    displayGymnasts();
+                    
+                }, (error) => {
+                    console.error('Erro ao carregar ginastas qualificadas:', error);
+                });
+                
+                // Salvar a função unsubscribe para cleanup
+                window.gymnastsUnsubscribe = unsubscribe;
+                
+            } catch (error) {
+                console.error('Erro ao carregar ginastas qualificadas:', error);
+            }
+        }
+
+        async function displayGymnasts() {
+            const container = document.getElementById('scoresContainer');
+            container.innerHTML = '';
+
+            for (let i = 0; i < qualifiedGymnasts.length; i++) {
+                const gymnast = qualifiedGymnasts[i];
+                
+                // Carregar notas existentes
+                const existingScores = await loadExistingScores(gymnast.id);
+                
+                const gymnastCard = document.createElement('div');
+                gymnastCard.className = 'gymnast-card';
+                gymnastCard.innerHTML = `
+                    <div class="gymnast-info">
+                        <div>
+                            <div class="gymnast-name">${gymnast.name}</div>
+                            <div class="gymnast-country">
+                                <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                                ${gymnast.country}
+                            </div>
+                        </div>
+                        <div class="qualification-position">
+                            Qualificação: ${i + 1}º (${gymnast.qualifyingScore.toFixed(3)})
+                        </div>
+                    </div>
+                    
+                    <div class="scores-section">
+                        <div class="score-input-group">
+                            <label class="score-label">Nota D</label>
+                            <input type="number" step="0.001" min="0" max="20" 
+                                   class="score-input d-score" 
+                                   placeholder="0.000"
+                                   value="${existingScores.dScore || ''}"
+                                   data-gymnast-id="${gymnast.id}">
+                        </div>
+                        
+                        <div class="score-input-group">
+                            <label class="score-label">Nota E</label>
+                            <input type="number" step="0.001" min="0" max="10" 
+                                   class="score-input e-score" 
+                                   placeholder="0.000"
+                                   value="${existingScores.eScore || ''}"
+                                   data-gymnast-id="${gymnast.id}">
+                        </div>
+                        
+                        <div class="score-input-group">
+                            <label class="score-label">Penalidade</label>
+                            <input type="number" step="0.001" min="0" max="10" 
+                                   class="score-input penalty" 
+                                   placeholder="0.000"
+                                   value="${existingScores.penalty || ''}"
+                                   data-gymnast-id="${gymnast.id}">
+                        </div>
+                    </div>
+                    
+                    <div class="total-score" id="total-${gymnast.id}">
+                        Total: ${existingScores.total ? existingScores.total.toFixed(3) : '0.000'}
+                    </div>
+                    
+                    <button class="save-btn" onclick="saveScore('${gymnast.id}', '${gymnast.name}', '${gymnast.country}')">
+                        <i class="fas fa-save"></i> Salvar Nota
+                    </button>
+                `;
+                
+                container.appendChild(gymnastCard);
+            }
+
+            // Adicionar event listeners para cálculo automático
+            document.querySelectorAll('.score-input').forEach(input => {
+                input.addEventListener('input', calculateTotal);
+            });
+
+            document.getElementById('loading').style.display = 'none';
+            container.style.display = 'grid';
+        }
+
+        async function loadExistingScores(gymnastId) {
+            try {
+                const scoreDoc = await getDoc(doc(db, 'scores', `bb-final-${gymnastId}`));
+                if (scoreDoc.exists()) {
+                    return scoreDoc.data();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar notas existentes:', error);
+            }
+            return {};
+        }
+
+        function calculateTotal(event) {
+            const gymnastId = event.target.dataset.gymnastId;
+            const dScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].d-score`).value) || 0;
+            const eScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].e-score`).value) || 0;
+            const penalty = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].penalty`).value) || 0;
+            
+            const total = Math.max(0, dScore + eScore - penalty);
+            document.getElementById(`total-${gymnastId}`).textContent = `Total: ${total.toFixed(3)}`;
+        }
+
+        window.saveScore = async function(gymnastId, gymnastName, country) {
+            try {
+                const dScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].d-score`).value) || 0;
+                const eScore = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].e-score`).value) || 0;
+                const penalty = parseFloat(document.querySelector(`[data-gymnast-id="${gymnastId}"].penalty`).value) || 0;
+                const total = Math.max(0, dScore + eScore - penalty);
+
+                await db.collection('scores').doc(`bb-final-${gymnastId}`).set({
+                    gymnastId,
+                    gymnastName,
+                    country,
+                    apparatus: 'BB',
+                    phase: 'bb-final',
+                    dScore,
+                    eScore,
+                    penalty,
+                    total,
+                    timestamp: new Date(),
+                    updatedBy: auth.currentUser?.email || 'unknown'
+                });
+
+                // Feedback visual
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
+                btn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Erro ao salvar nota:', error);
+                alert('Erro ao salvar nota. Tente novamente.');
+            }
+        };
+
+        function getCountryCode(country) {
+            const codes = {
+                'BRA': 'br',
+                'USA': 'us',
+                'CHN': 'cn',
+                'ITA': 'it',
+                'FRA': 'fr',
+                'GER': 'de',
+                'GBR': 'gb',
+                'JPN': 'jp',
+                'RUS': 'ru',
+                'CAN': 'ca',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Carregar dados ao iniciar
+        loadQualifiedGymnasts();
+    </script>
+
+    <script>
+        // Sistema de Notificação Global
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            container.appendChild(notification);
+            
+            // Mostrar notificação
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Remover notificação após 4 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+        
+        // Substituir alerts por notificações
+        window.showSuccess = (message) => showNotification(message, 'success');
+        window.showError = (message) => showNotification(message, 'error');
+        window.showWarning = (message) => showNotification(message, 'warning');
+        window.showInfo = (message) => showNotification(message, 'info');
+    </script>
+
+    <script src="js/auth-guard.js">    </script>
+
+    <!-- Auth Guard -->
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>
+

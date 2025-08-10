@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Jurado D - Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .olympic-rings-mini {
+            display: flex;
+            gap: 2px;
+        }
+
+        .ring-mini {
+            width: 10px;
+            height: 10px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #000000; }
+        .ring-mini:nth-child(3) { border-color: #df0024; }
+        .ring-mini:nth-child(4) { border-color: #ffb81c; }
+        .ring-mini:nth-child(5) { border-color: #009f3d; }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Seletor de Fase */
+        .phase-selector {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .phase-selector h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+        }
+
+        .phase-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .phase-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .phase-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .phase-btn.active {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        }
+
+        /* Filtros de seleção */
+        .selection-filters {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group h4 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .filter-item label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+
+        /* Área de notas */
+        .scoring-area {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .scoring-area.active {
+            display: block;
+        }
+
+        .current-gymnast {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .gymnast-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .gymnast-info {
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-arrow {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-arrow:disabled:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: none;
+        }
+
+        .current-gymnast h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-gymnast p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0.2rem 0;
+        }
+
+        .gymnast-counter {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .apparatus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .apparatus-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .apparatus-card:hover {
+            border-color: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .apparatus-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .score-input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .score-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .score-input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+
+        .score-input.difficulty {
+            border-color: #ffc107;
+            background: linear-gradient(135deg, #fff9c4, #ffffff);
+        }
+
+        .score-input.difficulty:focus {
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .confirm-btn {
+            flex: 1;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+        }
+
+        .edit-btn {
+            flex: 1;
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Mensagens de feedback */
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .message.success {
+            background: linear-gradient(45deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: linear-gradient(45deg, #f8d7da, #f1b0b7);
+            color: #721c24;
+            border: 1px solid #f1b0b7;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+            
+            .apparatus-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Painel Jurado D - Dificuldade
+            </div>
+            <div class="header-nav">
+                <button id="logout-btn" class="nav-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1 class="title-main">Sistema de Julgamento - Dificuldade</h1>
+
+        <div id="success-message" class="message success"></div>
+        <div id="error-message" class="message error"></div>
+
+        <!-- Seletor de Fase -->
+        <div class="phase-selector">
+            <h3><i class="fas fa-trophy"></i> Selecionar Fase da Competição</h3>
+            <div class="phase-buttons">
+                <button class="phase-btn" data-phase="qualifiers">Qualificatórias</button>
+                <button class="phase-btn" data-phase="team_final">Final por Equipes</button>
+                <button class="phase-btn" data-phase="aa_final">Final All-Around</button>
+                <button class="phase-btn" data-phase="vt_final">Final VT</button>
+                <button class="phase-btn" data-phase="ub_final">Final UB</button>
+                <button class="phase-btn" data-phase="bb_final">Final BB</button>
+                <button class="phase-btn" data-phase="fx_final">Final FX</button>
+            </div>
+        </div>
+
+        <!-- Filtros de Seleção -->
+        <div class="selection-filters" id="selection-filters" style="display: none;">
+            <div class="filter-group">
+                <h4><i class="fas fa-filter"></i> Filtros de Seleção</h4>
+                <div class="filter-row">
+                    <!-- Dropdown de País (para QF e Final por Equipes) -->
+                    <div class="filter-item" id="country-filter" style="display: none;">
+                        <label for="country-select">País:</label>
+                        <select id="country-select" class="filter-select">
+                            <option value="">Selecione um país...</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Dropdown de Ginasta -->
+                    <div class="filter-item" id="gymnast-filter" style="display: none;">
+                        <label for="gymnast-select">Ginasta:</label>
+                        <select id="gymnast-select" class="filter-select">
+                            <option value="">Selecione uma ginasta...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área de Pontuação -->
+        <div class="scoring-area" id="scoring-area">
+            <div class="current-gymnast">
+                <div class="gymnast-navigation">
+                    <button class="nav-arrow" id="prev-gymnast" onclick="navigateGymnast(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="gymnast-info">
+                        <h3 id="current-gymnast-name">Selecione uma ginasta</h3>
+                        <p id="current-gymnast-info">País | Aparelho Atual</p>
+                        <p class="gymnast-counter" id="gymnast-counter">-/-</p>
+                    </div>
+                    <button class="nav-arrow" id="next-gymnast" onclick="navigateGymnast(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="apparatus-grid" id="apparatus-grid">
+                <!-- Aparelhos serão inseridos dinamicamente aqui -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-init.js"></script>
+    
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        const db = window.db;
+
+        let currentPhase = 'qualifiers';
+        let allGymnasts = [];
+        let filteredGymnasts = [];
+        let currentGymnast = null;
+        let currentGymnastIndex = 0;
+        let countries = [];
+
+        // Elementos do DOM
+        const phaseButtons = document.querySelectorAll('.phase-btn');
+        const scoringArea = document.getElementById('scoring-area');
+        const apparatusGrid = document.getElementById('apparatus-grid');
+        const currentGymnastName = document.getElementById('current-gymnast-name');
+        const currentGymnastInfo = document.getElementById('current-gymnast-info');
+        const gymnastCounter = document.getElementById('gymnast-counter');
+        const prevBtn = document.getElementById('prev-gymnast');
+        const nextBtn = document.getElementById('next-gymnast');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // Elementos dos filtros
+        const selectionFilters = document.getElementById('selection-filters');
+        const countryFilter = document.getElementById('country-filter');
+        const gymnastFilter = document.getElementById('gymnast-filter');
+        const countrySelect = document.getElementById('country-select');
+        const gymnastSelect = document.getElementById('gymnast-select');
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGymnasts();
+            setupPhaseButtons();
+            setupFilters();
+            setupLogout();
+        });
+
+        // Setup dos botões de fase
+        function setupPhaseButtons() {
+            phaseButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    phaseButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentPhase = btn.dataset.phase;
+                    setupFiltersForPhase();
+                    hideScoring();
+                });
+            });
+        }
+
+        // Setup dos filtros
+        function setupFilters() {
+            countrySelect.addEventListener('change', () => {
+                populateGymnastSelect();
+            });
+
+            gymnastSelect.addEventListener('change', () => {
+                const selectedGymnastId = gymnastSelect.value;
+                if (selectedGymnastId) {
+                    // Procurar a ginasta na lista filtrada
+                    currentGymnast = filteredGymnasts.find(g => g.id === selectedGymnastId);
+                    currentGymnastIndex = filteredGymnasts.findIndex(g => g.id === selectedGymnastId);
+                    
+                    if (currentGymnast) {
+                        showScoringArea();
+                        updateCurrentGymnastDisplay();
+                        renderApparatusCards();
+                    }
+                }
+            });
+        }
+
+        // Configurar filtros baseado na fase
+        function setupFiltersForPhase() {
+            selectionFilters.style.display = 'block';
+            
+            // Reset filtros
+            countrySelect.innerHTML = '<option value="">Selecione um país...</option>';
+            gymnastSelect.innerHTML = '<option value="">Selecione uma ginasta...</option>';
+            
+            if (currentPhase === 'qualifiers' || currentPhase === 'team_final') {
+                // Mostrar filtro de país
+                countryFilter.style.display = 'block';
+                populateCountrySelect();
+                gymnastFilter.style.display = 'block';
+            } else {
+                // Individual geral e finais por aparelhos - apenas ginastas
+                countryFilter.style.display = 'none';
+                gymnastFilter.style.display = 'block';
+                populateGymnastSelectDirect();
+            }
+        }
+
+        // Esconder área de scoring
+        function hideScoring() {
+            scoringArea.classList.remove('active');
+            currentGymnast = null;
+            currentGymnastIndex = 0;
+        }
+
+        // Carregar ginastas do Firebase (nova coleção new_gymnasts)
+        async function loadGymnasts() {
+            try {
+                console.log('Carregando ginastas da coleção new_gymnasts...');
+                const querySnapshot = await db.collection('new_gymnasts').get();
+                allGymnasts = [];
+                querySnapshot.forEach((doc) => {
+                    allGymnasts.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Extrair países únicos
+                countries = [...new Set(allGymnasts.map(g => g.country))].sort();
+                
+                console.log('Ginastas carregadas:', allGymnasts.length);
+                console.log('Países encontrados:', countries);
+                
+                // Setup listener para atualizações em tempo real
+                setupRealtimeListener();
+                
+            } catch (error) {
+                console.error('Erro ao carregar ginastas:', error);
+                showError('Erro ao carregar dados das ginastas');
+            }
+        }
+
+        // Setup listener para atualizações em tempo real
+        function setupRealtimeListener() {
+            const unsubscribe = db.collection('new_gymnasts').onSnapshot((snapshot) => {
+                console.log('Atualizando dados das ginastas em tempo real...');
+                allGymnasts = [];
+                snapshot.forEach((doc) => {
+                    allGymnasts.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Atualizar países
+                countries = [...new Set(allGymnasts.map(g => g.country))].sort();
+                
+                // Se estiver visualizando uma ginasta, atualizar seus dados
+                if (currentGymnast) {
+                    const updatedGymnast = allGymnasts.find(g => g.id === currentGymnast.id);
+                    if (updatedGymnast) {
+                        currentGymnast = updatedGymnast;
+                        updateCurrentGymnastDisplay();
+                        renderApparatusCards();
+                    }
+                }
+            });
+        }
+
+        // Popular dropdown de países
+        function populateCountrySelect() {
+            countrySelect.innerHTML = '<option value="">Selecione um país...</option>';
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+            });
+        }
+
+        // Popular dropdown de ginastas (baseado no país selecionado)
+        function populateGymnastSelect() {
+            gymnastSelect.innerHTML = '<option value="">Selecione uma ginasta...</option>';
+            
+            const selectedCountry = countrySelect.value;
+            if (!selectedCountry) return;
+            
+            // Filtrar ginastas por país
+            let countryGymnasts = allGymnasts.filter(g => g.country === selectedCountry);
+            
+            // Para final por equipes, apenas ginastas sorteadas
+            if (currentPhase === 'team_final') {
+                countryGymnasts = countryGymnasts.filter(g => g.qualified?.team_final === true);
+            }
+            
+            filteredGymnasts = countryGymnasts.sort((a, b) => a.name.localeCompare(b.name));
+            
+            filteredGymnasts.forEach(gymnast => {
+                const option = document.createElement('option');
+                option.value = gymnast.id;
+                option.textContent = gymnast.name;
+                gymnastSelect.appendChild(option);
+            });
+        }
+
+        // Popular dropdown de ginastas diretamente (sem filtro de país)
+        function populateGymnastSelectDirect() {
+            gymnastSelect.innerHTML = '<option value="">Selecione uma ginasta...</option>';
+            
+            let availableGymnasts = [...allGymnasts];
+            
+            // Filtrar baseado na fase
+            if (currentPhase === 'aa_final') {
+                availableGymnasts = allGymnasts.filter(g => g.qualified?.aa_final === true);
+            } else if (currentPhase.includes('_final')) {
+                const apparatus = currentPhase.replace('_final', '');
+                availableGymnasts = allGymnasts.filter(g => g.qualified?.[currentPhase] === true);
+            }
+            
+            filteredGymnasts = availableGymnasts.sort((a, b) => a.name.localeCompare(b.name));
+            
+            filteredGymnasts.forEach(gymnast => {
+                const option = document.createElement('option');
+                option.value = gymnast.id;
+                option.textContent = `${gymnast.name} (${gymnast.country})`;
+                gymnastSelect.appendChild(option);
+            });
+        }
+
+        // Mostrar área de pontuação
+        function showScoringArea() {
+            scoringArea.classList.add('active');
+            updateCurrentGymnastDisplay();
+            renderApparatusCards();
+        }
+
+        // Atualizar exibição da ginasta atual
+        function updateCurrentGymnastDisplay() {
+            if (currentGymnast) {
+                currentGymnastName.textContent = currentGymnast.name;
+                currentGymnastInfo.textContent = `${currentGymnast.country} | Jurado D`;
+                gymnastCounter.textContent = `${currentGymnastIndex + 1}/${filteredGymnasts.length}`;
+                
+                // Atualizar botões de navegação
+                prevBtn.disabled = currentGymnastIndex === 0;
+                nextBtn.disabled = currentGymnastIndex === filteredGymnasts.length - 1;
+            }
+        }
+
+        // Navegação entre ginastas
+        window.navigateGymnast = function(direction) {
+            if (filteredGymnasts.length === 0) return;
+            
+            const newIndex = currentGymnastIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < filteredGymnasts.length) {
+                currentGymnastIndex = newIndex;
+                currentGymnast = filteredGymnasts[currentGymnastIndex];
+                
+                // Atualizar dropdown de ginasta
+                gymnastSelect.value = currentGymnast.id;
+                
+                updateCurrentGymnastDisplay();
+                renderApparatusCards();
+            }
+        };
+
+        // Renderizar cards dos aparelhos
+        function renderApparatusCards() {
+            apparatusGrid.innerHTML = '';
+            
+            if (!currentGymnast) return;
+
+            let apparatuses = [];
+            
+            if (currentPhase === 'qualifiers' || currentPhase === 'aa_final' || currentPhase === 'team_final') {
+                apparatuses = ['VT', 'UB', 'BB', 'FX'];
+            } else {
+                // Final de aparelho específico
+                const app = currentPhase.replace('_final', '').toUpperCase();
+                apparatuses = [app];
+            }
+
+            apparatuses.forEach(app => {
+                const card = createApparatusCard(app);
+                apparatusGrid.appendChild(card);
+            });
+        }
+
+        // Criar card de aparelho
+        function createApparatusCard(apparatus) {
+            const card = document.createElement('div');
+            card.className = 'apparatus-card';
+            
+            let inputsHTML = '';
+            
+            if (apparatus === 'VT' && (currentPhase === 'vt_final' || currentPhase === 'qualifiers')) {
+                // VT Final e Qualifiers - dois saltos
+                inputsHTML = `
+                    <div class="score-input-group">
+                        <label>VT1 - Dificuldade (D)</label>
+                        <input type="number" class="score-input difficulty" 
+                               data-score="${currentPhase}_vt1_d" step="0.1" min="0" max="10" placeholder="0.0">
+                    </div>
+                    <div class="score-input-group">
+                        <label>VT2 - Dificuldade (D)</label>
+                        <input type="number" class="score-input difficulty" 
+                               data-score="${currentPhase}_vt2_d" step="0.1" min="0" max="10" placeholder="0.0">
+                    </div>
+                `;
+            } else {
+                // Aparelho normal - só nota D
+                const scoreKey = apparatus === 'VT' ? `${currentPhase}_vt_d` : `${currentPhase}_${apparatus.toLowerCase()}_d`;
+                inputsHTML = `
+                    <div class="score-input-group">
+                        <label>Dificuldade (D)</label>
+                        <input type="number" class="score-input difficulty" 
+                               data-score="${scoreKey}" step="0.1" min="0" max="10" placeholder="0.0">
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                <h3 class="apparatus-title">${apparatus}</h3>
+                ${inputsHTML}
+                <div class="action-buttons">
+                    <button class="confirm-btn" onclick="confirmScore('${apparatus}')">
+                        <i class="fas fa-check"></i> Confirmar Nota
+                    </button>
+                    <button class="edit-btn" onclick="editScore('${apparatus}')">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                </div>
+            `;
+
+            // Carregar notas existentes
+            loadExistingScores(card, apparatus);
+
+            return card;
+        }
+
+        // Carregar notas existentes
+        function loadExistingScores(card, apparatus) {
+            if (!currentGymnast || !currentGymnast.scores || !currentGymnast.scores[currentPhase]) return;
+
+            const scores = currentGymnast.scores[currentPhase];
+            const inputs = card.querySelectorAll('.score-input');
+
+            inputs.forEach(input => {
+                const scoreKey = input.dataset.score;
+                if (scores[scoreKey] !== undefined) {
+                    input.value = scores[scoreKey];
+                }
+            });
+        }
+
+        // Confirmar nota
+        window.confirmScore = async function(apparatus) {
+            if (!currentGymnast) return;
+
+            const card = Array.from(document.querySelectorAll('.apparatus-card')).find(
+                c => c.querySelector('.apparatus-title').textContent === apparatus
+            );
+            const inputs = card.querySelectorAll('.score-input');
+            
+            const scoreData = {};
+            let hasValues = false;
+
+            inputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                if (value > 0) hasValues = true;
+                scoreData[input.dataset.score] = value;
+            });
+
+            if (!hasValues) {
+                showError('Por favor, insira pelo menos uma nota antes de confirmar.');
+                return;
+            }
+
+            try {
+                // Usar a coleção new_gymnasts
+                const docRef = db.collection('new_gymnasts').doc(currentGymnast.id);
+                
+                // Estrutura da nota de dificuldade
+                const updateData = {};
+                Object.keys(scoreData).forEach(key => {
+                    // As chaves já incluem a fase, então salvar diretamente
+                    updateData[`scores.${currentPhase}.${key}`] = scoreData[key];
+                });
+
+                await docRef.update(updateData);
+
+                showSuccess(`Nota de dificuldade confirmada para ${apparatus}!`);
+                
+                // Atualizar dados locais - será atualizado pelo listener em tempo real
+                console.log('Nota salva com sucesso:', updateData);
+
+            } catch (error) {
+                console.error('Erro ao salvar nota:', error);
+                showError('Erro ao salvar nota. Tente novamente.');
+            }
+        };
+
+        // Editar nota
+        window.editScore = function(apparatus) {
+            showSuccess(`Modo de edição ativado para ${apparatus}. Modifique os valores e confirme novamente.`);
+        };
+
+        // Setup logout
+        function setupLogout() {
+            logoutBtn.addEventListener('click', async () => {
+                // Aguardar um pouco para garantir que auth-guard foi carregado
+                setTimeout(async () => {
+                    if (window.logout) {
+                        // Usar função do auth-guard se disponível
+                        await window.logout();
+                    } else {
+                        // Fallback
+                        try {
+                            console.log('🚪 Iniciando logout...');
+                            await firebase.auth().signOut();
+                            localStorage.removeItem('userRole');
+                            localStorage.removeItem('userEmail');
+                            window.location.href = 'login.html';
+                        } catch (error) {
+                            console.error('💥 Erro no logout:', error);
+                            window.location.href = 'login.html';
+                        }
+                    }
+                }, 100);
+            });
+        }
+
+        // Funções de feedback
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            setTimeout(() => successMessage.style.display = 'none', 5000);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+            setTimeout(() => errorMessage.style.display = 'none', 5000);
+        }
+    </script>
+    
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>

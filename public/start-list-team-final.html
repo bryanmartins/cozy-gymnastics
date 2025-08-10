@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start List - Final por Equipes | Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1e3c72;
+        }
+
+        /* Header olímpico */
+        .olympic-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Anéis olímpicos mini */
+        .olympic-rings-mini {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .ring-mini {
+            width: 20px;
+            height: 20px;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .ring-mini:nth-child(1) { border-color: #0085c3; }
+        .ring-mini:nth-child(2) { border-color: #f4c300; }
+        .ring-mini:nth-child(3) { border-color: #000; }
+        .ring-mini:nth-child(4) { border-color: #009f3d; }
+        .ring-mini:nth-child(5) { border-color: #df0024; }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-phase {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Info section */
+        .info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            text-align: center;
+        }
+
+        /* Sorteio display */
+        .draw-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .apparatus-draw {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .apparatus-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .country-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            background: rgba(30, 60, 114, 0.05);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        /* Rotações */
+        .rotations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .rotation-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .rotation-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .rotation-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .apparatus-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .apparatus-section {
+            background: rgba(30, 60, 114, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .apparatus-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            text-align: center;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .gymnast-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .gymnast-item {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+
+        .gymnast-item:hover {
+            background: rgba(30, 60, 114, 0.1);
+            transform: translateX(5px);
+        }
+
+        .gymnast-order {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .gymnast-info {
+            flex: 1;
+        }
+
+        .gymnast-name {
+            font-weight: 700;
+            color: #1e3c72;
+            font-size: 1rem;
+        }
+
+        .gymnast-country {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.2rem;
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Controles */
+        .controls-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .olympic-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .olympic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .olympic-button.secondary {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            color: #2a5298;
+            font-weight: 600;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .draw-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .rotations-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .apparatus-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .title-main {
+                font-size: 2rem;
+            }
+        }
+
+        /* Footer olímpico */
+        .olympic-footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="olympic-header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="olympic-rings-mini">
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                    <div class="ring-mini"></div>
+                </div>
+                Start List
+            </div>
+            <nav class="header-nav">
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="start-list-wag.html" class="nav-btn">
+                    <i class="fas fa-list"></i> Todas as Lists
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title-main">Start List</h1>
+            <p class="title-phase">Final por Equipes</p>
+        </div>
+
+        <div class="info-section">
+            <h3 style="color: #1e3c72; margin-bottom: 1rem;">Sorteio da Final por Equipes</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Sistema de rotação com 3 ginastas por equipe por aparelho</p>
+            <p style="color: #666; font-size: 0.9rem; font-style: italic;">
+                Cada equipe se apresenta em todos os aparelhos seguindo a ordem de rotação
+            </p>
+            
+            <div id="loading-draw" class="loading">
+                <i class="fas fa-spinner"></i>
+                Carregando sorteio...
+            </div>
+
+            <div id="draw-display" class="draw-grid" style="display: none;">
+                <!-- O sorteio será mostrado aqui -->
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <p style="text-align: center; color: #666; margin-bottom: 1rem;">
+                <i class="fas fa-info-circle"></i> O sorteio é gerado na página de edição de pontuações
+            </p>
+            <a href="edit-scores-team-final.html" class="olympic-button secondary">
+                <i class="fas fa-edit"></i> Editar Pontuações
+            </a>
+            <button id="save-start-list" class="olympic-button">
+                <i class="fas fa-save"></i> Salvar Start List
+            </button>
+        </div>
+
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            Carregando start list...
+        </div>
+
+        <div id="rotations-container" class="rotations-container" style="display: none;">
+            <!-- Será preenchido pelo JavaScript -->
+        </div>
+    </main>
+
+    <footer class="olympic-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Jogos Olímpicos Brussels. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase v8 -->
+    <script src="js/countries.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="js/firebase-init.js"></script>
+
+    <script>
+        // Firebase já inicializado via firebase-init.js (globals)
+        // Função para inicializar quando Firebase estiver pronto
+        function initializeWhenReady() {
+            if (window.auth && window.db) {
+                initializePage();
+            } else {
+                setTimeout(initializeWhenReady, 100);
+            }
+        }
+
+        function initializePage() {
+            // Verificar autenticação
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                loadStartList();
+            });
+        }
+
+        // Aguardar Firebase estar pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWhenReady);
+        } else {
+            initializeWhenReady();
+        }
+
+        const apparatus = ['VT', 'UB', 'BB', 'FX'];
+        const apparatusNames = {
+            'VT': 'Salto',
+            'UB': 'Barras Assimétricas',
+            'BB': 'Trave de Equilíbrio',
+            'FX': 'Solo'
+        };
+
+        let gymnastsData = [];
+        let teamFinalDraw = {};
+
+        // Carregar dados iniciais
+        async function loadStartList() {
+            const loading = document.getElementById('loading');
+            const container = document.getElementById('rotations-container');
+            
+            try {
+                loading.style.display = 'block';
+                container.style.display = 'none';
+                
+                const gymnastsSnapshot = await window.db.collection('new_gymnasts').get();
+                gymnastsData = [];
+                
+                gymnastsSnapshot.forEach((doc) => {
+                    gymnastsData.push({ id: doc.id, ...doc.data() });
+                });
+
+                await loadDraw();
+                renderStartList();
+                
+                loading.style.display = 'none';
+                container.style.display = 'grid';
+                
+            } catch (error) {
+                console.error('Erro ao carregar start list:', error);
+                loading.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao carregar dados';
+            }
+        }
+
+        // Carregar ou gerar sorteio
+        async function loadDraw() {
+            const loadingDraw = document.getElementById('loading-draw');
+            const drawDisplay = document.getElementById('draw-display');
+            
+            try {
+                loadingDraw.style.display = 'block';
+                
+                console.log('🏅 [Team Final Start List] Carregando sorteio do Firebase...');
+                const drawDoc = await window.db.collection('start_lists').doc('team_final').get();
+                
+                if (drawDoc.exists) {
+                    console.log('🏅 [Team Final Start List] Sorteio encontrado no Firebase');
+                    const data = drawDoc.data();
+                    teamFinalDraw = data.structure || data; // Support both formats
+                    console.log('🏅 [Team Final Start List] Estrutura carregada:', teamFinalDraw);
+                } else {
+                    console.log('🏅 [Team Final Start List] Nenhum sorteio encontrado, mostrando mensagem...');
+                    teamFinalDraw = {}; // Estrutura vazia
+                }
+                
+                renderDraw();
+                
+                // Add real-time listeners for gymnasts and start lists
+                const unsubscribeGymnasts = window.db.collection('new_gymnasts').onSnapshot((snapshot) => {
+                    let updatedData = [];
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        if (!data.id) data.id = doc.id;
+                        updatedData.push(data);
+                    });
+                    gymnastsData = updatedData;
+                    console.log("[Team Final] Gymnast data updated via listener");
+                    
+                    // Apenas re-renderizar se temos um sorteio válido
+                    if (teamFinalDraw && (teamFinalDraw.rotation1 || teamFinalDraw.rotations)) {
+                        renderDraw();
+                        renderStartList();
+                    }
+                }, (error) => {
+                    console.error("[Team Final] Error listening to gymnasts:", error);
+                });
+
+                const unsubscribeStartList = window.db.collection('start_lists').doc('team_final').onSnapshot((docSnapshot) => {
+                    if (docSnapshot.exists) {
+                        const data = docSnapshot.data();
+                        const savedStructure = data.structure || data; // Support both formats
+                        console.log("🏅 [Team Final Start List] Sorteio atualizado via listener");
+                        console.log("🏅 [Team Final Start List] Nova estrutura:", savedStructure);
+                        
+                        // Only update if the structure is different
+                        if (JSON.stringify(savedStructure) !== JSON.stringify(teamFinalDraw)) {
+                            teamFinalDraw = savedStructure;
+                            renderDraw();
+                            renderStartList();
+                        }
+                    } else {
+                        console.log("🏅 [Team Final Start List] Documento não existe");
+                        // Se não existe documento, mostrar mensagem
+                        if (!teamFinalDraw || Object.keys(teamFinalDraw).length === 0) {
+                            teamFinalDraw = {}; // Estrutura vazia para mostrar mensagem
+                            renderDraw();
+                            renderStartList();
+                        }
+                    }
+                }, (error) => {
+                    console.error("🏅 [Team Final Start List] Erro ao ouvir mudanças:", error);
+                });
+                
+                loadingDraw.style.display = 'none';
+                drawDisplay.style.display = 'grid';
+                
+            } catch (error) {
+                console.error('🏅 [Team Final Start List] Erro ao carregar sorteio:', error);
+                showNoDrawMessage();
+                loadingDraw.style.display = 'none';
+                drawDisplay.style.display = 'grid';
+            }
+        }
+
+        // Mostrar mensagem quando não há sorteio
+        function showNoDrawMessage() {
+            const container = document.getElementById('draw-display');
+            const rotationsContainer = document.getElementById('rotations-container');
+            
+            container.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 10px; border: 2px dashed #dee2e6;">
+                    <i class="fas fa-info-circle" style="font-size: 2rem; color: #6c757d; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #495057; margin-bottom: 1rem;">Nenhum Sorteio Encontrado</h3>
+                    <p style="color: #6c757d; margin-bottom: 1.5rem;">
+                        O sorteio da Final por Equipes deve ser gerado na página de edição de pontuações.
+                    </p>
+                    <a href="edit-scores-team-final.html" class="nav-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                        <i class="fas fa-edit"></i> Ir para Edição de Pontuações
+                    </a>
+                </div>
+            `;
+            
+            rotationsContainer.innerHTML = '';
+        }
+
+        // Função obsoleta - removida para evitar confusão
+        // O sorteio deve ser gerado APENAS na página edit-scores-team-final.html
+
+        // Renderizar sorteio (apenas visualização)
+        function renderDraw() {
+            console.log('🏅 [Team Final Start List] Renderizando visualização do sorteio...');
+            const container = document.getElementById('draw-display');
+            container.innerHTML = '';
+            
+            // Verificar se temos um sorteio válido
+            if (!teamFinalDraw || (!teamFinalDraw.rotation1 && !teamFinalDraw.rotations)) {
+                showNoDrawMessage();
+                return;
+            }
+            
+            // Usar formato de rotações para mostrar uma visão geral
+            let countries = [];
+            
+            if (teamFinalDraw.rotations && teamFinalDraw.rotations.length > 0) {
+                // Formato novo - extrair países dos atletas na primeira rotação
+                const firstRotation = teamFinalDraw.rotations[0];
+                const allAthletes = [];
+                apparatus.forEach(app => {
+                    if (firstRotation.apparatus[app]) {
+                        allAthletes.push(...firstRotation.apparatus[app]);
+                    }
+                });
+                countries = [...new Set(allAthletes.map(athlete => athlete.country))];
+            } else if (teamFinalDraw.rotation1) {
+                // Formato antigo - extrair países das chaves
+                const firstRotation = teamFinalDraw.rotation1;
+                const countrySet = new Set();
+                apparatus.forEach(app => {
+                    if (firstRotation[app]) {
+                        Object.keys(firstRotation[app]).forEach(country => countrySet.add(country));
+                    }
+                });
+                countries = Array.from(countrySet);
+            }
+            
+            console.log('🏅 [Team Final Start List] Países no sorteio:', countries);
+            
+            apparatus.forEach(app => {
+                const appDiv = document.createElement('div');
+                appDiv.className = 'apparatus-draw';
+                
+                // Mostrar países que competem neste aparelho na Rotação 1
+                let competingCountries = [];
+                
+                if (teamFinalDraw.rotations && teamFinalDraw.rotations[0]) {
+                    const athletes = teamFinalDraw.rotations[0].apparatus[app] || [];
+                    competingCountries = [...new Set(athletes.map(a => a.country))];
+                } else if (teamFinalDraw.rotation1 && teamFinalDraw.rotation1[app]) {
+                    competingCountries = Object.keys(teamFinalDraw.rotation1[app]);
+                }
+                
+                appDiv.innerHTML = `
+                    <div class="apparatus-title">${apparatusNames[app]}</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        ${competingCountries.map(country => {
+                            return `
+                                <div class="country-item">
+                                    <span class="fi fi-${getCountryCode(country)}"></span>
+                                    <div>
+                                        <strong>${country}</strong><br>
+                                        <small>3 ginastas</small>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(appDiv);
+            });
+        }
+
+        // Renderizar start list com rotações
+        function renderStartList() {
+            console.log('🏅 [Team Final Start List] Renderizando start list...');
+            console.log('🏅 [Team Final Start List] teamFinalDraw:', teamFinalDraw);
+            
+            const container = document.getElementById('rotations-container');
+            container.innerHTML = '';
+            
+            // Verificar se temos dados do sorteio
+            if (!teamFinalDraw || (!teamFinalDraw.rotation1 && !teamFinalDraw.rotations)) {
+                container.innerHTML = '<p>Nenhum sorteio encontrado. Por favor, gere um sorteio na página de edição de pontuações.</p>';
+                return;
+            }
+            
+            // Usar formato de rotações (preferir o formato novo se disponível)
+            if (teamFinalDraw.rotations && Array.isArray(teamFinalDraw.rotations)) {
+                console.log('🏅 [Team Final Start List] Usando formato novo de rotações');
+                renderStartListNewFormat();
+            } else if (teamFinalDraw.rotation1) {
+                console.log('🏅 [Team Final Start List] Usando formato antigo de rotações');
+                renderStartListOldFormat();
+            } else {
+                container.innerHTML = '<p>Formato de sorteio não reconhecido.</p>';
+            }
+        }
+        
+        // Renderizar usando formato novo (teamFinalDraw.rotations) - LÓGICA DO EDIT-SCORES COM DUPLICAÇÕES
+        function renderStartListNewFormat() {
+            const container = document.getElementById('rotations-container');
+            container.innerHTML = '';
+            
+            console.log('🏅 [START LIST] Usando nova estrutura com duplicações:', teamFinalDraw.duplications ? 'SIM' : 'NÃO');
+            
+            // Organizar por país (igual ao edit-scores)
+            const countries = [...new Set(gymnastsData.map(g => g.country))];
+            
+            countries.forEach(country => {
+                const teamCard = document.createElement('div');
+                teamCard.className = 'rotation-card'; // Usar classe existente
+                
+                teamCard.innerHTML = `
+                    <div class="rotation-header">
+                        <div class="rotation-title">
+                            <span class="fi fi-${getCountryCode(country)}" style="margin-right: 0.5rem;"></span>
+                            ${country}
+                        </div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">
+                            3 ginastas por equipe por aparelho (com duplicações se necessário)
+                        </div>
+                    </div>
+                    <div class="apparatus-sections" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                        ${[1, 2, 3, 4].map(rotation => {
+                            const rotationApp = apparatus[(rotation - 1) % 4]; // VT, UB, BB, FX
+                            
+                            let athletes = [];
+                            
+                            // USAR ESTRUTURA DE DUPLICAÇÕES SE DISPONÍVEL
+                            if (teamFinalDraw.duplications) {
+                                const slots = teamFinalDraw.duplications[`rotation${rotation}`]?.[rotationApp]?.[country] || [];
+                                console.log(`🏅 [START LIST DEBUG] ${country} - R${rotation} ${rotationApp} slots:`, slots);
+                                
+                                athletes = slots.map((slot, index) => {
+                                    if (slot.gymnastId) {
+                                        const gymnast = gymnastsData.find(g => g.id === slot.gymnastId);
+                                        if (gymnast) {
+                                            return {
+                                                name: gymnast.name,
+                                                country: gymnast.country,
+                                                bib: gymnast.bib || '',
+                                                multiplier: slot.multiplier
+                                            };
+                                        }
+                                    }
+                                    // Slot vazio (ausente)
+                                    return {
+                                        name: 'AUSENTE',
+                                        country: country,
+                                        bib: '',
+                                        multiplier: 1
+                                    };
+                                });
+                            } else {
+                                // Fallback para estrutura antiga
+                                if (teamFinalDraw.rotations && teamFinalDraw.rotations[rotation - 1]) {
+                                    const rotationData = teamFinalDraw.rotations[rotation - 1];
+                                    const allAthletes = rotationData.apparatus[rotationApp] || [];
+                                    athletes = allAthletes.filter(athlete => athlete.country === country).slice(0, 3)
+                                        .map(athlete => ({ ...athlete, multiplier: 1 }));
+                                }
+                            }
+                            
+                            console.log(`🏅 [START LIST DEBUG] ${country} - R${rotation} (${rotationApp}) final:`, athletes);
+                            
+                            return `
+                                <div class="apparatus-section">
+                                    <div class="apparatus-section-title">Rotação ${rotation}<br>${apparatusNames[rotationApp]}</div>
+                                    ${athletes.length > 0 ? `
+                                        <div class="gymnast-list">
+                                            ${athletes.map((athlete, idx) => {
+                                                const multiplierDisplay = athlete.multiplier > 1 ? 
+                                                    ` <span style="color: #e53e3e; font-weight: bold;">(x${athlete.multiplier})</span>` : '';
+                                                const isAbsent = athlete.name === 'AUSENTE';
+                                                const itemStyle = isAbsent ? 'opacity: 0.5; border: 2px dashed #ccc;' : '';
+                                                
+                                                return `
+                                                    <div class="gymnast-item" style="${itemStyle}">
+                                                        <div class="gymnast-order">${idx + 1}</div>
+                                                        <div class="gymnast-info">
+                                                            <div class="gymnast-name">
+                                                                ${athlete.name}${multiplierDisplay}
+                                                            </div>
+                                                            <div class="gymnast-country">
+                                                                <span class="fi fi-${getCountryCode(athlete.country)}"></span>
+                                                                ${athlete.country}${athlete.bib ? ` - ${athlete.bib}` : ''}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    ` : '<p style="color: #999; text-align: center; padding: 1rem;">Nenhuma ginasta nesta rotação</p>'}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(teamCard);
+            });
+        }
+        
+        // Renderizar usando formato antigo (teamFinalDraw.rotation1, etc.)
+        function renderStartListOldFormat() {
+            const container = document.getElementById('rotations-container');
+            
+            for (let rotNum = 1; rotNum <= 4; rotNum++) {
+                const rotationData = teamFinalDraw[`rotation${rotNum}`];
+                
+                if (!rotationData) continue;
+                
+                const rotationCard = document.createElement('div');
+                rotationCard.className = 'rotation-card';
+                
+                rotationCard.innerHTML = `
+                    <div class="rotation-header">
+                        <div class="rotation-title">Rotação ${rotNum}</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">
+                            3 ginastas por equipe
+                        </div>
+                    </div>
+                    <div class="apparatus-sections">
+                        ${apparatus.map(app => {
+                            const countries = Object.keys(rotationData[app] || {});
+                            return `
+                                <div class="apparatus-section">
+                                    <div class="apparatus-section-title">${apparatusNames[app]}</div>
+                                    ${countries.map(country => {
+                                        const gymnastIds = rotationData[app][country] || [];
+                                        return `
+                                            <div class="team-info">
+                                                <span class="fi fi-${getCountryCode(country)}"></span>
+                                                ${country}
+                                            </div>
+                                            <div class="gymnast-list">
+                                                ${gymnastIds.map((gymnastId, idx) => {
+                                                    const gymnast = gymnastsData.find(g => g.id === gymnastId);
+                                                    if (!gymnast) return '';
+                                                    return `
+                                                        <div class="gymnast-item">
+                                                            <div class="gymnast-order">${idx + 1}</div>
+                                                            <div class="gymnast-info">
+                                                                <div class="gymnast-name">${gymnast.name}</div>
+                                                                <div class="gymnast-country">
+                                                                    <span class="fi fi-${getCountryCode(gymnast.country)}"></span>
+                                                                    ${gymnast.country}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    `;
+                                                }).join('')}
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(rotationCard);
+            }
+        }
+
+        // Função obsoleta removida - shuffleStartList
+        // O sorteio deve ser feito na página edit-scores-team-final.html
+
+        // Salvar start list
+        async function saveStartList() {
+            try {
+                const docData = {
+                    structure: teamFinalDraw,
+                    lastUpdated: new Date()
+                };
+                await window.db.collection('start_lists').doc('team_final').set(docData);
+                
+                // Feedback visual
+                const saveBtn = document.getElementById('save-start-list');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
+                saveBtn.style.background = 'linear-gradient(45deg, #2ed573, #5f27cd)';
+                
+                setTimeout(() => {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.style.background = 'linear-gradient(45deg, #1e3c72, #2a5298)';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Erro ao salvar start list:', error);
+                alert('Erro ao salvar lista de largada');
+            }
+        }
+
+        // Função auxiliar para obter código do país
+        function getCountryCode(country) {
+            const codes = {
+                'Brasil': 'br',
+                'Brazil': 'br',
+                'BRA': 'br',
+                'Estados Unidos': 'us',
+                'United States': 'us',
+                'USA': 'us',
+                'França': 'fr',
+                'France': 'fr',
+                'FRA': 'fr',
+                'Alemanha': 'de',
+                'Germany': 'de',
+                'GER': 'de',
+                'Itália': 'it',
+                'Italy': 'it',
+                'ITA': 'it',
+                'Reino Unido': 'gb',
+                'United Kingdom': 'gb',
+                'GBR': 'gb',
+                'Japão': 'jp',
+                'Japan': 'jp',
+                'JPN': 'jp',
+                'China': 'cn',
+                'CHN': 'cn',
+                'Rússia': 'ru',
+                'Russia': 'ru',
+                'RUS': 'ru',
+                'Canadá': 'ca',
+                'Canada': 'ca',
+                'CAN': 'ca',
+                'Austrália': 'au',
+                'Australia': 'au',
+                'AUS': 'au'
+            };
+            return codes[country] || 'xx';
+        }
+
+        // Event listeners
+        document.getElementById('save-start-list').addEventListener('click', saveStartList);
+        
+        // Função obsoleta removida - shuffleStartList
+        // O sorteio deve ser feito na página edit-scores-team-final.html
+    </script>
+
+    <!-- Auth Guard -->
+    <script src="js/auth-guard.js"></script>
+</body>
+</html>

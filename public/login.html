@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Jogos Olímpicos Brussels 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 25%, #2c5364 50%, #203a43 75%, #0f2027 100%);
+            background-size: 400% 400%;
+            animation: olympicGradient 20s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes olympicGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.4; }
+        }
+
+        .olympic-rings {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            opacity: 0.05;
+            z-index: 1;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            width: 200px;
+        }
+
+        .ring {
+            width: 30px;
+            height: 30px;
+            border: 3px solid;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .ring:nth-child(1) { border-color: #0085c3; }
+        .ring:nth-child(2) { border-color: #000000; margin-left: -15px; }
+        .ring:nth-child(3) { border-color: #df0024; margin-left: -15px; }
+        .ring:nth-child(4) { border-color: #ffb300; margin-top: -15px; }
+        .ring:nth-child(5) { border-color: #00a651; margin-left: -15px; margin-top: -15px; }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.2),
+                0 0 100px rgba(255, 255, 255, 0.1) inset;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 10;
+            transform: scale(0.9);
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: scale(0.9) translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .olympic-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #0085c3, #df0024, #ffb300, #00a651);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .olympic-logo i {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .login-subtitle {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0085c3;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 133, 195, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 0.8rem;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(45deg, #0085c3, #0066a0);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 133, 195, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 133, 195, 0.4);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button.loading {
+            color: transparent;
+        }
+
+        .login-button .spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        .login-button.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .error-message {
+            background: linear-gradient(45deg, #ff4757, #ff3742);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
+        }
+
+        .error-message.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e1e5e9;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            .login-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f2027, #2c5364);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-rings {
+            display: flex;
+            gap: 10px;
+        }
+
+        .loader-ring {
+            width: 40px;
+            height: 40px;
+            border: 4px solid transparent;
+            border-radius: 50%;
+            animation: loadSpin 1.5s linear infinite;
+        }
+
+        .loader-ring:nth-child(1) { border-color: #0085c3 transparent transparent transparent; animation-delay: 0s; }
+        .loader-ring:nth-child(2) { border-color: #000000 transparent transparent transparent; animation-delay: 0.1s; }
+        .loader-ring:nth-child(3) { border-color: #df0024 transparent transparent transparent; animation-delay: 0.2s; }
+        .loader-ring:nth-child(4) { border-color: #ffb300 transparent transparent transparent; animation-delay: 0.3s; }
+        .loader-ring:nth-child(5) { border-color: #00a651 transparent transparent transparent; animation-delay: 0.4s; }
+
+        @keyframes loadSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-rings">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+    </div>
+
+    <div class="particles" id="particles"></div>
+
+    <div class="olympic-rings">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <div class="olympic-logo">
+                <i class="fas fa-medal"></i>
+            </div>
+            <h1 class="login-title">Brussels 2025</h1>
+            <p class="login-subtitle">Sistema de Julgamento Olímpico</p>
+        </div>
+
+        <form class="login-form" id="login-form">
+            <div id="error-message" class="error-message">
+                <i class="fas fa-exclamation-triangle"></i>
+                Credenciais inválidas. Tente novamente.
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">
+                    <i class="fas fa-user"></i> E-mail
+                </label>
+                <div style="position: relative;">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        placeholder="Digite seu e-mail"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">
+                    <i class="fas fa-lock"></i> Senha
+                </label>
+                <div style="position: relative;">
+                    <i class="fas fa-key input-icon"></i>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="Digite sua senha"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="login-button" id="login-btn">
+                <span>Entrar no Sistema</span>
+                <div class="spinner"></div>
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <p><i class="fas fa-shield-alt"></i> Sistema Seguro de Autenticação</p>
+            <p>Jogos Olímpicos Brussels 2025 - Ginástica Artística</p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-init.js"></script>
+
+    <script>
+        // Aguardar Firebase estar pronto
+        function initializeLogin() {
+            if (window.auth) {
+                console.log('Firebase pronto, inicializando login...');
+                
+                // Firebase já inicializado via firebase-init.js (globals)
+                const auth = window.auth;
+
+                const loginForm = document.getElementById('login-form');
+                const emailInput = document.getElementById('email');
+                const passwordInput = document.getElementById('password');
+                const errorMessage = document.getElementById('error-message');
+                const loginBtn = document.getElementById('login-btn');
+                const pageLoader = document.getElementById('pageLoader');
+
+                function createParticles() {
+                    const particles = document.getElementById('particles');
+                    for (let i = 0; i < 50; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        function hidePageLoader() {
+            setTimeout(() => {
+                pageLoader.classList.add('hidden');
+            }, 1000);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => errorMessage.classList.remove('show'), 5000);
+        }
+
+        async function getUserRole(user) {
+            try {
+                console.log('🔍 Buscando role para:', user.email);
+                const db = window.db;
+                
+                let userDoc = await db.collection('users').doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    console.log('📧 Tentando buscar por email');
+                    const emailQuery = await db.collection('users').where('email', '==', user.email).get();
+                    if (!emailQuery.empty) {
+                        userDoc = emailQuery.docs[0];
+                    }
+                }
+                
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    console.log('✅ Role encontrada:', userData.role);
+                    return userData.role;
+                }
+                
+                console.log('❌ Usuário não encontrado na collection users');
+                return null;
+            } catch (error) {
+                console.error('💥 Erro ao buscar role:', error);
+                return null;
+            }
+        }
+
+        function redirectToRolePage(role) {
+            console.log('🎯 Redirecionando para role:', role);
+            
+            switch (role) {
+                case 'admin':
+                    window.location.href = 'dashboard.html';
+                    break;
+                case 'judge_d':
+                case 'jurado_d':
+                    window.location.href = 'judges-d.html';
+                    break;
+                case 'judge_e':
+                case 'jurado_e':
+                    window.location.href = 'judges-e.html';
+                    break;
+                default:
+                    console.log('❌ Role não reconhecida:', role);
+                    showError('Role de usuário não reconhecida. Contate o administrador.');
+            }
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!email || !password) {
+                showError('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            loginBtn.classList.add('loading');
+            loginBtn.disabled = true;
+            
+            try {
+                console.log('🔐 Tentando login para:', email);
+                
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                console.log('✅ Login realizado com sucesso:', user.email);
+                
+                const userRole = await getUserRole(user);
+                
+                if (!userRole) {
+                    await auth.signOut();
+                    throw new Error('Usuário sem permissões definidas');
+                }
+                
+                localStorage.setItem('userRole', userRole);
+                localStorage.setItem('userEmail', user.email);
+                
+                console.log('🎉 Login completo! Redirecionando...');
+                redirectToRolePage(userRole);
+                
+            } catch (error) {
+                console.error('💥 Erro no login:', error);
+                
+                let errorMsg = 'Erro ao fazer login. Tente novamente.';
+                
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMsg = 'Usuário não encontrado.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMsg = 'Senha incorreta.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMsg = 'E-mail inválido.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMsg = 'Muitas tentativas. Tente novamente mais tarde.';
+                        break;
+                    default:
+                        if (error.message.includes('sem permissões')) {
+                            errorMsg = 'Usuário sem permissões definidas. Contate o administrador.';
+                        }
+                }
+                
+                showError(errorMsg);
+            } finally {
+                loginBtn.classList.remove('loading');
+                loginBtn.disabled = false;
+            }
+        });
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                console.log('👤 Usuário já logado:', user.email);
+                const userRole = await getUserRole(user);
+                if (userRole) {
+                    console.log('🔄 Redirecionando usuário logado...');
+                    redirectToRolePage(userRole);
+                    return;
+                }
+            }
+            hidePageLoader();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            setTimeout(() => {
+                emailInput.focus();
+            }, 1200);
+        });
+        
+        } else {
+            console.log('Aguardando Firebase estar pronto...');
+            setTimeout(initializeLogin, 100);
+        }
+    }
+
+    // Inicializar quando DOM estiver pronto
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeLogin);
+    } else {
+        initializeLogin();
+    }
+    </script>
+</body>
+</html>
